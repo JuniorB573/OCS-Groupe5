@@ -9,6 +9,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{graphicx}
+\graphicspath{{figures/}{../figures/}}
 \usepackage{xcolor}
 \usepackage{geometry}
 \usepackage{fancyhdr}
@@ -144,64 +145,79 @@
 \begin{document}
 
 % ------------------------------------------------------------------------------
-% PAGE DE GARDE OFFICIELLE (CONFORME À L'EXIGENCE : SEULEMENT 'PROMOTION : ENSGMM1')
+% PAGE DE GARDE OFFICIELLE (LOGOS EN COINS SUPÉRIEURS, PARFAITEMENT CENTRÉE)
 % ------------------------------------------------------------------------------
 \begin{titlepage}
     \begin{tikzpicture}[remember picture, overlay]
+        % Double cadre académique aux bords de la page
         \draw[line width=1.5pt, color=navyblue] 
             ($(current page.north west) + (1.2cm,-1.2cm)$) rectangle 
             ($(current page.south east) + (-1.2cm,1.2cm)$);
         \draw[line width=0.6pt, color=goldline] 
             ($(current page.north west) + (1.35cm,-1.35cm)$) rectangle 
             ($(current page.south east) + (-1.35cm,1.35cm)$);
+
+        % Logo UNSTIM dans le coin supérieur gauche
+        \node[anchor=north west, inner sep=0pt] at ($(current page.north west) + (1.6cm,-1.6cm)$) {
+            \includegraphics[height=2.3cm]{figures/logo_unstim.png}
+        };
+
+        % Logo ENSGMM dans le coin supérieur droit
+        \node[anchor=north east, inner sep=0pt] at ($(current page.north east) + (-1.6cm,-1.6cm)$) {
+            \includegraphics[height=2.3cm]{figures/logo_ensgmm.png}
+        };
     \end{tikzpicture}
 
-    \vspace*{-0.9cm}
-    \noindent
-    \begin{minipage}[t]{0.40\textwidth}
-        \raggedright
-        \hspace*{0.3cm}\includegraphics[height=2.5cm]{figures/logo_unstim.png}
-    \end{minipage}%
-    \hfill
-    \begin{minipage}[t]{0.40\textwidth}
-        \raggedleft
-        \includegraphics[height=2.5cm]{figures/logo_ensgmm.png}\hspace*{0.3cm}
-    \end{minipage}
-
-    \vspace{0.4cm}
+    \centering
+    \vspace*{0.5cm}
 
     {\fontsize{11}{14}\selectfont \textsc{\textbf{République du Bénin}}}\\[0.15cm]
     {\fontsize{10}{13}\selectfont \textbf{Ministère de l'Enseignement Supérieur et de la Recherche Scientifique}}\\[0.25cm]
     {\fontsize{12}{15}\selectfont \textsc{\textbf{Université Nationale des Sciences, Technologies,}}}\\[0.1cm]
-    {\fontsize{12}{15}\selectfont \textsc{\textbf{Ingénierie et Mathématiques d'Abomey (UNSTIM)}}}\\[0.3cm]
-    {\fontsize{13}{16}\selectfont \textcolor{navyblue}{\textbf{École Nationale des Génies Mathématiques et Modélisation (ENSGMM)}}}
+    {\fontsize{12}{15}\selectfont \textsc{\textbf{Ingénierie et Mathématiques d'Abomey (UNSTIM)}}}\\[0.25cm]
+    {\fontsize{12.5}{15.5}\selectfont \textcolor{navyblue}{\textbf{École Nationale des Génies Mathématiques et Modélisation (ENSGMM)}}}
 
-    \vspace{0.4cm}
-    \textcolor{goldline}{\rule{0.8\textwidth}{1.2pt}}
-    \vspace{0.5cm}
+    \vspace{0.35cm}
+    \textcolor{goldline}{\rule{0.75\textwidth}{1.2pt}}
+    \vspace{0.45cm}
 
     \begin{tcolorbox}[
-        colback=navyblue!5!white,
+        colback=navyblue!4!white,
         colframe=navyblue,
         arc=4pt,
         boxrule=1.2pt,
-        width=0.95\textwidth,
+        width=0.96\textwidth,
         halign=center
     ]
-        \vspace{0.3cm}
-        {\fontsize{20}{24}\selectfont \textbf{\textcolor{navyblue}{Implémentation du modèle d'infection}}}\\[0.2cm]
+        \vspace{0.25cm}
+        {\fontsize{19}{23}\selectfont \textbf{\textcolor{navyblue}{Implémentation du modèle d'infection}}}\\[0.2cm]
         {\fontsize{22}{26}\selectfont \textbf{\textcolor{accentred}{par le VIH-SIDA}}}\\[0.35cm]
         {\fontsize{11}{14}\selectfont \textbf{\textit{Modèles intra-hôte et de population : analyse mathématique,}}}\\[0.1cm]
         {\fontsize{11}{14}\selectfont \textbf{\textit{stabilité et résolution numérique avec BLAS, LAPACK et Intel MKL en Python}}}
-        \vspace{0.3cm}
+        \vspace{0.25cm}
     \end{tcolorbox}
 
-    \vspace{0.6cm}
+    \vspace{0.5cm}
 
-    {\fontsize{13}{16}\selectfont \textbf{\textcolor{navyblue}{\underline{Équipe de projet -- Groupe 5}}}}\\[0.35cm]
-    {\large \textbf{ADOGOUN}} Déo Gracias Mahugnon\\[0.15cm]
-    {\large \textbf{BIAHOU}} Ahossou J. Marie-Clémenceau\\[0.15cm]
+    {\fontsize{12.5}{15}\selectfont \textbf{\textcolor{navyblue}{\textsc{Équipe de projet -- Groupe 5}}}}\\[0.3cm]
+    {\large \textbf{ADOGOUN}} Déo Gracias Mahugnon\\[0.12cm]
+    {\large \textbf{BIAHOU}} Ahossou J. Marie-Clémenceau\\[0.12cm]
     {\large \textbf{SYLLA IMOROU}} Izou Dine
+
+    \vspace{0.4cm}
+
+    \begin{tcolorbox}[
+        colback=lightbg,
+        colframe=royalblue!40,
+        boxrule=0.6pt,
+        arc=3pt,
+        width=0.92\textwidth,
+        halign=center
+    ]
+        \footnotesize
+        \textbf{\textcolor{navyblue}{Dépôt GitHub officiel (Code, Simulations \& Reproductibilité) :}}\\[0.08cm]
+        \url{https://github.com/JuniorB573/OCS-Groupe5}
+    \end{tcolorbox}
 
     \vfill
 
@@ -209,8 +225,9 @@
         colback=lightbg,
         colframe=gray!40,
         boxrule=0.5pt,
-        arc=2pt,
-        width=0.92\textwidth
+        arc=3pt,
+        width=0.92\textwidth,
+        halign=center
     ]
         \centering
         \small
@@ -257,6 +274,18 @@ Ce rapport a été pensé pour être lu et compris par tout étudiant en premiè
     \item Calculer à la main et par ordinateur le seuil critique $\mathcal{R}_0$ et l'efficacité minimale de traitement $\eta_c = 75\,\%$ nécessaire pour guérir un patient.
     \item Mesurer les gains de vitesse réels : montrer qu'un code basé sur BLAS/LAPACK s'exécute jusqu'à plus de \textbf{1\,000 fois plus vite} qu'un code Python ordinaire.
 \end{enumerate}
+
+\vspace{0.3cm}
+\begin{cadreconcept}[Liens et Ressources Clés du Projet]
+Pour garantir la transparence, l'accès direct aux outils et la reproductibilité complète :
+\begin{itemize}
+    \item \textbf{Dépôt GitHub officiel du Groupe 5 :} \url{https://github.com/JuniorB573/OCS-Groupe5} (codes sources Python, scripts de benchmarks, figures vectorielles et suite de tests unitaires).
+    \item \textbf{Spécification standard Netlib BLAS :} \url{https://www.netlib.org/blas/}
+    \item \textbf{Bibliothèque standard Netlib LAPACK :} \url{https://www.netlib.org/lapack/}
+    \item \textbf{Intel oneAPI Math Kernel Library (oneMKL) :} \url{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html}
+    \item \textbf{Documentation SciPy (wrappers bas niveau BLAS/LAPACK) :} \url{https://docs.scipy.org/doc/scipy/reference/linalg.lapack.html}
+\end{itemize}
+\end{cadreconcept}
 
 % ------------------------------------------------------------------------------
 % CHAPITRE 1 : BLAS (ORDRE OBLIGATOIRE : 1. BLAS)
