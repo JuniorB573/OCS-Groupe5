@@ -163,6 +163,7 @@ vih_sida_hpc/
 │   └── benchmark.py             # Suite de micro-benchmarks & scalabilité OpenMP
 │
 ├── scripts/                     # Scripts exécutables
+│   ├── generate_all_figures.py  # Génère l'intégralité des 16 figures (Fig 3 à Fig 19)
 │   ├── run_simulations.py       # Exécute les simulations et trace les courbes
 │   └── run_benchmarks.py        # Évalue débits GFLOPS et passage à l'échelle
 │
@@ -170,16 +171,11 @@ vih_sida_hpc/
 │   └── test_simulation.py       # Validation mathématique, LAPACK et intégrité
 │
 ├── docs/                        # Livrables académiques officiels
-│   ├── beamer_presentation.pdf  # Présentation Beamer Groupe 5 (PDF haute fidélité)
-│   ├── beamer_presentation.tex  # Code source LaTeX Beamer
-│   └── Rapport_Projet.pdf       # Rapport scientifique complet
+│   ├── presentation_beamer.tex  # Code source LaTeX Beamer
+│   ├── Presentation_Beamer_VIH_SIDA_Groupe5.pdf # Présentation Beamer Groupe 5
+│   └── Rapport_Projet_VIH_SIDA_Groupe5.pdf      # Rapport scientifique complet
 │
-└── figures/                     # Graphiques haute résolution (300 DPI)
-    ├── intra_host_treatment_response.png
-    ├── stiffness_stability_comparison.png
-    ├── population_epidemic_dynamics.png
-    ├── blas_lapack_gflops_scaling.png
-    └── openmp_thread_speedup.png
+└── figures/                     # Graphiques haute résolution (300 DPI, Fig 3 à Fig 19)
 ```
 
 ---
@@ -193,8 +189,8 @@ vih_sida_hpc/
 
 ### 2. Cloner le Dépôt
 ```bash
-git clone https://github.com/<votre-compte>/vih-sida-hpc.git
-cd vih-sida-hpc
+git clone https://github.com/JuniorB573/OCS-Groupe5.git
+cd OCS-Groupe5
 ```
 
 ### 3. Installer les Dépendances
@@ -206,20 +202,25 @@ pip install -r requirements.txt
 
 ## Guide d'Exécution
 
-### 1. Lancement des Simulations Scientifiques
-Pour générer l'ensemble des figures de dynamique virale, de réponse aux traitements et de dynamique épidémique :
+### 1. Génération de toutes les figures scientifiques (Fig 3 à Fig 19)
+Pour régénérer automatiquement l'intégralité des 16 graphiques du rapport et du diaporama Beamer :
+```bash
+python scripts/generate_all_figures.py
+```
+*Toutes les figures 300 DPI sont enregistrées dans le répertoire `figures/`.*
+
+### 2. Lancement des Simulations Scientifiques
 ```bash
 python scripts/run_simulations.py
 ```
-*Les graphiques générés sont sauvegardés automatiquement dans le répertoire `figures/`.*
 
-### 2. Lancement des Benchmarks HPC
+### 3. Lancement des Benchmarks HPC
 Pour mesurer les débits effectifs (GFLOPS), le facteur d'accélération face au Python naïf et la scalabilité OpenMP :
 ```bash
 python scripts/run_benchmarks.py
 ```
 
-### 3. Exécution de la Suite de Tests
+### 4. Exécution de la Suite de Tests
 Pour valider l'exactitude numérique de l'ensemble des modules :
 ```bash
 pytest tests/ -v
