@@ -232,6 +232,15 @@ Dans le domaine biomédical, le suivi clinique des personnes vivant avec le VIH 
     \item \textbf{Campagne de Benchmarks et Validation Rigoureuse :} Mesurer les temps d'exécution, facteurs d'accélération (Speedup), débits en GFLOPS et scalabilité multithread OpenMP en confrontant la bibliothèque Intel aux approches naïves.
 \end{enumerate}
 
+\vspace{0.4cm}
+\noindent\textbf{Organisation du Rapport :}
+\begin{itemize}
+    \item \textbf{Chapitres 1 à 3 :} Fondements théoriques de BLAS (Niveaux 1, 2, 3 et intensité arithmétique), LAPACK (factorisations LU, Cholesky, décompositions spectrales) et Intel oneAPI MKL (SIMD AVX2/AVX-512, bibliothèque vectorielle VML).
+    \item \textbf{Chapitre 4 : Installation, Configuration et Utilisation des Bibliothèques} (déploiement Conda/pip, détection dynamique des micro-noyaux avec \texttt{threadpoolctl}, contrôle des threads OpenMP et stockage mémoire Fortran zéro-copie).
+    \item \textbf{Chapitre 5 à 7 :} Modélisation biomédicale de cohorte VIH, formulation tensorielle matricielle scindée $\dot{\mathbf{Y}} = \mathbf{S} + \mathbf{Y}\mathbf{M}^T + \mathbf{\Phi}\mathbf{A}^T$, intégration Runge-Kutta 4 (BLAS 3) et analyse pronostique LAPACK (Cholesky et ACP).
+    \item \textbf{Chapitres 8 et 9 :} Résultats médicaux cliniques et campagne de benchmarks comparatifs (confrontation méthodique avec les méthodes lentes naïves).
+\end{itemize}
+
 % ------------------------------------------------------------------------------
 % CHAPITRE 1 : FONDEMENTS DE BLAS
 % ------------------------------------------------------------------------------
@@ -248,16 +257,16 @@ I = \frac{\text{Opérations (FLOPs)}}{\text{Transferts Mémoire (Octets)}}
 
 \begin{table}[htbp]
 \centering
-\caption{Classification hiérarchique des trois niveaux de BLAS.}
+\caption{Classification hiérarchique des trois niveaux de BLAS et intensité arithmétique.}
 \label{tab:blas_levels}
 \small
-\begin{tabularx}{\textwidth}{clcccX}
+\begin{tabularx}{\textwidth}{c l c c c X}
 \toprule
-\textbf{Niveau} & \textbf{Opération Typique} & \textbf{Données} & \textbf{FLOPs} & \textbf{Intensité $I$} & \textbf{Routines Phares} \\
+\textbf{Niveau} & \textbf{Opération} & \textbf{Données} & \textbf{FLOPs} & \textbf{Intensité $I$} & \textbf{Routines Phares} \\
 \midrule
-\textbf{1} & Vecteur-Vecteur & $\mathcal{O}(n)$ & $\mathcal{O}(n)$ & $\mathcal{O}(1)$ (Borné par la mémoire) & \texttt{DAXPY} ($y \leftarrow \alpha x + y$), \texttt{DDOT}, \texttt{DNRM2} \\
-\textbf{2} & Matrice-Vecteur & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^2)$ & $\mathcal{O}(1)$ (Borné par la mémoire) & \texttt{DGEMV} ($y \leftarrow \alpha Ax + \beta y$), \texttt{DGER}, \texttt{DTRSV} \\
-\textbf{3} & Matrice-Matrice & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^3)$ & $\mathcal{O}(n)$ (Borné par le calcul) & \texttt{DGEMM} ($C \leftarrow \alpha AB + \beta C$), \texttt{DSYRK}, \texttt{DTRMM} \\
+\textbf{1} & Vecteur-Vecteur & $\mathcal{O}(n)$ & $\mathcal{O}(n)$ & $\mathcal{O}(1)$ (Mémoire) & \texttt{DAXPY} ($y \leftarrow \alpha x + y$), \texttt{DDOT}, \texttt{DNRM2} \\
+\textbf{2} & Matrice-Vecteur & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^2)$ & $\mathcal{O}(1)$ (Mémoire) & \texttt{DGEMV} ($y \leftarrow \alpha Ax + \beta y$), \texttt{DGER}, \texttt{DTRSV} \\
+\textbf{3} & Matrice-Matrice & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^3)$ & $\mathcal{O}(n)$ (Calcul) & \texttt{DGEMM} ($C \leftarrow \alpha AB + \beta C$), \texttt{DSYRK}, \texttt{DTRMM} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -322,9 +331,9 @@ Grâce à l'instruction FMA (\textit{Fused Multiply-Add}) qui calcule $a \times 
 En complément de l'algèbre linéaire, Intel MKL intègre la bibliothèque vectorielle \textbf{VML}. Les fonctions transcendantes scalaires de base (\texttt{exp}, \texttt{log}, \texttt{pow}) sont notoirement coûteuses (souvent plus de 40 cycles CPU par évaluation). Les routines VML (\texttt{vdExp}, \texttt{vdLn}, \texttt{vdDiv}) calculent ces fonctions par blocs vectoriels de 1024 éléments avec une précision conforme aux normes IEEE-754, décuplant les débits de calcul des cinétiques non-linéaires d'infection.
 
 % ------------------------------------------------------------------------------
-% CHAPITRE 4 : INSTALLATION, CONFIGURATION ET UTILISATION EN PYTHON
+% CHAPITRE 4 : INSTALLATION, CONFIGURATION ET UTILISATION DES BIBLIOTHÈQUES
 % ------------------------------------------------------------------------------
-\chapter{Installation, Configuration et Utilisation en Python}
+\chapter{Installation, Configuration et Utilisation des Bibliothèques}
 
 \section{Installation de la Pile Scientifique avec Intel MKL}
 L'intégration des micro-noyaux Intel MKL au sein de l'environnement Python s'effectue via deux approches principales :
@@ -422,6 +431,16 @@ w, info_potrs = lapack.dpotrs(L, b_fortran, lower=1)
 w_eig, v_eig, info = lapack.dsyevd(Cov_matrix, compute_v=1, lower=1)
 \end{lstlisting}
 
+\begin{tcolorbox}[colback=navyblue!5!white,colframe=navyblue!80!black,arc=3pt,boxrule=0.8pt]
+\textbf{\large Synthèse du Chapitre 4 : Pratiques Clés en Python HPC}
+\begin{enumerate}
+    \item \textbf{Liaison Bas Niveau :} Vérifier systématiquement avec \texttt{threadpool\_info()} et \texttt{np.show\_config()} que NumPy/SciPy exploitent bien les bibliothèques multithreadées optimisées (Intel MKL ou OpenBLAS).
+    \item \textbf{Agencement Fortran Zéro-Copie :} Utiliser rigoureusement \texttt{order="F"} ou \texttt{np.asfortranarray} pour transmettre des blocs mémoires continus aux micro-noyaux BLAS/LAPACK sans recopie intermédiaire.
+    \item \textbf{Appel Direct des Micro-Noyaux :} Privilégier \texttt{scipy.linalg.blas} (\texttt{dgemm}, \texttt{dsyrk}) et \texttt{scipy.linalg.lapack} (\texttt{dpotrf}, \texttt{dsyevd}, \texttt{dgesv}) face aux fonctions génériques pour un contrôle total des allocations et des performances.
+    \item \textbf{Contrôle des Threads :} Calibrer \texttt{MKL\_NUM\_THREADS} ou \texttt{threadpool\_limits} sur les cœurs physiques réels pour éviter les contentions de cache L1/L2.
+\end{enumerate}
+\end{tcolorbox}
+
 % ------------------------------------------------------------------------------
 % CHAPITRE 5 : LE MODÈLE VIH DE COHORTE CLINIQUE
 % ------------------------------------------------------------------------------
@@ -468,19 +487,19 @@ illustrant le fait qu'une mutation confère un échappement partiel mais subit e
 \caption{Paramètres biomédicaux du modèle intra-hôte de cohorte.}
 \label{tab:biomed_params}
 \small
-\begin{tabularx}{\textwidth}{clccX}
+\begin{tabularx}{\textwidth}{c >{\raggedright\arraybackslash}p{3.8cm} c c X}
 \toprule
-\textbf{Symbole} & \textbf{Désignation Physiologique} & \textbf{Valeur Nominale} & \textbf{Unité} & \textbf{Rôle dans le Modèle} \\
+\textbf{Symbole} & \textbf{Désignation} & \textbf{Valeur} & \textbf{Unité} & \textbf{Rôle dans le Modèle} \\
 \midrule
-$s_k$ & Néo-génération thymique des CD4+ & $10.0 \pm 1.5$ & $\text{cell}/\mu\text{L}/\text{j}$ & Source constante, hétérogénéité patient \\
-$d$ & Mortalité naturelle des CD4+ sains & $0.01$ & $\text{jour}^{-1}$ & Demi-vie physiologique ($\approx 100\text{ jours}$) \\
-$\delta$ & Mortalité des cellules infectées & $0.50$ & $\text{jour}^{-1}$ & Lyse induite par le virus et les CTL \\
-$p$ & Taux de production virale par cellule & $1000.0$ & $\text{virions}/\text{cell}/\text{j}$ & Éclatement et libération des virions \\
-$c$ & Taux de clairance plasmatique & $23.0$ & $\text{jour}^{-1}$ & Demi-vie plasmatique virale brève \\
-$\beta_s$ & Infectiosité de la souche sauvage & $4.6 \times 10^{-5}$ & $\mu\text{L}/\text{virion}/\text{j}$ & Efficacité d'entrée du virus sauvage \\
-$\beta_r$ & Infectiosité de la souche résistante & $3.2 \times 10^{-5}$ & $\mu\text{L}/\text{virion}/\text{j}$ & Coût de fitness réplicatif ($\beta_r < \beta_s$) \\
-$\mu$ & Taux de mutation de résistance & $1.2 \times 10^{-4}$ & $\text{paire}^{-1}/\text{cycle}$ & Probabilité d'erreur de réplication \\
-$\eta_k$ & Observance thérapeutique du patient & $0.85 \pm 0.12$ & Sans unité & Efficacité d'inhibition médicamenteuse \\
+$s_k$ & Néo-génération thymique CD4+ & $10.0 \pm 1.5$ & $\text{cell}/\mu\text{L}/\text{j}$ & Source constante, hétérogénéité \\
+$d$ & Mortalité des CD4+ sains & $0.01$ & $\text{jour}^{-1}$ & Demi-vie physiologique ($\approx 100\text{ j}$) \\
+$\delta$ & Mortalité cellules infectées & $0.50$ & $\text{jour}^{-1}$ & Lyse induite par virus et cytotoxicité \\
+$p$ & Taux de production virale & $1000.0$ & $\text{virions}/\text{cell}/\text{j}$ & Éclatement et virémie circulante \\
+$c$ & Clairance plasmatique & $23.0$ & $\text{jour}^{-1}$ & Demi-vie virale plasmatique brève \\
+$\beta_s$ & Infectiosité souche sauvage & $4.6 \times 10^{-5}$ & $\mu\text{L}/\text{virion}/\text{j}$ & Taux d'entrée du virus sauvage \\
+$\beta_r$ & Infectiosité souche résistante & $3.2 \times 10^{-5}$ & $\mu\text{L}/\text{virion}/\text{j}$ & Coût de fitness réplicatif ($\beta_r < \beta_s$) \\
+$\mu$ & Taux mutation résistance & $1.2 \times 10^{-4}$ & $\text{paire}^{-1}/\text{cycle}$ & Probabilité de mutation par cycle \\
+$\eta_k$ & Observance trithérapie & $0.85 \pm 0.12$ & Sans unité & Efficacité d'inhibition médicamenteuse \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -634,17 +653,18 @@ La résolution du modèle de régression par factorisation de Cholesky délivre 
 \centering
 \caption{Coefficients de la régression clinique Ridge résolue via LAPACK (\texttt{DPOTRF}/\texttt{DPOTRS}).}
 \label{tab:ridge_results}
-\begin{tabular}{lcc}
+\small
+\begin{tabularx}{\textwidth}{l c X}
 \toprule
 \textbf{Biomarqueur Explicatif} & \textbf{Coefficient $w_i$} & \textbf{Interprétation Clinique} \\
 \midrule
-Biais constant & $+3.5514$ & Niveau moyen de base en cas d'absence d'intervention \\
+Biais constant & $+3.5514$ & Niveau moyen en l'absence d'intervention \\
 Nadir CD4 initial ($T_0 / 1000$) & $+0.7833$ & Effet réservoir cellulaire initial \\
 $\log_{10}$ charge virale initiale & $-0.0526$ & Faible prédictibilité isolée du titre initial \\
-\textbf{Observance thérapeutique ($\eta$)} & $\mathbf{-6.3475}$ & \textbf{Facteur protecteur majeur (abaisse drastiquement le virus)} \\
-Génération thymique relative ($s / 10$) & $+3.2615$ & Disponibilité en cellules cibles alimentant l'infection \\
+\textbf{Observance thérapeutique ($\eta$)} & $\mathbf{-6.3475}$ & \textbf{Facteur protecteur majeur (réduit la charge virale)} \\
+Génération thymique relative ($s / 10$) & $+3.2615$ & Disponibilité en cellules cibles pour le virus \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \section{Cartographie Spectrale par ACP LAPACK (\texttt{DSYEVD})}
@@ -660,7 +680,7 @@ La décomposition spectrale de la covariance finale révèle que les deux premie
 Comme l'illustre la figure \ref{fig:pca_clusters}, la projection spectrale sépare nettement les deux populations cliniques sans supervision préalable, confirmant la puissance de la routine \texttt{DSYEVD} pour l'analyse discriminante en épidémiologie numérique.
 
 % ------------------------------------------------------------------------------
-% CHAPITRE 8 : BENCHMARKS ET ANALYSE COMPARATIVE DE PERFORMANCE
+% CHAPITRE 9 : BENCHMARKS ET ANALYSE COMPARATIVE DE PERFORMANCE
 % ------------------------------------------------------------------------------
 \chapter{Campagne de Benchmarks et Évaluation des Performances}
 
@@ -678,16 +698,17 @@ Le tableau \ref{tab:bench_simulation} consigne les temps d'exécution pour l'int
 \centering
 \caption{Comparatif de performance : Python Pur (Naïf) vs BLAS 3 / Intel MKL.}
 \label{tab:bench_simulation}
-\begin{tabular}{ccccc}
+\small
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
 \toprule
-\textbf{Taille Cohorte ($N$)} & \textbf{Temps Naïf (ms)} & \textbf{Temps BLAS 3 (ms)} & \textbf{Accélération (Speedup)} & \textbf{Débit (Patients/s)} \\
+\textbf{Cohorte ($N$)} & \textbf{Temps Naïf} & \textbf{Temps BLAS 3} & \textbf{Accélération} & \textbf{Débit MKL} \\
 \midrule
-50 & 135.8 & 67.8 & $\mathbf{2.0 \times}$ & 738 \\
-100 & 292.2 & 120.9 & $\mathbf{2.4 \times}$ & 827 \\
-200 & 723.2 & 121.6 & $\mathbf{5.9 \times}$ & 1\,644 \\
-400 & 1574.8 & 199.9 & $\mathbf{7.9 \times}$ & 2\,001 \\
+50 & 135.8 ms & 67.8 ms & $\mathbf{2.0 \times}$ & 738 pat/s \\
+100 & 292.2 ms & 120.9 ms & $\mathbf{2.4 \times}$ & 827 pat/s \\
+200 & 723.2 ms & 121.6 ms & $\mathbf{5.9 \times}$ & 1\,644 pat/s \\
+400 & 1574.8 ms & 199.9 ms & $\mathbf{7.9 \times}$ & 2\,001 pat/s \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \begin{figure}[htbp]
@@ -707,16 +728,17 @@ Pour tester la scalabilité sur de très grands effectifs de population, nous si
 \centering
 \caption{Débits de calcul en GFLOPS et scalabilité sur grandes cohortes (BLAS 3 MKL).}
 \label{tab:bench_large}
-\begin{tabular}{cccc}
+\small
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X >{\centering\arraybackslash}X}
 \toprule
-\textbf{Nombre de Patients ($N$)} & \textbf{Temps de Calcul (ms)} & \textbf{Débit Arithmétique} & \textbf{Débit de Simulation} \\
+\textbf{Patients ($N$)} & \textbf{Temps de Calcul} & \textbf{Débit Calcul} & \textbf{Débit Simulation} \\
 \midrule
-1\,000 & 557.8 & 0.76 GFLOPS & 1\,793 patients/s \\
-2\,500 & 1\,414.0 & 0.75 GFLOPS & 1\,768 patients/s \\
-5\,000 & 1\,856.0 & 1.14 GFLOPS & 2\,694 patients/s \\
-\textbf{10\,000} & \textbf{2\,601.6} & \textbf{1.63 GFLOPS} & \textbf{3\,844 patients/s} \\
+1\,000 & 557.8 ms & 0.76 GFLOPS & 1\,793 pat/s \\
+2\,500 & 1\,414.0 ms & 0.75 GFLOPS & 1\,768 pat/s \\
+5\,000 & 1\,856.0 ms & 1.14 GFLOPS & 2\,694 pat/s \\
+\textbf{10\,000} & \textbf{2\,601.6 ms} & \textbf{1.63 GFLOPS} & \textbf{3\,844 pat/s} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 À $N = 10\,000$, la bibliothèque traite près de \textbf{4\,000 patients complets par seconde}, démontrant une excellente occupation des pipelines vectoriels avec un débit crête atteignant 1.63 GFLOPS effectifs.
