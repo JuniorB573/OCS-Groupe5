@@ -1,43 +1,48 @@
 """
-Package vih-sida-hpc
-Modélisation mathématique et simulation haute performance du VIH-SIDA
-(BLAS, LAPACK et Intel oneMKL)
-
-Auteurs : Groupe 5 -- ENSGMM / UNSTIM (Abomey, Bénin)
-- ADOGOUN Déo Gracias Mahugnon
-- BIAHOU Ahossou Junior Marie-Clémenceau
-- SYLLA IMOROU Izou Dine
-Encadrant : Dr. Carlos AGOSSOU
+Package vih_sida_hpc : Modélisation HPC de la dynamique du VIH à l'échelle d'une cohorte clinique.
+Optimisé pour BLAS 3, LAPACK et Intel MKL.
 """
 
-__version__ = "1.0.0"
-
-from .lapack_solvers import (
-    solve_linear_system,
-    balance_matrix,
-    compute_eigenvalues,
-    compute_svd_norm,
+from .cohort_model import (
+    DEFAULT_PARAMS,
+    build_cohort_parameters,
+    initialize_cohort_state,
+    evaluate_cohort_rhs,
+    simulate_cohort_rk4,
 )
-from .intra_host import (
-    DEFAULT_INTRA_PARAMS,
-    compute_r0,
-    rhs_intra,
-    jacobian_intra,
-    disease_free_equilibrium,
-    endemic_equilibrium,
-    solve_equilibrium_newton,
-    simulate_euler_implicit,
-    simulate_euler_explicit,
+from .naive_model import (
+    evaluate_single_patient_rhs,
+    simulate_cohort_naive_rk4,
 )
-from .population import (
-    DEFAULT_POP_PARAMS,
-    compute_pop_r0,
-    rhs_population,
-    jacobian_population,
-    simulate_population,
+from .lapack_analysis import (
+    build_clinical_design_matrix,
+    solve_ridge_cholesky_lapack,
+    solve_ridge_naive_inverse,
+    compute_cohort_pca_lapack,
 )
 from .benchmark import (
-    benchmark_dgemm,
-    benchmark_dgesv,
-    benchmark_thread_scaling,
+    get_hpc_system_info,
+    benchmark_simulation_naive_vs_mkl,
+    benchmark_large_cohort_scaling,
+    benchmark_lapack_cholesky_vs_naive,
+    benchmark_thread_scalability,
 )
+
+__all__ = [
+    "DEFAULT_PARAMS",
+    "build_cohort_parameters",
+    "initialize_cohort_state",
+    "evaluate_cohort_rhs",
+    "simulate_cohort_rk4",
+    "evaluate_single_patient_rhs",
+    "simulate_cohort_naive_rk4",
+    "build_clinical_design_matrix",
+    "solve_ridge_cholesky_lapack",
+    "solve_ridge_naive_inverse",
+    "compute_cohort_pca_lapack",
+    "get_hpc_system_info",
+    "benchmark_simulation_naive_vs_mkl",
+    "benchmark_large_cohort_scaling",
+    "benchmark_lapack_cholesky_vs_naive",
+    "benchmark_thread_scalability",
+]
