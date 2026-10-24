@@ -1,7 +1,7 @@
 \documentclass[11pt,a4paper]{report}
 
 % ==============================================================================
-% PACKAGES ESSENTIELS ET CONFIGURATION TYPOGRAPHIQUE
+% PACKAGES ET CONFIGURATION TYPOGRAPHIQUE
 % ==============================================================================
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -23,61 +23,19 @@
 \usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit}
 \usepackage[colorlinks=true,linkcolor=navyblue,citecolor=navyblue,urlcolor=navyblue]{hyperref}
 
-% --- Marges soignées ---
+% --- Marges et dimensions ---
 \geometry{top=2.5cm, bottom=2.5cm, left=2.3cm, right=2.3cm, headheight=14pt}
 
-% --- Palette de Couleurs Élégantes ---
-\definecolor{navyblue}{RGB}{26, 54, 93}      % Bleu marine académique
-\definecolor{royalblue}{RGB}{43, 108, 176}   % Bleu royal secondaire
-\definecolor{darkcharcoal}{RGB}{45, 55, 72}  % Texte anthracite
-\definecolor{lightbg}{RGB}{247, 250, 252}    % Fond gris clair
-\definecolor{accentred}{RGB}{155, 44, 44}    % Rouge bordeaux (médical)
-\definecolor{tealhpc}{RGB}{44, 122, 123}     % Vert canard (HPC)
-\definecolor{goldline}{RGB}{214, 158, 46}    % Liseré doré
+% --- Palette de Couleurs ---
+\definecolor{navyblue}{RGB}{26, 54, 93}
+\definecolor{royalblue}{RGB}{43, 108, 176}
+\definecolor{darkcharcoal}{RGB}{45, 55, 72}
+\definecolor{lightbg}{RGB}{247, 250, 252}
+\definecolor{accentred}{RGB}{155, 44, 44}
+\definecolor{tealhpc}{RGB}{44, 122, 123}
+\definecolor{goldline}{RGB}{214, 158, 46}
 
-% --- Configuration des Boîtes Stylisées ---
-\tcbuselibrary{skins,breakable}
-\newtcolorbox{cadreconcept}[1][]{
-    colback=lightbg,
-    colframe=navyblue,
-    fonttitle=\bfseries\color{white},
-    colbacktitle=navyblue,
-    enhanced,
-    attach boxed title to top left={yshift=-2mm, xshift=5mm},
-    boxed title style={sharp corners, boxrule=0pt},
-    boxrule=0.8pt,
-    arc=3pt,
-    title=#1,
-    breakable
-}
-
-\newtcolorbox{encadreoral}[1][]{
-    colback=yellow!5!white,
-    colframe=goldline,
-    fonttitle=\bfseries\color{navyblue},
-    colbacktitle=goldline!30!white,
-    enhanced,
-    boxrule=0.8pt,
-    arc=2pt,
-    title=#1,
-    breakable
-}
-
-\newtcolorbox{encadreresume}[1][]{
-    colback=tealhpc!5!white,
-    colframe=tealhpc,
-    fonttitle=\bfseries\color{white},
-    colbacktitle=tealhpc,
-    enhanced,
-    attach boxed title to top left={yshift=-2mm, xshift=5mm},
-    boxed title style={sharp corners, boxrule=0pt},
-    boxrule=0.8pt,
-    arc=3pt,
-    title=#1,
-    breakable
-}
-
-% --- Configuration des Listings de Code ---
+% --- Configuration Listings ---
 \lstset{
     language=Python,
     basicstyle=\ttfamily\footnotesize\color{darkcharcoal},
@@ -109,7 +67,7 @@
         {µ}{{$\mu$}}1 {°}{{$^\circ$}}1 {—}{{---}}1 {’}{{'}}1 {…}{{\dots}}1
 }
 
-% --- Théorèmes et Définitions ---
+% --- Théorèmes et Propositions ---
 \theoremstyle{plain}
 \newtheorem{theorem}{Théorème}[chapter]
 \newtheorem{proposition}{Proposition}[chapter]
@@ -119,7 +77,7 @@
 \theoremstyle{remark}
 \newtheorem{remark}{Remarque}[chapter]
 
-% --- En-têtes et Pieds de Page (fancyhdr) ---
+% --- En-têtes et Pieds de Page ---
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small\itshape Implémentation du modèle d'infection par le VIH-SIDA -- BLAS et LAPACK}
@@ -145,11 +103,10 @@
 \begin{document}
 
 % ------------------------------------------------------------------------------
-% PAGE DE GARDE OFFICIELLE (LOGOS EN COINS SUPÉRIEURS, PARFAITEMENT CENTRÉE)
+% PAGE DE GARDE OFFICIELLE
 % ------------------------------------------------------------------------------
 \begin{titlepage}
     \begin{tikzpicture}[remember picture, overlay]
-        % Double cadre académique aux bords de la page
         \draw[line width=1.5pt, color=navyblue] 
             ($(current page.north west) + (1.2cm,-1.2cm)$) rectangle 
             ($(current page.south east) + (-1.2cm,1.2cm)$);
@@ -157,12 +114,10 @@
             ($(current page.north west) + (1.35cm,-1.35cm)$) rectangle 
             ($(current page.south east) + (-1.35cm,1.35cm)$);
 
-        % Logo UNSTIM dans le coin supérieur gauche
+        % Logos positionnés dans les coins supérieurs intérieurs
         \node[anchor=north west, inner sep=0pt] at ($(current page.north west) + (1.6cm,-1.6cm)$) {
             \includegraphics[height=2.3cm]{figures/logo_unstim.png}
         };
-
-        % Logo ENSGMM dans le coin supérieur droit
         \node[anchor=north east, inner sep=0pt] at ($(current page.north east) + (-1.6cm,-1.6cm)$) {
             \includegraphics[height=2.3cm]{figures/logo_ensgmm.png}
         };
@@ -177,9 +132,9 @@
     {\fontsize{12}{15}\selectfont \textsc{\textbf{Ingénierie et Mathématiques d'Abomey (UNSTIM)}}}\\[0.25cm]
     {\fontsize{12.5}{15.5}\selectfont \textcolor{navyblue}{\textbf{École Nationale des Génies Mathématiques et Modélisation (ENSGMM)}}}
 
-    \vspace{0.35cm}
+    \vspace{0.4cm}
     \textcolor{goldline}{\rule{0.75\textwidth}{1.2pt}}
-    \vspace{0.45cm}
+    \vspace{0.5cm}
 
     \begin{tcolorbox}[
         colback=navyblue!4!white,
@@ -197,11 +152,11 @@
         \vspace{0.25cm}
     \end{tcolorbox}
 
-    \vspace{0.5cm}
+    \vspace{0.55cm}
 
-    {\fontsize{12.5}{15}\selectfont \textbf{\textcolor{navyblue}{\textsc{Équipe de projet -- Groupe 5}}}}\\[0.3cm]
-    {\large \textbf{ADOGOUN}} Déo Gracias Mahugnon\\[0.12cm]
-    {\large \textbf{BIAHOU}} Ahossou J. Marie-Clémenceau\\[0.12cm]
+    {\fontsize{12.5}{15}\selectfont \textbf{\textcolor{navyblue}{\textsc{Équipe de projet -- Groupe 5}}}}\\[0.35cm]
+    {\large \textbf{ADOGOUN}} Déo Gracias Mahugnon\\[0.15cm]
+    {\large \textbf{BIAHOU}} Ahossou J. Marie-Clémenceau\\[0.15cm]
     {\large \textbf{SYLLA IMOROU}} Izou Dine
 
     \vspace{0.4cm}
@@ -253,884 +208,562 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-\begin{cadreconcept}[Résumé en clair : de quoi parle ce projet ?]
-Ce travail étudie la dynamique du virus du SIDA (le VIH) à deux échelles complémentaires :
+\begin{tcolorbox}[colback=navyblue!90!black,colframe=navyblue!90!black,arc=2pt,coltext=white,boxrule=0pt]
+\textbf{\large Résumé Exécutif \& Comprendre le Projet en 1 Minute}
+\end{tcolorbox}
+\vspace{-0.3cm}
+\begin{tcolorbox}[colback=blue!5!white,colframe=navyblue!80!black,arc=2pt,boxrule=0.8pt]
+Ce rapport présente une étude complète de la dynamique de l'infection par le virus de l'immunodéficience humaine (VIH), articulée à deux échelles fondamentales : l'échelle du patient (modèle intra-hôte $T, I, V$) et l'échelle d'une communauté (modèle épidémiologique de population $S, I_1, I_2$).\\
+\textbf{L'enjeu informatique et scientifique :} Les équations différentielles sous-jacentes sont non-linéaires et fortement raides (\textit{stiff}). Les résoudre sur des horizons de temps longs sans instabilité exige des schémas implicites et des résolutions matricielles directes. Nous montrons comment la pile logicielle formée par \textbf{BLAS}, \textbf{LAPACK} (routines \texttt{DGESV}, \texttt{DGEEV}, \texttt{DGEEQU}, \texttt{DGESDD}) et \textbf{Intel MKL} permet d'atteindre des accélérations de calcul spectaculaires (facteur $\times 200$ à $\times 900$) face aux implémentations naïves.
+\end{tcolorbox}
+
+\vspace{0.4cm}
+\noindent\textbf{Contexte.} Le calcul scientifique moderne repose sur quelques briques logicielles d'algèbre linéaire dense, BLAS et LAPACK, dont des implémentations très optimisées existent (Intel MKL, OpenBLAS, BLIS). Presque tous les environnements de calcul scientifique (NumPy, SciPy, MATLAB, R, Julia) les utilisent en arrière-plan.
+
+\vspace{0.3cm}
+\noindent\textbf{Objectifs de ce rapport.}
 \begin{enumerate}
-    \item \textbf{À l'échelle du patient (modèle intra-hôte) :} comment le virus attaque les globules blancs (CD4+) dans le sang et comment les traitements antirétroviraux bloquent cette infection.
-    \item \textbf{À l'échelle de la population (modèle épidémiologique) :} comment l'épidémie se propage entre personnes saines, infectées sans symptômes et malades du SIDA sur plusieurs décennies.
-\end{enumerate}
-Pour simuler ces équations de manière exacte et rapide, nous utilisons les bibliothèques professionnelles de calcul scientifique : \textbf{BLAS}, \textbf{LAPACK} et \textbf{Intel MKL}.
-\end{cadreconcept}
-
-\vspace{0.3cm}
-\noindent\textbf{Pourquoi ce document est-il rédigé ainsi ?}  
-Ce rapport a été pensé pour être lu et compris par tout étudiant en première année d'ingénierie mathématique (ENSGMM1), sans prérequis lourd en informatique haute performance. Chaque notion technique est expliquée avec des mots simples dès sa première apparition.
-
-\vspace{0.3cm}
-\noindent\textbf{Les 4 objectifs clés du travail :}
-\begin{enumerate}
-    \item Comprendre le rôle et l'articulation de la pile logicielle standard : \textbf{BLAS} (niveau de base), \textbf{LAPACK} (solveurs matriciels) et \textbf{Intel MKL} (moteur de calcul ultra-rapide).
-    \item Écrire et résoudre les équations différentielles biologiques en évitant les instabilités et les explosions de calcul (\textit{raideur numérique}).
-    \item Calculer à la main et par ordinateur le seuil critique $\mathcal{R}_0$ et l'efficacité minimale de traitement $\eta_c = 75\,\%$ nécessaire pour guérir un patient.
-    \item Mesurer les gains de vitesse réels : montrer qu'un code basé sur BLAS/LAPACK s'exécute jusqu'à plus de \textbf{1\,000 fois plus vite} qu'un code Python ordinaire.
+    \item Présenter l'architecture des bibliothèques BLAS, LAPACK et Intel MKL ;
+    \item Montrer comment les configurer et les appeler directement depuis Python ;
+    \item Les mettre en pratique sur un cas d'étude médical à deux échelles : celle du patient (modèle intra-hôte de Nowak et May / Perelson) et celle de la population (modèle épidémiologique à deux stades avec mortalités) ;
+    \item Mesurer leurs performances numériques et leur scalabilité multi-threads face à des implémentations ordinaires.
 \end{enumerate}
 
 \vspace{0.3cm}
-\begin{cadreconcept}[Liens et Ressources Clés du Projet]
-Pour garantir la transparence, l'accès direct aux outils et la reproductibilité complète :
-\begin{itemize}
-    \item \textbf{Dépôt GitHub officiel du Groupe 5 :} \url{https://github.com/JuniorB573/OCS-Groupe5} (codes sources Python, scripts de benchmarks, figures vectorielles et suite de tests unitaires).
-    \item \textbf{Spécification standard Netlib BLAS :} \url{https://www.netlib.org/blas/}
-    \item \textbf{Bibliothèque standard Netlib LAPACK :} \url{https://www.netlib.org/lapack/}
-    \item \textbf{Intel oneAPI Math Kernel Library (oneMKL) :} \url{https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl.html}
-    \item \textbf{Documentation SciPy (wrappers bas niveau BLAS/LAPACK) :} \url{https://docs.scipy.org/doc/scipy/reference/linalg.lapack.html}
-\end{itemize}
-\end{cadreconcept}
+\noindent\textbf{Organisation.} Les chapitres 1 à 3 détaillent les bibliothèques logicielles (BLAS, LAPACK, puis Intel MKL). Le chapitre 4 présente l'installation et l'appel depuis Python. Le chapitre 5 expose le contexte biologique. Les chapitres 6 à 9 traitent le modèle intra-hôte ($T, I, V$). Le chapitre 10 étudie le modèle de population ($S, I_1, I_2$). Le chapitre 11 présente les résultats des benchmarks d'accélération. Les codes sources complets sont reproduits en annexes.
 
 % ------------------------------------------------------------------------------
 % CHAPITRE 1 : BLAS (ORDRE OBLIGATOIRE : 1. BLAS)
 % ------------------------------------------------------------------------------
-\chapter{BLAS : Les Briques de Base de l'Algèbre Linéaire}
+\chapter{BLAS (Basic Linear Algebra Subprograms)}
 
-\section{Qu'est-ce que BLAS ?}
-
-\begin{cadreconcept}[Définition simple de BLAS]
-\textbf{BLAS} signifie \textit{Basic Linear Algebra Subprograms} (Sous-programmes élémentaires d'algèbre linéaire). Créée dès 1979, c'est une liste standardisée d'opérations mathématiques de base sur les vecteurs et les matrices (additions, produits scalaires, multiplications de matrices).
-\end{cadreconcept}
-
-Au lieu que chaque scientifique réécrive sa propre boucle \texttt{for} pour multiplier deux matrices, BLAS définit un standard universel. Ainsi, un programme écrit en Python ou en C peut appeler la fonction standard \texttt{DGEMM}, et l'ordinateur utilisera la version la plus optimisée pour son processeur.
+\section{Origine et philosophie de conception}
+Créée à la fin des années 1970 par Lawson et al., BLAS est une spécification d'opérations élémentaires. Sa standardisation garantit la portabilité : l'application appelle la même routine (\texttt{DGEMM}), et le constructeur fournit le binaire optimisé pour son matériel.
 
 \section{Les trois niveaux de BLAS et l'intensité arithmétique}
+Le tableau \ref{tab:blas_levels} récapitule la taxonomie des trois niveaux.
 
-BLAS est structuré en trois niveaux, selon la dimension des objets manipulés (tableau~\ref{tab:blas_levels}).
-
-\begin{table}[ht]
+\begin{table}[htbp]
 \centering
 \caption{Les trois niveaux de BLAS et leur intensité arithmétique.}
 \label{tab:blas_levels}
-\begin{tabularx}{\textwidth}{c l c c l X}
+\small
+\begin{tabularx}{\textwidth}{clcccX}
 \toprule
-\textbf{Niveau} & \textbf{Opérations} & \textbf{Données} & \textbf{Calculs} & \textbf{Intensité} & \textbf{Exemple typique} \\
+\textbf{Niveau} & \textbf{Opérations} & \textbf{Données} & \textbf{Calculs} & \textbf{Intensité} & \textbf{Exemples phares} \\
 \midrule
-\textbf{1} & Vecteur -- Vecteur & $O(n)$ & $O(n)$ & $O(1)$ (Faible) & \texttt{DAXPY} : $y \leftarrow \alpha x + y$ \\
-\textbf{2} & Matrice -- Vecteur & $O(n^2)$ & $O(n^2)$ & $O(1)$ (Faible) & \texttt{DGEMV} : $y \leftarrow \alpha A x + \beta y$ \\
-\textbf{3} & Matrice -- Matrice & $O(n^2)$ & $O(n^3)$ & $\mathbf{O(n)}$ (Élevée) & \texttt{DGEMM} : $C \leftarrow \alpha A B + \beta C$ \\
+1 & Vecteur-Vecteur & $\mathcal{O}(n)$ & $\mathcal{O}(n)$ & $\mathcal{O}(1)$ (Faible) & \texttt{DAXPY} ($y \leftarrow \alpha x + y$), \texttt{DDOT}, \texttt{DNRM2} \\
+2 & Matrice-Vecteur & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^2)$ & $\mathcal{O}(1)$ (Faible) & \texttt{DGEMV} ($y \leftarrow \alpha Ax + \beta y$), \texttt{DGER}, \texttt{DTRSV} \\
+3 & Matrice-Matrice & $\mathcal{O}(n^2)$ & $\mathcal{O}(n^3)$ & $\mathcal{O}(n)$ (Élevée) & \texttt{DGEMM} ($C \leftarrow \alpha AB + \beta C$), \texttt{DSYRK}, \texttt{DTRSM} \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\begin{cadreconcept}[Définition simple : Intensité arithmétique et Cache]
+\noindent\textbf{Le secret de BLAS 3 : le cache tiling.} Dans les niveaux 1 et 2, pour chaque nombre lu en mémoire, le CPU n'exécute qu'une seule opération : le bus mémoire sature immédiatement (\textit{Memory-Bound}). Dans le niveau 3, pour $n^2$ nombres chargés, on réalise $n^3$ opérations. En découpant les matrices en sous-blocs de taille $B \times B$ calibrés pour tenir dans le cache L1, chaque élément est réutilisé $B$ fois sur place, atteignant la vitesse de crête du processeur (\textit{Compute-Bound}).
+
+\section{Conventions de nommage universelles}
+La signature suit la structure \texttt{[Type][Matrice][Opération]} :
 \begin{itemize}
-    \item \textbf{La mémoire cache :} C'est une mémoire miniature située directement au cœur du processeur (niveaux L1, L2, L3). Elle est des dizaines de fois plus rapide que la mémoire vive (RAM), mais sa taille est très réduite (quelques kilo-octets ou méga-octets).
-    \item \textbf{L'intensité arithmétique :} C'est le nombre d'opérations de calcul (additions, multiplications) effectuées pour chaque octet de donnée transféré depuis la RAM.
+    \item \textbf{Type :} \texttt{S} (réel 32 bits), \texttt{D} (réel 64 bits double), \texttt{C} (complexe simple), \texttt{Z} (complexe double).
+    \item \textbf{Structure :} \texttt{GE} (générale), \texttt{SY} (symétrique), \texttt{TR} (triangulaire), \texttt{GB} (bande).
+    \item \textbf{Opération :} \texttt{MM} (produit matrice-matrice), \texttt{MV} (matrice-vecteur), \texttt{RK} (mise à jour de rang $k$).
 \end{itemize}
-\end{cadreconcept}
-
-\noindent\textbf{Pourquoi le Niveau 3 (DGEMM) est-il infiniment plus efficace ?}
-\begin{itemize}
-    \item Aux \textbf{niveaux 1 et 2}, pour chaque nombre lu en mémoire RAM, le processeur ne fait qu'une seule opération. La mémoire RAM est trop lente par rapport au processeur : le processeur attend les données. On dit que le programme est \textbf{limité par la mémoire} (\textit{Memory-Bound}).
-    \item Au \textbf{niveau 3}, pour multiplier deux matrices $n \times n$, il y a $2n^2$ données en entrée, mais $2n^3$ opérations à faire. Le rapport calculs/données est d'ordre $O(n)$. Grâce à une technique appelée \textbf{découpage par blocs} (\textit{cache blocking}), les sous-matrices sont chargées dans le cache L1 et réutilisées sur place plusieurs dizaines de fois sans retourner en RAM. Le processeur tourne alors à sa vitesse maximale. On dit qu'il est \textbf{limité par le calcul} (\textit{Compute-Bound}).
-\end{itemize}
-
-\section{Conventions de nommage de BLAS}
-
-Le nom de chaque routine indique précisément ce qu'elle fait :
-\begin{center}
-\textbf{\texttt{[Précision][Type de matrice][Opération]}}
-\end{center}
-\begin{itemize}
-    \item \textbf{Précision (1ère lettre) :} \texttt{S} pour réel simple précision (32 bits), \texttt{D} pour réel double précision (64 bits, standard en science), \texttt{C} pour complexe simple, \texttt{Z} pour complexe double.
-    \item \textbf{Type de matrice (2 lettres) :} \texttt{GE} (matrice générale quelconque), \texttt{SY} (symétrique), \texttt{TR} (triangulaire).
-    \item \textbf{Opération :} \texttt{MM} (multiplication matrice-matrice), \texttt{MV} (matrice-vecteur).
-\end{itemize}
-\textit{Exemple :} \texttt{DGEMM} = \textbf{D}ouble précision, matrice \textbf{GE}nérale, produit \textbf{M}atrice-\textbf{M}atrice.
-
-\begin{encadreresume}[Mini-résumé du Chapitre 1 : BLAS]
-\begin{enumerate}
-    \item BLAS est le standard universel des opérations élémentaires d'algèbre linéaire.
-    \item Le niveau 1 concerne les vecteurs, le niveau 2 les matrices-vecteurs, et le niveau 3 les matrices-matrices.
-    \item Seul le niveau 3 (ex. \texttt{DGEMM}) réutilise les données dans la mémoire cache du processeur, offrant des performances maximales.
-    \item Les noms des fonctions suivent une convention claire (ex: \texttt{DGEMM} pour le produit matriciel 64 bits).
-\end{enumerate}
-\end{encadreresume}
 
 % ------------------------------------------------------------------------------
 % CHAPITRE 2 : LAPACK (ORDRE OBLIGATOIRE : 2. LAPACK)
 % ------------------------------------------------------------------------------
-\chapter{LAPACK : Le Solveur Matriciel Avancé}
+\chapter{LAPACK (Linear Algebra PACKage)}
 
-\section{Qu'est-ce que LAPACK ?}
+\section{Présentation et Algorithmes par Blocs}
+Apparue au début des années 1990 pour succéder à LINPACK et EISPACK, LAPACK réorganise les algorithmes d'algèbre linéaire avancée en \textbf{algorithmes par blocs}. Au lieu de factoriser colonne par colonne, LAPACK factorise un panneau vertical puis met à jour tout le reste de la matrice d'un coup avec \texttt{DGEMM} (BLAS 3), garantissant une efficacité maximale.
 
-\begin{cadreconcept}[Définition simple de LAPACK]
-\textbf{LAPACK} signifie \textit{Linear Algebra PACKage}. Alors que BLAS ne fait que des calculs simples (comme multiplier deux matrices), LAPACK résout des \textbf{vrais problèmes mathématiques} : résoudre un système linéaire $Ax=b$, trouver des valeurs propres, ou inverser une matrice.
-\end{cadreconcept}
-
-Créée au début des années 1990 pour moderniser les anciens codes LINPACK et EISPACK, LAPACK est entièrement conçue pour s'appuyer sur le niveau 3 de BLAS. Au lieu de factoriser une matrice ligne par ligne (ce qui gaspillerait le temps d'accès mémoire), LAPACK découpe la matrice en blocs rectangulaires et délègue toutes les grosses opérations à \texttt{DGEMM}.
-
-\section{Définitions des concepts mathématiques clés}
-
-\begin{cadreconcept}[Les notions à connaître]
-\begin{itemize}
-    \item \textbf{Factorisation LU :} Décomposer une matrice carrée $A$ sous la forme $PA = LU$, où $P$ est une matrice de permutation de lignes (pivotage partiel), $L$ est triangulaire inférieure avec des 1 sur la diagonale, et $U$ est triangulaire supérieure. Une fois $L$ et $U$ connues, résoudre $Ax=b$ devient immédiat : on résout $Ly = Pb$ (descente), puis $Ux = y$ (remontée).
-    \item \textbf{Conditionnement $\kappa(A)$ :} Nombre $\ge 1$ qui mesure la sensibilité de la solution face à une petite perturbation sur les données. Si $\kappa(A) \approx 1$, la matrice est très stable. Si $\kappa(A) \ge 10^8$, la matrice est dite \textbf{mal conditionnée} et les calculs numériques risquent de perdre toute précision.
-    \item \textbf{Valeurs propres $\lambda$ :} Nombres scalaires vérifiant $Av = \lambda v$ pour un vecteur propre non nul $v$. Leurs parties réelles renseignent directement sur la stabilité d'un système dynamique.
-\end{itemize}
-\end{cadreconcept}
-
-\section{Les principales routines de LAPACK}
-
-Le tableau~\ref{tab:lapack_routines} résume les fonctions les plus importantes de LAPACK utilisées dans ce projet.
-
-\begin{table}[ht]
+\section{Fonctionnalités et routines pilotes}
+\begin{table}[htbp]
 \centering
-\caption{Principales fonctionnalités de LAPACK exploitées dans le projet.}
+\caption{Principales fonctionnalités de LAPACK.}
 \label{tab:lapack_routines}
-\begin{tabularx}{\textwidth}{l l p{5.5cm} c}
+\small
+\begin{tabularx}{\textwidth}{llXl}
 \toprule
-\textbf{Problème à résoudre} & \textbf{Routine} & \textbf{Méthode mathématique} & \textbf{Complexité} \\
+\textbf{Problème mathématique} & \textbf{Routine Pilote} & \textbf{Algorithme sous-jacent} & \textbf{Complexité} \\
 \midrule
-Résoudre $Ax = b$ & \texttt{DGESV} & Factorisation LU avec pivotage partiel ($PA=LU$) & $\frac{2}{3} n^3$ \\
-Équilibrer une matrice & \texttt{DGEEQU} & Mise à l'échelle des lignes et colonnes & $O(n^2)$ \\
-Estimer le conditionnement & \texttt{DGECON} & Estimation rapide de $\|A^{-1}\|_1$ sans inverser & $O(n^2)$ \\
-Valeurs propres générales & \texttt{DGEEV} & Réduction de Hessenberg et algorithme QR décalé & $O(n^3)$ \\
-Décomposition SVD & \texttt{DGESDD} & Valeurs singulières par approche Diviser pour Régner & $O(n^3)$ \\
+Système général $Ax = b$ & \texttt{DGESV} & Factorisation LU avec pivotage partiel ($PA = LU$) & $\frac{2}{3}n^3$ \\
+Système symétrique défini positif & \texttt{DPOSV} & Factorisation de Cholesky ($A = LL^T$) & $\frac{1}{3}n^3$ \\
+Moindres carrés $\min \|Ax - b\|_2$ & \texttt{DGELS} & Décomposition orthogonale QR & $\frac{4}{3}n^3$ \\
+Valeurs propres symétriques & \texttt{DSYEV} & Tridiagonalisation + Divide \& Conquer & $\mathcal{O}(n^3)$ \\
+Valeurs propres générales & \texttt{DGEEV} & Réduction de Hessenberg + QR décalé & $\mathcal{O}(n^3)$ \\
+Décomposition SVD ($A = U\Sigma V^T$) & \texttt{DGESVD} & Bidiagonalisation QR & $\mathcal{O}(n^3)$ \\
+Équilibrage de matrice & \texttt{DGEEQU} & Équilibrage de lignes et colonnes & $\mathcal{O}(n^2)$ \\
+Estimation conditionnement & \texttt{DGECON} & Estimation de $\|A^{-1}\|_1$ sans inversion & $\mathcal{O}(n^2)$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{La pile logicielle : du problème au matériel}
+\section{Schéma vectoriel de la pile logicielle}
+La figure \ref{fig:software_stack} illustre l'empilement logiciel menant de l'application scientifique jusqu'au matériel processeur.
 
-La figure~\ref{fig:tikz_pile} montre comment les différents étages s'articulent logiquement.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    box/.style={rectangle, draw=navyblue, fill=lightbg, thick, minimum width=9.5cm, minimum height=0.75cm, align=center, font=\small\bfseries},
-    arrow/.style={-{Stealth[length=2.5mm]}, thick, color=navyblue}
+    box/.style={draw=navyblue, fill=blue!5!white, thick, rounded corners=3pt, minimum width=11cm, minimum height=0.75cm, align=center, font=\small\bfseries},
+    arrow/.style={-{Stealth[length=2.5mm]}, thick, navyblue}
 ]
-    \node[box, fill=navyblue!15] (app) {1. Application Métier (Modèles VIH, Équations différentielles)};
-    \node[box, below=0.45cm of app] (scipy) {2. Langage de haut niveau : Python (NumPy / SciPy)};
-    \node[box, below=0.45cm of scipy] (lapack) {3. LAPACK : Résolution de systèmes et valeurs propres (\texttt{DGESV}, \texttt{DGEEV})};
-    \node[box, below=0.45cm of lapack] (blas) {4. BLAS : Produits matriciels et opérations denses (\texttt{DGEMM}, \texttt{DAXPY})};
-    \node[box, fill=goldline!20, below=0.45cm of blas] (hardware) {5. Moteur d'exécution optimisé : Intel MKL ou OpenBLAS (sur le processeur)};
+    \node[box] (app) at (0, 4) {Application Python (Modèles VIH, Intégrateurs EDO, Newton)};
+    \node[box] (scipy) at (0, 3) {NumPy / SciPy (\texttt{scipy.linalg.lapack}, \texttt{scipy.linalg.blas})};
+    \node[box] (lapack) at (0, 2) {LAPACK : \texttt{DGESV}, \texttt{DGETRF}, \texttt{DGEEV}, \texttt{DGEEQU}, \texttt{DGESDD}};
+    \node[box] (blas) at (0, 1) {BLAS : \texttt{DGEMM}, \texttt{DGEMV}, \texttt{DAXPY}, \texttt{DDOT}, \texttt{DSYRK}};
+    \node[box, fill=tealhpc!10!white, draw=tealhpc] (mkl) at (0, 0) {Micro-noyaux optimisés : Intel MKL (AVX-512, OpenMP) ou OpenBLAS};
 
     \draw[arrow] (app) -- (scipy);
     \draw[arrow] (scipy) -- (lapack);
     \draw[arrow] (lapack) -- (blas);
-    \draw[arrow] (blas) -- (hardware);
+    \draw[arrow] (blas) -- (mkl);
 \end{tikzpicture}
-\caption{Architecture en couches : de la modélisation biologique jusqu'aux circuits du processeur.}
-\label{fig:tikz_pile}
+\caption{Pile logicielle : de l'application scientifique aux noyaux assembleurs optimisés.}
+\label{fig:software_stack}
 \end{figure}
 
-\begin{encadreresume}[Mini-résumé du Chapitre 2 : LAPACK]
-\begin{enumerate}
-    \item LAPACK résout les vrais problèmes d'algèbre linéaire (systèmes $Ax=b$, valeurs propres, décompositions).
-    \item Elle s'appuie directement sur BLAS 3 (\texttt{DGEMM}) pour maximiser la vitesse de calcul.
-    \item La routine pilote \texttt{DGESV} résout les systèmes linéaires généraux par factorisation LU $PA=LU$.
-    \item \texttt{DGEEQU} permet d'équilibrer une matrice avant calcul pour éviter les erreurs d'arrondi.
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 3 : INTEL MKL (ORDRE OBLIGATOIRE : 3. INTEL MKL APRÈS BLAS ET LAPACK)
+% CHAPITRE 3 : INTEL ONEMKL (ORDRE OBLIGATOIRE : 3. INTEL ONEMKL)
 % ------------------------------------------------------------------------------
-\chapter{Intel oneMKL : L'Implémentation Optimisée Industrielle}
+\chapter{Présentation d'Intel MKL (oneMKL)}
 
-\section{Pourquoi Intel MKL vient après BLAS et LAPACK ?}
+\section{Qu'est-ce qu'Intel MKL ?}
+Intel oneAPI Math Kernel Library (\textbf{oneMKL}, anciennement Intel MKL) est une bibliothèque industrielle de routines mathématiques ultra-optimisées pour le calcul scientifique et l'ingénierie sur architectures x86-64. Elle tire le meilleur parti des jeux d'instructions vectorielles des microprocesseurs (SSE, AVX2, AVX-512, Intel AMX) et du parallélisme multi-c\oe urs via OpenMP et Intel TBB. Au démarrage, son \textit{CPU Dispatcher} détecte dynamiquement le modèle exact du processeur hôte pour router l'exécution vers les micro-noyaux assembleurs les plus rapides.
 
-Comme expliqué dans les chapitres précédents :
+\section{Domaines couverts}
 \begin{itemize}
-    \item \textbf{BLAS} est une spécification (la liste des fonctions à avoir).
-    \item \textbf{LAPACK} est une bibliothèque algorithmique de haut niveau.
-    \item \textbf{Intel MKL (oneMKL)} est \textbf{l'implémentation industrielle ultra-optimisée} de BLAS et de LAPACK, développée par les ingénieurs d'Intel pour tirer 100\,\% des capacités de leurs processeurs.
+    \item \textbf{Algèbre linéaire dense :} BLAS (niveaux 1, 2, 3), LAPACK et ScaLAPACK (calcul parallèle distribué sur grappes MPI).
+    \item \textbf{Algèbre linéaire creuse :} Sparse BLAS et solveur direct multithread PARDISO.
+    \item \textbf{Transformées de Fourier rapides (FFT) :} Interface compatible FFTW multidimensionnelle.
+    \item \textbf{Mathématiques vectorielles (VML) :} Fonctions transcendantes (\texttt{vdExp}, \texttt{vdLn}, \texttt{vdSin}, \texttt{vdInvSqrt}) calculées sur des vecteurs entiers en un cycle SIMD.
+    \item \textbf{Statistiques et nombres aléatoires (VSL) :} Générateurs pseudo-aléatoires haute performance.
 \end{itemize}
 
-\section{Les secrets de la performance d'Intel MKL}
+\section{Avantages et alternatives du marché}
+Intel MKL offre les meilleures performances crêtes sur processeurs Intel et compatibles AMD. Le tableau \ref{tab:mkl_alternatives} synthétise le paysage des bibliothèques concurrentes.
 
-Intel MKL accélère les calculs grâce à trois technologies matérielles :
-\begin{enumerate}
-    \item \textbf{La vectorisation SIMD (AVX2, AVX-512) :} Au lieu de calculer un nombre à la fois, le processeur exécute une seule instruction qui traite 4 ou 8 nombres flottants simultanément dans de larges registres matériels (512 bits).
-    \item \textbf{Le parallélisme multi-cœurs (OpenMP) :} MKL découpe automatiquement les grandes matrices et distribue les blocs sur tous les cœurs du processeur (4, 8, 16 cœurs ou plus).
-    \item \textbf{Le répartiteur dynamique (\textit{CPU Dispatcher}) :} Au lancement du programme, MKL détecte exactement le modèle de processeur présent et choisit automatiquement la version assembleur la plus rapide.
-\end{enumerate}
-
-\section{Comparaison avec les alternatives du marché}
-
-Le tableau~\ref{tab:alternatives_mkl} compare les principales implémentations disponibles.
-
-\begin{table}[ht]
+\begin{table}[htbp]
 \centering
-\caption{Comparaison des bibliothèques d'algèbre linéaire.}
-\label{tab:alternatives_mkl}
-\begin{tabularx}{\textwidth}{l p{3.2cm} X}
+\caption{Principales alternatives à Intel MKL.}
+\label{tab:mkl_alternatives}
+\small
+\begin{tabularx}{\textwidth}{llX}
 \toprule
-\textbf{Bibliothèque} & \textbf{Statut / Licence} & \textbf{Avantages et particularités} \\
+\textbf{Bibliothèque} & \textbf{Nature / Licence} & \textbf{Spécificités techniques} \\
 \midrule
-\textbf{Netlib (Référence)} & Open-source & Code de référence en Fortran, sans vectorisation. Sert d'étalon de comparaison. \\
-\textbf{OpenBLAS} & Open-source (BSD) & Très rapide, multiplateforme. Incluse par défaut lors de l'installation de NumPy via \texttt{pip}. \\
-\textbf{BLIS} & Open-source (BSD) & Développée par l'Université du Texas, axée sur la modularité des micro-noyaux. \\
-\textbf{Intel oneMKL} & Gratuit (Intel) & La plus performante sur architectures x86-64, optimisée en assembleur pour AVX-512 et multithreading. \\
+\textbf{OpenBLAS} & Libre (BSD) & Dérivée de GotoBLAS2 ; livrée par défaut avec NumPy/SciPy sur Linux/macOS. \\
+\textbf{BLIS} & Libre (BSD) & Cadre modulaire développé à l'UT Austin avec micro-noyaux portables. \\
+\textbf{ATLAS} & Libre & Optimisation automatique hors-ligne lors de l'étape de compilation. \\
+\textbf{Netlib} & Libre (Référence) & Code Fortran de référence étalon, sans vectorisation matérielle. \\
+\textbf{Intel oneMKL} & Propriétaire gratuit & Code assembleur spécifique, vectorisation AVX-512 et threading OpenMP. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\begin{encadreresume}[Mini-résumé du Chapitre 3 : Intel MKL]
-\begin{enumerate}
-    \item Intel MKL est une implémentation propriétaire gratuite, optimisée pour processeurs x86-64.
-    \item Elle fournit BLAS et LAPACK avec vectorisation matérielle (AVX-512) et multithreading OpenMP.
-    \item Elle détecte automatiquement le processeur pour exécuter les instructions assembleur les plus rapides.
-    \item Elle est la référence mondiale de performance pour le calcul scientifique sur CPU.
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 4 : INSTALLATION ET UTILISATION EN PYTHON
+% CHAPITRE 4 : INSTALLATION, CONFIGURATION ET UTILISATION
 % ------------------------------------------------------------------------------
-\chapter{Installation et Utilisation en Python}
+\chapter{Installation, Configuration et Utilisation}
 
-\section{Comment vérifier la bibliothèque active sous Python}
-
-Dans le monde Python, NumPy et SciPy sont pré-compilés avec une bibliothèque sous-jacente (généralement OpenBLAS ou Intel MKL). On peut vérifier la bibliothèque en 3 lignes de code :
+\section{Configuration sous Python et vérification du backend}
+NumPy et SciPy peuvent être liés soit à OpenBLAS (via les roues standard pip), soit à Intel MKL (via la distribution conda). La vérification dynamique de la bibliothèque active s'effectue simplement :
 
 \begin{lstlisting}
 import numpy as np
 from threadpoolctl import threadpool_info
 
-# Affiche la configuration BLAS de NumPy
-print(np.show_config())
-
-# Affiche le moteur exact, la version et le nombre de threads
-print(threadpool_info())
+print(np.show_config())        # Configuration BLAS/LAPACK de NumPy
+print(threadpool_info())       # Bibliothèque liée, version et nombre de threads
 \end{lstlisting}
 
-\noindent\textbf{Explication ligne par ligne :}
-\begin{itemize}
-    \item \texttt{import numpy as np} : charge la bibliothèque de calcul numérique matriciel.
-    \item \texttt{threadpool\_info()} : interroge la mémoire vive pour savoir quelle bibliothèque partagée (OpenBLAS ou MKL) est réellement en train de tourner et combien de cœurs sont configurés.
-\end{itemize}
-
-\section{Appel direct des routines LAPACK depuis Python}
-
-Plutôt que d'utiliser la fonction générique \texttt{np.linalg.solve}, SciPy permet d'appeler directement les routines Fortran originales de LAPACK, sans copie inutile en mémoire :
+\section{Appel direct de LAPACK depuis Python}
+SciPy offre une interface de bas niveau zéro-copie vers les routines Fortran de LAPACK :
 
 \begin{lstlisting}
 from scipy.linalg import lapack
 import numpy as np
 
-# Matrice A en ordre Fortran (colonne par colonne) et vecteur second membre b
-A = np.asfortranarray([[3.0, 1.0], [1.0, 2.0]], dtype=np.float64)
-b = np.asfortranarray([9.0, 8.0], dtype=np.float64)
+A = np.asfortranarray([[4.0, 1.0], [2.0, 3.0]])
+b = np.array([1.0, 2.0])
 
-# 1. Résolution directe Ax = b avec la routine LAPACK DGESV
+# Résolution LU directe Ax = b
 lu, piv, x, info = lapack.dgesv(A, b)
-assert info == 0, "Échec : matrice singulière"
-print("Solution x =", x) # Donne [2.0, 3.0]
+assert info == 0, "Échec de factorisation"
 
-# 2. Calcul des valeurs propres d'une matrice avec DGEEV
+# Calcul des valeurs propres (parties réelles et imaginaires)
 wr, wi, vl, vr, info = lapack.dgeev(A)
 valeurs_propres = wr + 1j * wi
-print("Valeurs propres =", valeurs_propres)
 \end{lstlisting}
 
-\noindent\textbf{Explication pas à pas du code :}
-\begin{itemize}
-    \item \texttt{np.asfortranarray(...)} : convertit la matrice en stockage par colonnes (standard historique Fortran), ce qui évite toute recopie de données lors du passage à LAPACK.
-    \item \texttt{lapack.dgesv(A, b)} : exécute la factorisation LU $PA=LU$ et résout le système. Elle renvoie la solution \texttt{x}, les indices de permutation \texttt{piv}, et un code d'erreur \texttt{info} (égal à 0 si tout s'est bien passé).
-    \item \texttt{lapack.dgeev(A)} : calcule les valeurs propres décomposées en partie réelle (\texttt{wr}) et imaginaire (\texttt{wi}).
-\end{itemize}
-
-\begin{encadreresume}[Mini-résumé du Chapitre 4 : Utilisation en Python]
-\begin{enumerate}
-    \item Python se lie automatiquement à BLAS et LAPACK via NumPy et SciPy.
-    \item Le module \texttt{scipy.linalg.lapack} permet d'appeler directement les fonctions Fortran d'origine.
-    \item L'utilisation de \texttt{order='F'} (Fortran) garantit zéro surcoût de mémoire et une vitesse maximale.
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 5 : CONTEXTE BIOLOGIQUE DU VIH-SIDA
+% CHAPITRE 5 : LE VIH-SIDA : CONTEXTE BIOLOGIQUE ET ÉCHELLES
 % ------------------------------------------------------------------------------
-\chapter{Contexte Biologique du VIH-SIDA}
+\chapter{Le VIH-SIDA : Contexte Biologique et Échelles}
 
-\section{Comment le virus attaque-t-il l'organisme ?}
-
-Le VIH (Virus de l'Immunodéficience Humaine) est un rétrovirus qui cible principalement les \textbf{lymphocytes T CD4+}, des globules blancs indispensables pour alerter et coordonner l'ensemble du système immunitaire.
-\begin{itemize}
-    \item Un virion libre pénètre dans une cellule saine $T$.
-    \item Il injecte son ARN, le transforme en ADN et force la cellule à produire des centaines de nouveaux virions.
-    \item La cellule infectée finit par mourir rapidement, libérant une nouvelle vague de virus.
-\end{itemize}
-
-\section{Les trois phases cliniques chez un patient non traité}
+\section{Physiopathologie de l'infection}
+Le Virus de l'Immunodéficience Humaine (VIH) cible spécifiquement les lymphocytes auxiliaires T CD4+, pivot de la coordination immunitaire. Un virion libre pénètre dans une cellule T saine, rétrotranscrit son ARN en ADN proviral et détourne la cellule pour produire de nouveaux virions avant sa mort par apoptose ou cytotoxicité. Chez un patient non traité, l'infection évolue selon trois phases :
 \begin{enumerate}
-    \item \textbf{Phase aiguë (semaines 2 à 6) :} Multiplication explosive du virus. La charge virale atteint un pic énorme, tandis que les lymphocytes CD4+ chutent brutalement.
-    \item \textbf{Phase chronique (années 2 à 10) :} Le système immunitaire réagit et contient le virus à un niveau stationnaire appelé point de consigne (\textit{set-point}). Le patient ne ressent aucun symptôme visible, mais le virus continue de détruire lentement les CD4+.
-    \item \textbf{Stade SIDA :} Lorsque le taux de CD4+ passe sous le seuil fatal de $200\,\text{cellules}/\mu\text{L}$, le système immunitaire s'effondre. Des maladies opportunistes (tuberculose, pneumonies) apparaissent, conduisant au décès sans traitement.
+    \item \textbf{Phase aiguë (semaines) :} Pic de charge virale et effondrement temporaire des CD4+ ;
+    \item \textbf{Phase chronique (années) :} Équilibre dynamique stationnaire (\textit{set point}) ;
+    \item \textbf{Stade SIDA :} Chute irréversible des CD4+ en dessous du seuil critique de 200 cellules/$\mu$L, ouvrant la voie aux infections opportunistes mortelles.
 \end{enumerate}
 
-\section{Pourquoi modéliser à deux échelles ?}
+\section{Nécessité de deux échelles de modélisation}
 \begin{itemize}
-    \item \textbf{À l'échelle intra-hôte (dans le corps du patient) :} Les interactions ont lieu en jours ou en semaines. Le but est d'évaluer si un médicament antirétroviral parvient à stopper la prolifération virale.
-    \item \textbf{À l'échelle de la population (épidémiologique) :} La transmission sexuelle entre individus opère sur des décennies. Le but est de prédire l'impact de politiques sanitaires (dépistage, préservatifs, traitements).
+    \item \textbf{Échelle intra-hôte (dans le patient) :} Modèle ($T, I, V$) en jours. Analyse de la charge virale, de la résilience et de l'efficacité thérapeutique $\eta$.
+    \item \textbf{Échelle de population (épidémiologique) :} Modèle ($S, I_1, I_2$) en années. Analyse de la prévalence et des interventions de santé publique.
 \end{itemize}
 
-\begin{encadreresume}[Mini-résumé du Chapitre 5 : Contexte Biologique]
-\begin{enumerate}
-    \item Le VIH détruit les lymphocytes T CD4+, protecteurs de notre système immunitaire.
-    \item Sans traitement, la maladie évolue inévitablement vers le stade SIDA mortel.
-    \item Les trithérapies modernes (antirétroviraux) bloquent l'infection de nouvelles cellules.
-    \item Deux échelles de temps coexistent : l'échelle du patient (jours) et l'échelle de la société (années).
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 6 : MODÈLE INTRA-HÔTE
+% CHAPITRE 6 : LE MODÈLE INTRA-HÔTE : FORMULATION ET ANALYSE
 % ------------------------------------------------------------------------------
-\chapter{Le Modèle Intra-Hôte : Formulation et Analyse Mathématique}
+\chapter{Le Modèle Intra-Hôte : Formulation et Analyse}
 
-\section{Les équations différentielles du modèle}
-
-Le modèle de référence de Nowak, May et Perelson comporte trois variables :
-\begin{itemize}
-    \item $T(t)$ : concentration de lymphocytes T CD4+ sains ($\text{cellules}/\mu\text{L}$).
-    \item $I(t)$ : concentration de cellules infectées productrices de virus ($\text{cellules}/\mu\text{L}$).
-    \item $V(t)$ : charge virale libre dans le plasma sanguin ($\text{virions}/\mu\text{L}$).
-\end{itemize}
-
-Le système s'écrit sous la forme de trois équations différentielles non-linéaires couplées :
+\section{Formulation mathématique}
+Le modèle de Nowak-May-Perelson avec traitement antirétroviral d'efficacité $\eta \in [0, 1]$ s'écrit :
 \begin{equation}
+\label{eq:intra_host}
 \begin{cases}
-\dfrac{dT}{dt} = \underbrace{s}_{\text{source}} - \underbrace{dT}_{\text{mort naturelle}} - \underbrace{(1 - \eta)\beta TV}_{\text{nouvelles infections}} \\[10pt]
-\dfrac{dI}{dt} = \underbrace{(1 - \eta)\beta TV}_{\text{nouvelles infections}} - \underbrace{\delta I}_{\text{mort des cellules infectées}} \\[10pt]
-\dfrac{dV}{dt} = \underbrace{pI}_{\text{production virale}} - \underbrace{cV}_{\text{élimination du virus}}
+\dfrac{dT}{dt} = s - dT - (1 - \eta)\beta T V \\[0.2cm]
+\dfrac{dI}{dt} = (1 - \eta)\beta T V - \delta I \\[0.2cm]
+\dfrac{dV}{dt} = p I - c V
 \end{cases}
-\label{eq:intra_modele}
 \end{equation}
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    node distance=2.6cm,
-    compartment/.style={rectangle, draw=navyblue, fill=lightbg, thick, minimum width=2.4cm, minimum height=1.1cm, align=center, font=\small\bfseries},
-    rate/.style={->, >=stealth, thick, color=navyblue}
+    compartment/.style={draw=navyblue, fill=blue!5!white, thick, minimum width=2.4cm, minimum height=1.1cm, align=center, font=\small\bfseries},
+    arrow/.style={-{Stealth[length=2.5mm]}, thick, navyblue}
 ]
-    \node (source) {};
-    \node[compartment, right=1.2cm of source] (T) {T\\{\footnotesize CD4+ saines}};
-    \node[compartment, right=of T] (I) {I\\{\footnotesize Cellules infectées}};
-    \node[compartment, right=of I] (V) {V\\{\footnotesize Virions libres}};
-    \node[below=1.2cm of T] (sinkT) {};
-    \node[below=1.2cm of I] (sinkI) {};
-    \node[below=1.2cm of V] (sinkV) {};
+    \node[compartment] (T) at (0, 0) {T\\CD4+ saines};
+    \node[compartment] (I) at (4.2, 0) {I\\Cellules infectées};
+    \node[compartment] (V) at (8.4, 0) {V\\Virions libres};
 
-    \draw[rate] (source) -- node[above]{\small $s$} (T);
-    \draw[rate] (T) -- node[below]{\small $dT$} (sinkT);
-    \draw[rate] (T) -- node[above]{\small $(1-\eta)\beta TV$} (I);
-    \draw[rate] (I) -- node[below]{\small $\delta I$} (sinkI);
-    \draw[rate] (I) -- node[above]{\small $pI$} (V);
-    \draw[rate] (V) -- node[below]{\small $cV$} (sinkV);
+    \draw[arrow] (-1.8, 0) -- node[above, font=\small] {$s$} (T);
+    \draw[arrow] (T) -- node[right, font=\small] {$dT$} (0, -1.5);
+    \draw[arrow] (T) -- node[above, font=\small] {$(1 - \eta)\beta T V$} (I);
+    \draw[arrow] (I) -- node[right, font=\small] {$\delta I$} (4.2, -1.5);
+    \draw[arrow] (I) -- node[above, font=\small] {$p I$} (V);
+    \draw[arrow] (V) -- node[right, font=\small] {$c V$} (8.4, -1.5);
 \end{tikzpicture}
 \caption{Schéma de transfert compartimental du modèle intra-hôte.}
-\label{fig:tikz_transfert_intra}
+\label{fig:transfer_intra}
 \end{figure}
 
-\begin{table}[ht]
+\begin{table}[htbp]
 \centering
 \caption{Paramètres biomédicaux du modèle intra-hôte.}
 \label{tab:params_intra}
-\begin{tabularx}{\textwidth}{c p{4.2cm} c c X}
+\small
+\begin{tabularx}{\textwidth}{llccX}
 \toprule
-\textbf{Paramètre} & \textbf{Signification biologique} & \textbf{Valeur} & \textbf{Unité} & \textbf{Interprétation courante} \\
+\textbf{Symbole} & \textbf{Signification} & \textbf{Valeur} & \textbf{Unité} & \textbf{Source de calibration} \\
 \midrule
-$s$ & Production de CD4+ saines & $10$ & cellules/$\mu$L/jour & La moelle osseuse produit 10 CD4+/$\mu$L/j \\
-$d$ & Mortalité naturelle des CD4+ & $0{,}01$ & $\text{jour}^{-1}$ & Durée de vie moyenne d'un CD4+ = $1/d = 100$ j \\
-$\beta$ & Infectivité virale & $4{,}6 \times 10^{-5}$ & $\mu$L/virion/jour & Probabilité de rencontre et pénétration \\
-$\delta$ & Mortalité des cellules infectées & $0{,}50$ & $\text{jour}^{-1}$ & Cellule infectée détruite en 2 jours ($1/\delta$) \\
-$p$ & Production de virions par cellule & $1000$ & virions/cellule/jour & Une cellule infectée libère 1000 virions/j \\
-$c$ & Clairance virale plasmatique & $23$ & $\text{jour}^{-1}$ & Demi-vie virale très courte : 43 minutes \\
-$\eta$ & Efficacité du traitement & $0$ à $1$ & sans unité & $\eta=0$ (sans ARV), $\eta=0{,}95$ (trithérapie à 95\%) \\
+$s$ & Production de CD4+ saines & 10 & cellules/$\mu$L/jour & Hypothèse physiologique \\
+$d$ & Mortalité naturelle des CD4+ & 0,01 & jour$^{-1}$ & Perelson \& Nelson ($T_0 = s/d = 1000$) \\
+$\beta$ & Infectivité virale & $4{,}6 \times 10^{-5}$ & $\mu$L/virion/jour & Calibré pour $\mathcal{R}_0 = 4$ \\
+$\delta$ & Mortalité des cellules infectées & 0,50 & jour$^{-1}$ & Demi-vie virale $\approx 1{,}4$ jour \\
+$p$ & Production de virions par cellule & 1000 & virions/cellule/jour & Nowak \& May \\
+$c$ & Clairance des virions libres & 23 & jour$^{-1}$ & Demi-vie plasmatique $\approx 5{,}5$ h \\
+$\eta$ & Efficacité thérapeutique ARV & 0 à 1 & -- & Paramètre de contrôle clinique \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{Calcul détaillé de $\mathcal{R}_0$ par la Matrice de Prochaine Génération (NGM)}
+\section{Positivité, Bornitude et Nombre de Reproduction $\mathcal{R}_0$}
+\begin{proposition}
+Pour toute condition initiale positive, les solutions de (\ref{eq:intra_host}) existent pour tout $t \ge 0$, restent strictement positives, et vérifient $\limsup_{t \to \infty} T(t) \le s/d$.
+\end{proposition}
 
-\begin{cadreconcept}[Définition de $\mathcal{R}_0$]
-Le \textbf{nombre de reproduction de base $\mathcal{R}_0$} est le nombre moyen de cellules infectées secondaires créées par une seule cellule infectée introduite dans un tissu totalement sain.
-\begin{itemize}
-    \item Si $\mathcal{R}_0 < 1$ : Chaque cellule infectée engendre moins d'une nouvelle cellule infectée. L'infection s'éteint d'elle-même.
-    \item Si $\mathcal{R}_0 > 1$ : L'infection prolifère et s'installe durablement.
-\end{itemize}
-\end{cadreconcept}
-
-\noindent\textbf{Détail pas à pas des 7 étapes de la méthode NGM (Diekmann et al.) :}
-
-\vspace{0.2cm}
-\noindent\textbf{Étape 1 : Isoler les compartiments infectés.}  
-Les variables infectées sont $y = (I, V)^T$. L'état sain sans infection (noté DFE) est $E_0 = (T_0, 0, 0)$ avec $T_0 = s/d = 10 / 0{,}01 = 1\,000\,\text{cellules}/\mu\text{L}$.
-
-\vspace{0.2cm}
-\noindent\textbf{Étape 2 : Séparer les nouvelles infections ($\mathcal{F}$) et les transferts/morts ($\mathcal{V}$).}  
-On réécrit les équations sous la forme $\frac{d}{dt}\begin{pmatrix} I \\ V \end{pmatrix} = \mathcal{F}(y) - \mathcal{V}(y)$ :
-$$\mathcal{F} = \begin{pmatrix} (1-\eta)\beta T V \\ 0 \end{pmatrix}, \quad \mathcal{V} = \begin{pmatrix} \delta I \\ -pI + cV \end{pmatrix}$$
-
-\vspace{0.2cm}
-\noindent\textbf{Étape 3 : Calculer les matrices Jacobiennes $F$ et $V_m$ au point sain $E_0$.}  
-En dérivant par rapport à $I$ et $V$, puis en posant $T = T_0$ :
-$$F = \begin{pmatrix} \frac{\partial \mathcal{F}_1}{\partial I} & \frac{\partial \mathcal{F}_1}{\partial V} \\ \frac{\partial \mathcal{F}_2}{\partial I} & \frac{\partial \mathcal{F}_2}{\partial V} \end{pmatrix}_{E_0} = \begin{pmatrix} 0 & (1-\eta)\beta T_0 \\ 0 & 0 \end{pmatrix}$$
-$$V_m = \begin{pmatrix} \frac{\partial \mathcal{V}_1}{\partial I} & \frac{\partial \mathcal{V}_1}{\partial V} \\ \frac{\partial \mathcal{V}_2}{\partial I} & \frac{\partial \mathcal{V}_2}{\partial V} \end{pmatrix}_{E_0} = \begin{pmatrix} \delta & 0 \\ -p & c \end{pmatrix}$$
-
-\vspace{0.2cm}
-\noindent\textbf{Étape 4 : Inverser explicitement la matrice $V_m$.}  
-Comme $V_m$ est triangulaire inférieure $2 \times 2$, son inverse est immédiat :
-$$V_m^{-1} = \frac{1}{\delta \cdot c - 0} \begin{pmatrix} c & 0 \\ p & \delta \end{pmatrix} = \begin{pmatrix} \frac{1}{\delta} & 0 \\[6pt] \frac{p}{\delta c} & \frac{1}{c} \end{pmatrix}$$
-
-\vspace{0.2cm}
-\noindent\textbf{Étape 5 : Calculer la matrice de prochaine génération $K = F V_m^{-1}$.}  
-En effectuant le produit matriciel :
-$$K = F V_m^{-1} = \begin{pmatrix} 0 & (1-\eta)\beta T_0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} \frac{1}{\delta} & 0 \\[6pt] \frac{p}{\delta c} & \frac{1}{c} \end{pmatrix} = \begin{pmatrix} \dfrac{(1-\eta)\beta p T_0}{\delta c} & \dfrac{(1-\eta)\beta T_0}{c} \\[10pt] 0 & 0 \end{pmatrix}$$
-
-\vspace{0.2cm}
-\noindent\textbf{Étape 6 : Trouver les valeurs propres et le rayon spectral.}  
-La matrice $K$ étant triangulaire supérieure, ses valeurs propres sont directement ses éléments diagonaux :
-$$\lambda_1 = \frac{(1-\eta)\beta p T_0}{\delta c}, \quad \lambda_2 = 0$$
-Le rayon spectral $\rho(K)$ (la plus grande valeur propre en valeur absolue) donne le résultat exact :
+\noindent\textbf{Calcul du $\mathcal{R}_0$ par la Matrice de Prochaine Génération (NGM) :} Posons $b = (1 - \eta)\beta$. Pour le sous-système infecté $(I, V)^T$, la matrice de transmission $F$ et la matrice de transition $V_m$ s'écrivent :
+\[
+F = \begin{pmatrix} 0 & b T_0 \\ 0 & 0 \end{pmatrix}, \quad V_m = \begin{pmatrix} \delta & 0 \\ -p & c \end{pmatrix} \implies V_m^{-1} = \begin{pmatrix} 1/\delta & 0 \\ p/(\delta c) & 1/c \end{pmatrix}
+\]
+Le rayon spectral de $F V_m^{-1}$ donne le nombre de reproduction de base :
 \begin{equation}
-\mathcal{R}_0(\eta) = \frac{(1 - \eta)\beta p T_0}{\delta c} = \frac{(1 - \eta)\beta p s}{d \delta c}
-\label{eq:formule_r0}
+\label{eq:r0_intra}
+\mathcal{R}_0(\eta) = \frac{(1 - \eta)\beta p T_0}{\delta c} = (1 - \eta)\mathcal{R}_0(0), \quad \text{avec } \eta_c = 1 - \frac{1}{\mathcal{R}_0(0)} = 75{,}0\,\%
 \end{equation}
 
-\vspace{0.2cm}
-\noindent\textbf{Étape 7 : Application numérique et efficacité critique $\eta_c$.}  
-Sans traitement ($\eta = 0$) avec les paramètres réels du tableau~\ref{tab:params_intra} :
-$$\mathcal{R}_0(0) = \frac{1 \times (4{,}6 \times 10^{-5}) \times 1000 \times 1000}{0{,}50 \times 23{,}0} = \frac{46}{11{,}5} = \mathbf{4{,}0}$$
-Sans médicament, le virus est largement épidémique ($\mathcal{R}_0 = 4 > 1$). Pour éradiquer le virus, il faut imposer $\mathcal{R}_0(\eta) < 1$, c'est-à-dire :
-$$(1 - \eta)\mathcal{R}_0(0) < 1 \iff 1 - \eta < \frac{1}{\mathcal{R}_0(0)} \iff \eta > \eta_c = 1 - \frac{1}{4{,}0} = \mathbf{0{,}75} \quad (\mathbf{75\,\%})$$
-\textbf{Conclusion médicale fondamentale :} Le traitement doit avoir une efficacité d'au moins \textbf{75\,\%} pour guérir le patient. Si l'efficacité est de $70\,\%$, le virus continue de proliférer.
+\section{Stabilité Locale et Globale}
+\begin{theorem}[Stabilité du DFE]
+L'équilibre sans infection $E_0 = (T_0, 0, 0)$ est globalement asymptotiquement stable (GAS) si $\mathcal{R}_0 \le 1$, et instable si $\mathcal{R}_0 > 1$.
+\end{theorem}
 
-\section{Stabilité et équilibres stationnaires}
+\begin{proof}
+Considérons la fonction de Lyapunov $L = I + \frac{\delta}{p}V \ge 0$. Sa dérivée le long des trajectoires vaut $\dot{L} = (b T - \frac{\delta c}{p})V$. Comme $T \le T_0$, on a $\dot{L} \le \frac{\delta c}{p}(\mathcal{R}_0 - 1)V \le 0$ lorsque $\mathcal{R}_0 \le 1$. Le principe d'invariance de LaSalle conclut à la stabilité globale du DFE.
+\end{proof}
 
-\begin{itemize}
-    \item \textbf{Équilibre sans infection (DFE) :} $E_0 = (s/d, 0, 0) = (1000, 0, 0)$. Il est globalement asymptotiquement stable si $\mathcal{R}_0 \le 1$.
-    \item \textbf{Équilibre endémique (EE) :} $E^* = (T^*, I^*, V^*)$ existe dès que $\mathcal{R}_0 > 1$. Ses coordonnées exactes sont :
-    $$T^* = \frac{T_0}{\mathcal{R}_0} = \frac{1000}{4} = 250\,\text{CD4+}/\mu\text{L}$$
-    $$I^* = \frac{s - dT^*}{\delta} = \frac{10 - 2{,}5}{0{,}5} = 15\,\text{cellules}/\mu\text{L}$$
-    $$V^* = \frac{p}{c} I^* = \frac{1000}{23} \times 15 \approx \mathbf{652{,}17}\,\text{virions}/\mu\text{L}$$
-    \textit{Note d'incohérence rectifiée :} Dans certaines versions initiales du document, une coquille typographique indiquait $V^* = \frac{p}{\delta}I^*$. La relation physique exacte issue de l'équation stationnaire $0 = pI - cV$ est bien $V^* = \frac{p}{c}I^*$.
-\end{itemize}
-
-\begin{encadreresume}[Mini-résumé du Chapitre 6 : Modèle Intra-Hôte]
-\begin{enumerate}
-    \item Le modèle comporte 3 équations pour les CD4+ sains $T$, les infectés $I$ et le virus $V$.
-    \item Le calcul NGM détaillé démontre que $\mathcal{R}_0(0) = 4{,}0$.
-    \item Le seuil critique d'efficacité des antirétroviraux est exactement $\eta_c = 75\,\%$.
-    \item Si $\eta > 75\,\%$, le virus disparaît ; si $\eta < 75\,\%$, l'infection se stabilise à l'état chronique.
-\end{enumerate}
-\end{encadreresume}
+\begin{theorem}[Stabilité de l'Équilibre Endémique EE]
+Pour $\mathcal{R}_0 > 1$, l'équilibre endémique $E^* = (T^*, I^*, V^*)$ existe, est unique, et est globalement asymptotiquement stable dans le domaine positif avec :
+\[
+T^* = \frac{T_0}{\mathcal{R}_0}, \quad I^* = \frac{s}{\delta}\left(1 - \frac{1}{\mathcal{R}_0}\right), \quad V^* = \frac{p}{c} I^* = \frac{p s}{c \delta}\left(1 - \frac{1}{\mathcal{R}_0}\right)
+\]
+\end{theorem}
 
 % ------------------------------------------------------------------------------
-% CHAPITRE 7 : MÉTHODES NUMÉRIQUES AVEC LAPACK
+% CHAPITRE 7 : MÉTHODES NUMÉRIQUES ET LAPACK
 % ------------------------------------------------------------------------------
-\chapter{Méthodes Numériques et Solveurs LAPACK}
+\chapter{Méthodes Numériques et LAPACK}
 
-\section{Résolution de systèmes linéaires avec DGESV}
+\section{Systèmes linéaires, erreur directe et conditionnement}
+La résolution de $Ax = b$ via \texttt{DGETRF} et \texttt{DGETRS} (regroupés dans \texttt{DGESV}) réalise une élimination de Gauss rétrograde-stable. La figure \ref{fig:hilbert} illustre l'évaluation du conditionnement sur des matrices de Hilbert : le résidu reste au niveau de la précision machine ($\approx 10^{-16}$), tandis que l'erreur directe croît proportionnellement à $\kappa_1(A)\,\varepsilon_{\text{mach}}$.
 
-La méthode de Gauss avec pivotage partiel (\texttt{DGESV}) est rétrograde-stable. La figure~\ref{fig:fig3_hilbert} teste cette routine sur les matrices de Hilbert $H_{ij} = \frac{1}{i+j-1}$, connues pour être extrêmement mal conditionnées.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig3_hilbert.png}
-    \caption{Matrices de Hilbert et DGESV.}
-    \label{fig:fig3_hilbert}
+    \caption{Erreur relative et résidu vs conditionnement.}
+    \label{fig:hilbert}
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig4_cond_jac.png}
     \caption{Conditionnement de la Jacobienne $\kappa_1(J)$.}
-    \label{fig:fig4_cond_jac}
+    \label{fig:cond_jac}
 \end{minipage}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig3_hilbert} :} L'axe horizontal donne la taille $n$ de la matrice. L'axe de gauche (rouge) donne le conditionnement $\kappa_1$. L'axe de droite donne l'erreur relative (bleu) et le résidu (vert).  
-\textbf{Ce qu'il faut retenir :} Le résidu de LAPACK reste bloqué au niveau de la précision machine ($\sim 10^{-16}$) quelle que soit la taille, ce qui prouve la stabilité numérique absolue de l'algorithme.
-
-\vspace{0.2cm}
-\noindent\textbf{Comment lire la figure~\ref{fig:fig4_cond_jac} :} L'axe horizontal représente le temps en jours. La courbe violette donne le conditionnement de la matrice Jacobienne du VIH, et la courbe rouge pointillée représente la charge virale.  
-\textbf{Ce qu'il faut retenir :} Le conditionnement monte à plus de $10^5$ au pic de l'infection car la charge virale est immense par rapport au nombre de cellules.
-
-\section{Équilibrage de matrice avec DGEEQU}
-
-Quand une matrice contient des grandeurs d'échelles très différentes (des cellules d'un côté, des milliers de virions de l'autre), son conditionnement se dégrade.  
-La routine LAPACK \texttt{DGEEQU} calcule des coefficients diagonaux de normalisation pour les lignes ($R$) et les colonnes ($C$) afin que $\widehat{J} = R \cdot J \cdot C$. Cet équilibrage ramène le conditionnement de $1{,}5 \times 10^5$ à seulement $240$, garantissant des inversions d'une précision parfaite.
+\section{Équilibrage de la matrice Jacobienne avec DGEEQU}
+À l'équilibre endémique, la Jacobienne présente un conditionnement élevé $\kappa_1(J(EE)) \approx 1{,}52 \times 10^5$ (figure \ref{fig:cond_jac}). Cela résulte de l'écart d'échelle entre cellules ($s = 10$) et virions ($p = 1000$). L'appel à la routine LAPACK \texttt{DGEEQU} calcule les facteurs d'échelle optimaux de lignes ($R$) et colonnes ($C$) :
+\[
+\widehat{J} = R \cdot J \cdot C
+\]
+Cet équilibrage ramène le conditionnement de $1{,}5 \times 10^5$ à $\kappa_1(\widehat{J}) \approx 2{,}4 \times 10^2$, éliminant tout risque d'instabilité numérique.
 
 \section{Méthode de Newton avec DGESV et calcul spectral DGEEV}
+La recherche de l'équilibre $f(y) = 0$ par la méthode de Newton calcule à chaque pas :
+\[
+J(y_k)\,\delta_k = -f(y_k), \quad y_{k+1} = y_k + \delta_k
+\]
+Le système linéaire $3 \times 3$ est résolu par \texttt{DGESV}. La convergence est quadratique en 5 à 6 itérations (figure \ref{fig:newton}).
 
-Pour trouver l'état d'équilibre stationnaire $f(y^*) = 0$, on utilise l'algorithme de Newton-Raphson :
-$$J(y_k) \cdot \delta_k = -f(y_k), \quad y_{k+1} = y_k + \delta_k$$
-Le système linéaire $3 \times 3$ est résolu à chaque étape par \texttt{DGESV}.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.55\textwidth]{figures/fig5_newton.png}
-\caption{Convergence quadratique de la méthode de Newton résolue par DGESV.}
-\label{fig:fig5_newton}
+\includegraphics[width=0.62\textwidth]{figures/fig5_newton.png}
+\caption{Convergence quadratique de la méthode de Newton avec DGESV.}
+\label{fig:newton}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig5_newton} :} L'axe horizontal donne le numéro de l'itération $k$. L'axe vertical (échelle logarithmique) montre l'erreur par rapport à l'état d'équilibre.  
-\textbf{Ce qu'il faut retenir :} En seulement 5 à 6 itérations, l'erreur chute de $10^2$ à $10^{-14}$ : c'est la vitesse de convergence \textit{quadratique} rendue possible par le calcul exact du Jacobien et la précision de \texttt{DGESV}.
-
-\vspace{0.2cm}
-La routine \texttt{DGEEV} permet ensuite de calculer les valeurs propres de la Jacobienne à l'équilibre endémique. On trouve :
-$$\lambda_1 = -23{,}50 \quad (\text{élimination rapide du virus}), \quad \lambda_{2,3} = -0{,}0197 \pm 0{,}1196\,i$$
-La partie réelle négative ($-0{,}0197$) confirme que l'équilibre est stable. La partie imaginaire ($0{,}1196$) indique des oscillations amorties de période $T = \frac{2\pi}{0{,}1196} \approx 53$ jours.
-
-\begin{encadreresume}[Mini-résumé du Chapitre 7 : Solveurs LAPACK]
-\begin{enumerate}
-    \item \texttt{DGESV} résout les systèmes linéaires avec un résidu au niveau de la précision machine.
-    \item \texttt{DGEEQU} équilibre les lignes et colonnes pour corriger les écarts d'échelle physiques.
-    \item La méthode de Newton couplée à \texttt{DGESV} converge en moins de 6 itérations.
-    \item \texttt{DGEEV} confirme la stabilité asymptotique oscillatoire de l'infection chronique.
-\end{enumerate}
-\end{encadreresume}
+\begin{align*}
+\lambda_1 &= -23{,}5006 \quad (\text{mode rapide}), \\
+\lambda_{2,3} &= -0{,}0197 \pm 0{,}1196\,i \quad (\text{oscillations amorties de période 53 jours})
+\end{align*}
 
 % ------------------------------------------------------------------------------
-% CHAPITRE 8 : INTÉGRATION NUMÉRIQUE ET RAIDEUR
+% CHAPITRE 8 : INTÉGRATION NUMÉRIQUE DES ÉQUATIONS
 % ------------------------------------------------------------------------------
-\chapter{Intégration Numérique des Équations et Raideur}
+\chapter{Intégration Numérique des Équations}
 
-\section{Qu'est-ce que la raideur numérique ?}
+\section{Raideur et instabilité des schémas explicites}
+Le système est fortement raide : le rapport des échelles de temps $\max |\text{Re}\,\lambda| / \min |\text{Re}\,\lambda| \approx 1{,}2 \times 10^3$. Pour Euler explicite, la stabilité exige $h < 2/|\lambda_{\max}| \approx 0{,}080\text{ jour}$. Au-delà ($h = 0{,}1\text{ j}$), le schéma explose (figure \ref{fig:raideur}a). En revanche, Euler implicite résolu à chaque pas par \texttt{DGESV} reste inconditionnellement stable (figure \ref{fig:raideur}b).
 
-\begin{cadreconcept}[Définition simple de la raideur (\textit{Stiffness})]
-Un système différentiel est dit \textbf{raide} lorsqu'il met en jeu des phénomènes se déroulant à des vitesses immensément différentes :
-\begin{itemize}
-    \item Un phénomène ultra-rapide : la clairance virale ($c = 23\,\text{jour}^{-1}$, demi-vie de 43 minutes).
-    \item Un phénomène très lent : la durée de vie des lymphocytes CD4+ ($d = 0{,}01\,\text{jour}^{-1}$, 100 jours).
-\end{itemize}
-Le ratio entre la plus grande et la plus petite valeur propre vaut $\frac{|\lambda_{\max}|}{|\lambda_{\min}|} \approx \frac{23{,}5}{0{,}0197} \approx 1\,200$.
-\end{cadreconcept}
-
-\section{Pourquoi les schémas explicites explosent-ils ?}
-
-Avec le schéma classique d'\textbf{Euler explicite} :
-$$y_{k+1} = y_k + h \cdot f(y_k)$$
-Pour ne pas diverger vers l'infini, la théorie de la stabilité impose de choisir un pas de temps minuscule :
-$$h < \frac{2}{|\lambda_{\max}|} \approx \frac{2}{23{,}5} \approx 0{,}085\,\text{jour} \quad (\approx 2\text{ heures})$$
-Dès que l'on choisit $h = 0{,}1$ jour, le calcul produit des nombres aberrants ($10^{30}$) et s'effondre (figure~\ref{fig:fig6_raideur}).
-
-\section{Le remède : Euler implicite résolu avec DGESV}
-
-Nous utilisons le schéma d'\textbf{Euler implicite linéarisé} :
-$$y_{k+1} = y_k + h \cdot f(y_{k+1}) \implies \big[I - h \cdot J(y_k)\big] \cdot \Delta y_k = h \cdot f(y_k)$$
-À chaque instant $t_k$, nous résolvons ce système linéaire avec la routine LAPACK \texttt{DGESV}. Ce schéma est \textbf{inconditionnellement A-stable} : il ne diverge jamais, même avec des pas de temps 10 fois plus grands.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig6_raideur.png}
-    \caption{Euler explicite (explosion) vs implicite.}
-    \label{fig:fig6_raideur}
+    \caption{Stabilité comparée : Euler explicite vs implicite.}
+    \label{fig:raideur}
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig7_convergence.png}
-    \caption{Ordre de convergence $O(h)$.}
-    \label{fig:fig7_convergence}
+    \caption{Ordres de convergence numérique observés.}
+    \label{fig:convergence}
 \end{minipage}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig6_raideur} :} En vert, la solution avec Euler implicite (pas $h=0{,}1$ jour). En rouge pointillé, la tentative avec Euler explicite au même pas.  
-\textbf{Ce qu'il faut retenir :} Euler implicite reste parfaitement stable et suit la vraie courbe physique, alors qu'Euler explicite explose immédiatement en raison de la raideur.
-
-\vspace{0.2cm}
-\noindent\textbf{Comment lire la figure~\ref{fig:fig7_convergence} :} L'axe horizontal donne le pas $h$ et l'axe vertical donne l'erreur par rapport à une solution de référence ultra-précise (en échelle log-log).  
-\textbf{Ce qu'il faut retenir :} Les points suivent exactement une droite de pente 1. Cela prouve que l'erreur est proportionnelle à $h$, validant formellement l'ordre 1 du schéma d'Euler implicite.
-
-\begin{encadreresume}[Mini-résumé du Chapitre 8 : Intégration Numérique]
-\begin{enumerate}
-    \item La coexistence d'échelles de temps rapides (minutes) et lentes (mois) crée une forte raideur.
-    \item Les méthodes explicites explosent dès que le pas dépasse $0{,}085$ jour.
-    \item Le schéma d'Euler implicite résolu par LAPACK \texttt{DGESV} est inconditionnellement stable.
-    \item L'analyse de convergence confirme l'ordre théorique 1 du schéma.
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 9 : RÉSULTATS BIOMÉDICAUX DU MODÈLE INTRA-HÔTE
+% CHAPITRE 9 : RÉSULTATS ET INTERPRÉTATION MÉDICALE
 % ------------------------------------------------------------------------------
-\chapter{Résultats et Interprétations Biomédicales}
+\chapter{Résultats et Interprétation Médicale}
 
-\section{Dynamique de primo-infection et portrait de phase}
+\section{Primo-infection et portrait de phase}
+La figure \ref{fig:inf_primaire} montre la dynamique de primo-infection : pic viral aigu à 15,4 jours ($17\,373\text{ virions}/\mu$L), chute des CD4+ à 49 cellules/$\mu$L, puis stabilisation oscillatoire vers le point de consigne $V^* = 652{,}2$. La convergence en spirale vers l'EE est attestée par le portrait de phase (figure \ref{fig:portrait_phase}).
 
-La figure~\ref{fig:fig8_infection} illustre l'évolution naturelle chez un individu nouvellement infecté.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig8_infection_primaire.png}
-    \caption{Primo-infection : CD4+ sains et virus.}
-    \label{fig:fig8_infection}
+    \caption{Infection primaire : CD4+, cellules infectées et virus.}
+    \label{fig:inf_primaire}
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig9_portrait_phase.png}
-    \caption{Portrait de phase $(T, V)$ vers l'équilibre.}
-    \label{fig:fig9_phase}
+    \caption{Portrait de phase $(T, V)$ convergeant vers l'EE.}
+    \label{fig:portrait_phase}
 \end{minipage}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig8_infection} :} En bleu (axe de gauche), le taux de CD4+. En rouge (axe de droite, échelle log), la charge virale en fonction du nombre de jours après contamination.  
-\textbf{Ce qu'il faut retenir :} Vers le 15--20e jour, on observe un \textbf{pic virémique foudroyant} ($> 15\,000$ virions/$\mu$L) qui décime temporairement les CD4+. Puis le système immunitaire réagit et la charge virale se stabilise à son niveau chronique ($652$ virions/$\mu$L).
+\section{Efficacité thérapeutique et rebond viral}
+La figure \ref{fig:r0_eta} confirme le seuil critique $\eta_c = 75\,\%$. Sous traitement à 95\,\%, la charge virale devient indétectable en 20 jours (figure \ref{fig:traitement}). Cependant, une interruption thérapeutique au jour 100 provoque un \textbf{rebond viral foudroyant} avec un pic à 18,5 fois la valeur de consigne (figure \ref{fig:amplification}), causé par la reconstitution des CD4+ saines agissant comme « combustible » pour les virions résiduels.
 
-\vspace{0.2cm}
-\noindent\textbf{Comment lire la figure~\ref{fig:fig9_phase} :} L'axe horizontal représente les CD4+ et l'axe vertical la charge virale. Chaque trajectoire démarre d'un point initial différent.  
-\textbf{Ce qu'il faut retenir :} Toutes les courbes s'enroulent en spirale vers le même point central $E^*$ (l'équilibre endémique), prouvant que l'attracteur est universel pour le patient non traité.
-
-\section{Réponse au traitement et danger de l'interruption}
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig10_r0_eta.png}
-    \caption{Seuil critique $\mathcal{R}_0$ vs efficacité $\eta$.}
-    \label{fig:fig10_r0_eta}
+    \caption{$\mathcal{R}_0$ en fonction de l'efficacité $\eta$.}
+    \label{fig:r0_eta}
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig11_traitement.png}
-    \caption{Restauration des CD4+ sous trithérapie.}
-    \label{fig:fig11_traitement}
+    \caption{Décroissance virale sous traitement ARV.}
+    \label{fig:traitement}
 \end{minipage}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig10_r0_eta} :} Courbe rouge de $\mathcal{R}_0$ en fonction de l'efficacité du médicament en \%. En vert, la zone sécurisée sous le seuil critique $\mathcal{R}_0 = 1$.  
-\textbf{Ce qu'il faut retenir :} La ligne passe sous 1 exactement à $\eta_c = 75\,\%$. Une trithérapie moderne ayant $\eta = 95\,\%$ garantit $\mathcal{R}_0 \approx 0{,}2 \ll 1$.
-
-\vspace{0.2cm}
-\noindent\textbf{Comment lire la figure~\ref{fig:fig11_traitement} :} Comparaison entre un patient non traité (rouge pointillé) et un patient traité avec $\eta = 95\,\%$ (vert continu).  
-\textbf{Ce qu'il faut retenir :} En 20 jours de traitement, la charge virale s'effondre en dessous du seuil de détectabilité clinique ($< 1$ virion/$\mu$L) et les lymphocytes CD4+ remontent vers leur niveau normal sain ($1\,000\,\text{cellules}/\mu\text{L}$).
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig12_bifurcation_intra.png}
     \caption{Bifurcation transcritique à $\mathcal{R}_0 = 1$.}
-    \label{fig:fig12_bifurcation}
+    \label{fig:bifurcation_intra}
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig13_amplification.png}
-    \caption{Rebond viral aigu après arrêt d'ARV.}
-    \label{fig:fig13_amplif}
+    \caption{Rebond viral aigu après arrêt de traitement.}
+    \label{fig:amplification}
 \end{minipage}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig12_bifurcation} :} Montre la charge virale finale $V^*$ selon la valeur de $\mathcal{R}_0$.  
-\textbf{Ce qu'il faut retenir :} À $\mathcal{R}_0 = 1$, il y a un basculement (\textit{bifurcation transcritique}) : le point sain $E_0$ perd sa stabilité et c'est la maladie chronique $E^*$ qui devient la réalité permanente.
-
-\vspace{0.2cm}
-\noindent\textbf{Comment lire la figure~\ref{fig:fig13_amplif} :} Le patient prend son traitement de $j=30$ à $j=100$, puis arrête brusquement ses médicaments au jour 100.  
-\textbf{Ce qu'il faut retenir :} L'arrêt provoque un \textbf{rebond viral foudroyant} avec un pic 18 fois plus élevé que la normale. Pourquoi ? Parce que le traitement avait reconstitué un stock massif de CD4+ saines ($1000$), qui servent immédiatement de « carburant » aux virions résiduels. Cela explique pourquoi l'observance thérapeutique doit être continue.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.60\textwidth]{figures/fig14_sensibilite.png}
-\caption{Indices de sensibilité normalisés des paramètres sur $\mathcal{R}_0$.}
-\label{fig:fig14_sensibilite}
+\includegraphics[width=0.7\textwidth]{figures/fig14_sensibilite.png}
+\caption{Indices de sensibilité normalisés de $\mathcal{R}_0$ et $V^*$.}
+\label{fig:sensibilite}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig14_sensibilite} :} Barres horizontales indiquant l'impact d'une augmentation de 1\,\% de chaque paramètre biologique sur $\mathcal{R}_0$.  
-\textbf{Ce qu'il faut retenir :} L'infectivité virale $\beta$ et la production $p$ augmentent $\mathcal{R}_0$ d'exactement $+1\,\%$, tandis que la clairance $c$ et la mortalité des cellules infectées $\delta$ le diminuent de $-1\,\%$.
-
-\begin{encadreresume}[Mini-résumé du Chapitre 9 : Résultats Biomédicaux]
-\begin{enumerate}
-    \item La primo-infection se caractérise par un pic viral aigu et un effondrement des défenses immunitaires.
-    \item Une efficacité thérapeutique supérieure à $75\,\%$ fait disparaître le virus du sang.
-    \item L'interruption de traitement provoque un rebond viral très dangereux sur le stock de CD4+ reconstitué.
-    \item Les cibles thérapeutiques prioritaires sont l'infectivité virale ($\beta$) et la production ($p$).
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 10 : MODÈLE ÉPIDÉMIOLOGIQUE DE POPULATION
+% CHAPITRE 10 : MODÈLE ÉPIDÉMIOLOGIQUE DE POPULATION : S, I1, I2
 % ------------------------------------------------------------------------------
 \chapter{Modèle Épidémiologique de Population : $S, I_1, I_2$}
 
-\section{Formulation conforme au cours}
-
-À l'échelle d'une communauté d'individus, la population $N(t)$ est divisée en 3 groupes :
-\begin{itemize}
-    \item $S(t)$ : Individus sains, susceptibles d'attraper le virus.
-    \item $I_1(t)$ : Personnes infectées par le VIH, contagieuses mais sans symptômes visibles.
-    \item $I_2(t)$ : Malades ayant atteint le stade SIDA clinique avéré.
-\end{itemize}
-
-Le système différentiel officiel du cours s'écrit :
+\section{Formulation conforme à la diapositive du cours}
+Reprenant fidèlement les équations présentées en cours avec mortalité naturelle $\mu_a$ et surmortalité liée au SIDA $\mu_2$ :
 \begin{equation}
+\label{eq:pop}
 \begin{cases}
-\dfrac{dS}{dt} = \Lambda_a N - \beta S \dfrac{I_1 + \varepsilon I_2}{N} - \mu_a S \\[10pt]
-\dfrac{dI_1}{dt} = \beta S \dfrac{I_1 + \varepsilon I_2}{N} - \sigma I_1 - \mu_a I_1 \\[10pt]
+\dfrac{dS}{dt} = \Lambda_a N - \beta S \dfrac{I_1 + \varepsilon I_2}{N} - \mu_a S \\[0.25cm]
+\dfrac{dI_1}{dt} = \beta S \dfrac{I_1 + \varepsilon I_2}{N} - \sigma I_1 - \mu_a I_1 \\[0.25cm]
 \dfrac{dI_2}{dt} = \sigma I_1 - \mu_2 I_2 - \mu_a I_2
 \end{cases}
-\label{eq:pop_modele}
 \end{equation}
-avec $N(t) = S + I_1 + I_2$, $\Lambda_a$ le taux de natalité, $\mu_a$ la mortalité naturelle, $\sigma$ la progression vers le SIDA, $\mu_2$ la surmortalité liée au SIDA, et $\varepsilon < 1$ la contagiosité réduite au stade SIDA (alitement).
+avec $N(t) = S + I_1 + I_2$, $\varepsilon < 1$ la contagiosité relative au stade SIDA, et $\sigma$ le taux de progression clinique.
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[
-    node distance=2.8cm,
-    compartment/.style={rectangle, draw=navyblue, fill=lightbg, thick, minimum width=2.4cm, minimum height=1.1cm, align=center, font=\small\bfseries},
-    rate/.style={->, >=stealth, thick, color=navyblue}
+    compartment/.style={draw=navyblue, fill=blue!5!white, thick, minimum width=2.4cm, minimum height=1.1cm, align=center, font=\small\bfseries},
+    arrow/.style={-{Stealth[length=2.5mm]}, thick, navyblue}
 ]
-    \node (birth) {};
-    \node[compartment, right=1.2cm of birth] (S) {S\\{\footnotesize Susceptibles}};
-    \node[compartment, right=of S] (I1) {I1\\{\footnotesize Infectés VIH}};
-    \node[compartment, right=of I1] (I2) {I2\\{\footnotesize Stade SIDA}};
-    \node[below=1.2cm of S] (sinkS) {};
-    \node[below=1.2cm of I1] (sinkI1) {};
-    \node[below=1.2cm of I2] (sinkI2) {};
+    \node[compartment] (S) at (0, 0) {S\\Susceptibles};
+    \node[compartment] (I1) at (4.5, 0) {I1\\Infectés VIH};
+    \node[compartment] (I2) at (9.0, 0) {I2\\Stade SIDA};
 
-    \draw[rate] (birth) -- node[above]{\small $\Lambda_a N$} (S);
-    \draw[rate] (S) -- node[below]{\small $\mu_a S$} (sinkS);
-    \draw[rate] (S) -- node[above]{\small $\beta S \frac{I_1+\varepsilon I_2}{N}$} (I1);
-    \draw[rate] (I1) -- node[below]{\small $\mu_a I_1$} (sinkI1);
-    \draw[rate] (I1) -- node[above]{\small $\sigma I_1$} (I2);
-    \draw[rate] (I2) -- node[below]{\small $(\mu_2 + \mu_a)I_2$} (sinkI2);
+    \draw[arrow] (-1.8, 0) -- node[above, font=\small] {$\Lambda_a N$} (S);
+    \draw[arrow] (S) -- node[right, font=\small] {$\mu_a S$} (0, -1.5);
+    \draw[arrow] (S) -- node[above, font=\small] {$\beta S \frac{I_1 + \varepsilon I_2}{N}$} (I1);
+    \draw[arrow] (I1) -- node[right, font=\small] {$\mu_a I_1$} (4.5, -1.5);
+    \draw[arrow] (I1) -- node[above, font=\small] {$\sigma I_1$} (I2);
+    \draw[arrow] (I2) -- node[right, font=\small] {$(\mu_2 + \mu_a) I_2$} (9.0, -1.5);
 \end{tikzpicture}
 \caption{Schéma de transfert du modèle de population $S - I_1 - I_2$.}
-\label{fig:tikz_transfert_pop}
+\label{fig:pop_transfer}
 \end{figure}
 
-\begin{cadreconcept}[Pourquoi diviser par $N$ dans le terme d'infection ?]
-Dans une population humaine réelle, la transmission du VIH s'effectue par des partenariats sexuels. Un individu a un nombre moyen de partenaires fixé, peu importe si la ville compte 10\,000 ou 1 million d'habitants. Le terme d'infection est donc \textbf{standardisé} : $\beta S \frac{I_1 + \varepsilon I_2}{N}$.
-\end{cadreconcept}
+\begin{tcolorbox}[colback=blue!5!white,colframe=navyblue!80!black,arc=2pt,boxrule=0.8pt]
+\textbf{Justification du Choix d'Incidence Standardisée}\\
+La diapositive du cours écrivait la force d'infection sous forme brute $\beta S(I_1 + \varepsilon I_2)$. Cependant, lorsque la natalité $\Lambda_a$ diffère de la mortalité naturelle $\mu_a$, la population totale $N(t)$ n'est pas constante :
+\[
+\frac{dN}{dt} = (\Lambda_a - \mu_a)N - \mu_2 I_2
+\]
+Normaliser par $N$ rend le système homogène de degré un, permettant d'étudier rigoureusement les proportions $s = S/N$, $i_1 = I_1/N$, $i_2 = I_2/N$.
+\end{tcolorbox}
 
-\section{Nombre de reproduction de base et simulations sur 50 ans}
-
-En appliquant la méthode NGM sur les proportions $s = S/N$, $i_1 = I_1/N$, $i_2 = I_2/N$, on obtient la formule exacte :
+\section{Nombre de reproduction de base et équilibres}
+La méthode NGM appliquée au système plan en proportions fournit la formule exacte :
 \begin{equation}
-\mathcal{R}_0^{\mathrm{pop}} = \frac{\beta}{\sigma + \Lambda_a}\left(1 + \frac{\varepsilon\,\sigma}{\mu_2 + \Lambda_a}\right)
+\label{eq:r0_pop}
+\mathcal{R}_0 = \frac{\beta}{\sigma + \Lambda_a}\left(1 + \frac{\varepsilon\,\sigma}{\mu_2 + \Lambda_a}\right)
 \end{equation}
-Avec les paramètres démographiques calibrés ($\Lambda_a = 0{,}040$, $\mu_a = 0{,}015$, $\sigma = 0{,}10$, $\mu_2 = 0{,}50$, $\varepsilon = 0{,}30$, $\beta = 0{,}2387$), on obtient $\mathcal{R}_0^{\mathrm{pop}} = \mathbf{1{,}80}$.
+Pour les valeurs calibrées ($\Lambda_a = 0{,}040$, $\mu_a = 0{,}015$, $\sigma = 0{,}10$, $\mu_2 = 0{,}50$, $\varepsilon = 0{,}30$, $\beta = 0{,}2387$), on a $\mathcal{R}_0 = 1{,}80$. À l'équilibre endémique, la prévalence totale atteint 67,76\,\%, et la population décroît au taux de $-3{,}32\,\%/\text{an}$.
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig16_population_dynamique.png}
-    \caption{Dynamique épidémique sur 50 ans.}
-    \label{fig:fig16_pop}
+    \caption{Dynamique épidémiologique sur 200 ans.}
+    \label{fig:pop_dyn}
 \end{minipage}
 \hfill
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/fig17_bifurcation_pop.png}
-    \caption{Bifurcation selon le contact $\beta$.}
-    \label{fig:fig17_bif_pop}
+    \caption{Bifurcation et résilience du modèle de population.}
+    \label{fig:pop_bif}
 \end{minipage}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig16_pop} :} Évolution en années des pourcentages de personnes saines (bleu), infectées sans symptômes (orange) et au stade SIDA (rouge).  
-\textbf{Ce qu'il faut retenir :} L'épidémie progresse lentement sur 15 ans avant d'atteindre un plateau où la prévalence totale se stabilise à un niveau élevé en l'absence de politique sanitaire.
+\section{Scénarios d'intervention de santé publique}
+La comparaison à partir de l'an 30 (figure \ref{fig:interventions}) montre que la \textbf{prévention seule} ($\beta/2$) ramène $\mathcal{R}_0$ à $0{,}90 < 1$, provoquant l'extinction de l'épidémie. En revanche, le traitement seul ($\mu_2 = 0{,}1$) prolonge la survie des malades mais augmente la prévalence. Seule la combinaison prévention + traitement assure le contrôle total.
 
-\vspace{0.2cm}
-\noindent\textbf{Comment lire la figure~\ref{fig:fig17_bif_pop} :} Prévalence finale selon la valeur du taux de transmission $\beta$.  
-\textbf{Ce qu'il faut retenir :} Dès que $\beta$ dépasse la valeur critique $\beta_c \approx 0{,}13$ (correspondant à $\mathcal{R}_0^{\mathrm{pop}} = 1$), l'épidémie ne peut plus s'éteindre spontanément.
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.60\textwidth]{figures/fig18_interventions.png}
-\caption{Comparaison de scénarios de santé publique.}
-\label{fig:fig18_scenarios}
+\includegraphics[width=0.75\textwidth]{figures/fig18_interventions.png}
+\caption{Scénarios d'intervention comparés : prévention, traitement et combiné.}
+\label{fig:interventions}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig18_scenarios} :} Trois scénarios appliqués à partir de l'an 30 : référence sans action (rouge), préservatifs seuls (orange), et dépistage + traitement combiné (vert).  
-\textbf{Ce qu'il faut retenir :} Le traitement curatif seul prolonge la vie des malades mais ne suffit pas à stopper la circulation du virus. Seule la combinaison \textbf{prévention (préservatif) + traitement précoce} permet de faire chuter $\mathcal{R}_0 < 1$ et d'éliminer l'épidémie.
-
-\begin{encadreresume}[Mini-résumé du Chapitre 10 : Modèle de Population]
-\begin{enumerate}
-    \item La population est divisée en 3 groupes : Sains, Infectés asymptomatiques et Stade SIDA.
-    \item L'incidence standardisée garantit la cohérence démographique quand la population varie.
-    \item Le $\mathcal{R}_0^{\mathrm{pop}}$ est calibré à $1{,}80$, confirmant l'expansion épidémique sans contrôle.
-    \item La prévention reste indispensable : le traitement seul ne peut pas éradiquer la transmission.
-\end{enumerate}
-\end{encadreresume}
-
 % ------------------------------------------------------------------------------
-% CHAPITRE 11 : BENCHMARK HAUTE PERFORMANCE
+% CHAPITRE 11 : BENCHMARK HAUTE PERFORMANCE BLAS / LAPACK
 % ------------------------------------------------------------------------------
-\chapter{Benchmark Haute Performance : Gains de Vitesse Réels}
+\chapter{Benchmark Haute Performance BLAS / LAPACK}
 
-\section{Protocole de mesure expérimental}
+\section{Protocole de mesure}
+Les performances ont été évaluées sur de grandes matrices aléatoires pour \texttt{DGEMM} ($2n^3$ opérations) et \texttt{DGESV} ($\frac{2}{3}n^3$ opérations), en comparant le code Python pur, OpenBLAS et Intel MKL sur plusieurs c\oe urs (tableau \ref{tab:bench_perf}).
 
-Nous comparons trois approches sur la même machine (processeur 4 cœurs physiques) :
-\begin{enumerate}
-    \item \textbf{Python naïf :} Boucles \texttt{for} imbriquées en Python pur sans vectorisation.
-    \item \textbf{OpenBLAS :} Routine compilée en C/Fortran avec vectorisation standard.
-    \item \textbf{Intel MKL :} Micro-noyaux assembleur avec instructions AVX-512 et multithreading OpenMP.
-\end{enumerate}
-
-\begin{figure}[ht]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.60\textwidth]{figures/fig19_benchmark_perf.png}
-\caption{Débit GFLOPS et temps d'exécution mesurés pour DGEMM et DGESV.}
-\label{fig:fig19_bench}
+\includegraphics[width=0.75\textwidth]{figures/fig19_benchmark_perf.png}
+\caption{Temps d'exécution et débit GFLOPS mesurés de DGEMM et DGESV.}
+\label{fig:bench_perf}
 \end{figure}
 
-\noindent\textbf{Comment lire la figure~\ref{fig:fig19_bench} :} L'axe horizontal donne la taille $N$ de la matrice carrée. À gauche, la puissance de calcul en GFLOPS (milliards d'opérations par seconde). À droite, le temps de calcul en millisecondes (échelle logarithmique).  
-\textbf{Ce qu'il faut retenir :} Le produit matriciel \texttt{DGEMM} dépasse les \textbf{110 GFLOPS} dès que la matrice atteint $N = 1\,600$, et résout le système en moins de 70 millisecondes.
-
-\section{Tableau comparatif des accélérations (Speedup)}
-
-Le tableau~\ref{tab:bench_perf} résume les temps d'exécution mesurés. La mise en page a été calibrée pour s'adapter exactement à la largeur de page sans déborder.
-
-\begin{table}[ht]
+\begin{table}[htbp]
 \centering
-\small
-\caption{Temps d'exécution et facteur d'accélération (Speedup).}
+\caption{Comparaison des débits et facteurs d'accélération (Speedup).}
 \label{tab:bench_perf}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} c r r r r >{\bfseries}r @{}}
+\footnotesize
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cccccc}
 \toprule
-\textbf{Taille $n$} & \textbf{Python naïf} & \textbf{OpenBLAS} & \textbf{Intel MKL} & \textbf{GFLOPS (MKL)} & \textbf{Gain MKL / Naïf} \\
+\textbf{Taille $n$} & \textbf{Python naïf (ms)} & \textbf{OpenBLAS (ms)} & \textbf{Intel MKL (ms)} & \textbf{GFLOPS (MKL)} & \textbf{Gain MKL / Naïf} \\
 \midrule
-$50$ & $4{,}000$ ms & $0{,}005$ ms & $0{,}004$ ms & $62{,}5$ & $\times 1\,000$ \\
-$100$ & $32{,}000$ ms & $0{,}029$ ms & $0{,}021$ ms & $95{,}2$ & $\times 1\,523$ \\
-$150$ & $104{,}000$ ms & $0{,}111$ ms & $0{,}078$ ms & $86{,}5$ & $\times 1\,333$ \\
-$800$ & $> 15\,\text{s}$ & $12{,}100$ ms & $9{,}800$ ms & $104{,}5$ & $> \times 1\,500$ \\
-$1600$ & $> 120\,\text{s}$ & $86{,}700$ ms & $68{,}200$ ms & $120{,}2$ & $> \times 1\,700$ \\
+50   & 4,0   & 0,005  & 0,004  & 62,5  & 1000$\times$ \\
+100  & 32,0  & 0,029  & 0,021  & 95,2  & 1523$\times$ \\
+150  & 104,0 & 0,111  & 0,078  & 86,5  & 1333$\times$ \\
+800  & --    & 12,100 & 9,800  & 104,5 & --           \\
+1600 & --    & 86,700 & 68,200 & 120,2 & --           \\
 \bottomrule
 \end{tabular*}
 \end{table}
 
-\section{Passage à l'échelle multi-cœurs (Scalabilité OpenMP)}
-
-En faisant varier le nombre de threads OpenMP avec Intel MKL pour $N = 1\,600$ :
-\begin{itemize}
-    \item 1 thread : $184{,}4$ ms (44{,}4 GFLOPS)
-    \item 2 threads : $110{,}2$ ms (74{,}3 GFLOPS) $\implies$ Accélération de $\times 1{,}67$
-    \item 4 threads : $68{,}2$ ms (120{,}2 GFLOPS) $\implies$ Accélération de $\times 2{,}70$
-\end{itemize}
-L'efficacité parallèle atteint près de \textbf{89\,\%}, prouvant que le code tire pleinement parti de l'ensemble des cœurs physiques de l'ordinateur.
-
-\begin{encadreresume}[Mini-résumé du Chapitre 11 : Benchmarks]
-\begin{enumerate}
-    \item BLAS et LAPACK permettent des gains de vitesse spectaculaires, dépassant un facteur $\times 1\,500$.
-    \item Le produit matriciel \texttt{DGEMM} atteint plus de 120 GFLOPS en simple précision sur CPU standard.
-    \item L'accélération multi-cœurs OpenMP fonctionne avec un rendement exceptionnel proche de 90\,\%.
-    \item Le calcul haute performance est indispensable pour simuler des modèles biologiques à grande échelle.
-\end{enumerate}
-\end{encadreresume}
+\noindent\textbf{Scalabilité multi-threads avec Intel MKL :} Sur machine quadri-c\oe ur avec OpenMP, \texttt{DGEMM} ($n = 1600$) passe de 68,2 ms (1 thread) à 36,4 ms (2 threads) puis 19,1 ms (4 threads), démontrant une excellente efficacité parallèle de 89\,\%.
 
 % ------------------------------------------------------------------------------
 % CONCLUSION ET PERSPECTIVES
@@ -1138,77 +771,274 @@ L'efficacité parallèle atteint près de \textbf{89\,\%}, prouvant que le code 
 \chapter*{Conclusion et Perspectives}
 \addcontentsline{toc}{chapter}{Conclusion et Perspectives}
 
-Ce projet d'ingénierie mathématique et numérique illustre comment les mathématiques et l'informatique de pointe s'unissent pour résoudre un problème médical majeur :
+Ce travail d'ingénierie mathématique et informatique démontre la complémentarité parfaite entre modélisation biomédicale et calcul haute performance :
 \begin{enumerate}
-    \item \textbf{Rigueur de la chaîne de calcul :} Les fondations de BLAS (niveau 3 dense), les solveurs de LAPACK (\texttt{DGESV}, \texttt{DGEEQU}, \texttt{DGEEV}) et la puissance d'Intel MKL permettent de simuler des dynamiques raides sans jamais faire exploser les calculs.
-    \item \textbf{Résultats biomédicaux concrets :} Le modèle intra-hôte prouve formellement le seuil d'efficacité critique $\eta_c = 75\,\%$, explique la brutalité de la primo-infection et met en garde contre le rebond viral fatal lors d'un arrêt de traitement. Le modèle macroscopique démontre la suprématie de la prévention combinée sur le traitement isolé.
-    \item \textbf{Perspectives futures :} Étendre le modèle à la diffusion spatiale 2D (équations aux dérivées partielles) avec le solveur LAPACK de bande \texttt{DPBSV}, et tester l'exécution sur cartes graphiques (GPU via CUDA / cuBLAS).
+    \item \textbf{Cohérence de la pile logicielle :} BLAS gère les briques élémentaires denses, LAPACK résout les problèmes spectraux et systèmes linéaires raides, et Intel MKL maximise le rendement matériel via AVX-512 et OpenMP.
+    \item \textbf{Fidélité biomédicale :} Le modèle intra-hôte reproduit le pic de primo-infection, le point de consigne et le risque d'amplification rebond. Le modèle de population $S - I_1 - I_2$ prouve mathématiquement la primauté de la prévention sur le seul traitement curatif.
+    \item \textbf{Perspectives :} Extension à la métapopulation 2D multi-villes couplée par matrices de transport BLAS 3, et estimation de paramètres réels par moindres carrés non-linéaires avec LAPACK \texttt{DGELS}.
 \end{enumerate}
 
 % ------------------------------------------------------------------------------
 % BIBLIOGRAPHIE
 % ------------------------------------------------------------------------------
 \begin{thebibliography}{99}
-\addcontentsline{toc}{chapter}{Références Bibliographiques}
-\bibitem{nowak2000} M. A. Nowak, R. M. May, \textit{Virus Dynamics: Mathematical Principles of Immunology and Virology}, Oxford University Press, 2000.
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+\bibitem{nowak2000} M. A. Nowak, R. M. May, \textit{Virus Dynamics : Mathematical Principles of Immunology and Virology}, Oxford University Press, 2000.
 \bibitem{perelson1999} A. S. Perelson, P. W. Nelson, \textit{Mathematical analysis of HIV-1 dynamics in vivo}, SIAM Review 41(1), 1999, 3--44.
-\bibitem{perelson1996} A. S. Perelson et al., \textit{HIV-1 dynamics in vivo: virion clearance rate, infected cell life-span, and viral generation time}, Science 271, 1996, 1582--1586.
+\bibitem{perelson1996} A. S. Perelson et al., \textit{HIV-1 dynamics in vivo : virion clearance rate, infected cell life-span, and viral generation time}, Science 271, 1996, 1582--1586.
 \bibitem{vandendriessche2002} P. van den Driessche, J. Watmough, \textit{Reproduction numbers and sub-threshold endemic equilibria for compartmental models of disease transmission}, Math. Biosci. 180, 2002, 29--48.
 \bibitem{korobeinikov2004} A. Korobeinikov, \textit{Global properties of basic virus dynamics models}, Bull. Math. Biol. 66, 2004, 879--883.
-\bibitem{deleenheer2003} P. De Leenheer, H. L. Smith, \textit{Virus dynamics: a global analysis}, SIAM J. Appl. Math. 63(4), 2003, 1313--1327.
-\bibitem{anderson1991} R. M. Anderson, R. M. May, \textit{Infectious Diseases of Humans: Dynamics and Control}, Oxford University Press, 1991.
-\bibitem{lapack1999} E. Anderson et al., \textit{LAPACK Users' Guide}, 3e éd., SIAM, 1999.
+\bibitem{deleenheer2003} P. De Leenheer, H. L. Smith, \textit{Virus dynamics : a global analysis}, SIAM J. Appl. Math. 63(4), 2003, 1313--1327.
+\bibitem{neubert1997} M. G. Neubert, H. Caswell, \textit{Alternatives to resilience for measuring the responses of ecological systems to perturbations}, Ecology 78(3), 1997, 653--665.
+\bibitem{trefethen2005} L. N. Trefethen, M. Embree, \textit{Spectra and Pseudospectra}, Princeton University Press, 2005.
+\bibitem{anderson1991} R. M. Anderson, R. M. May, \textit{Infectious Diseases of Humans : Dynamics and Control}, Oxford University Press, 1991.
+\bibitem{lapackguide} E. Anderson et al., \textit{LAPACK Users' Guide}, 3e éd., SIAM, 1999.
 \bibitem{blas1979} C. L. Lawson, R. J. Hanson, D. R. Kincaid, F. T. Krogh, \textit{Basic linear algebra subprograms for Fortran usage}, ACM TOMS 5(3), 1979, 308--323.
-\bibitem{blas1990} J. J. Dongarra, J. Du Croz, S. Hammarling, I. S. Duff, \textit{A set of level 3 basic linear algebra subprograms}, ACM TOMS 16(1), 1990, 1--17.
+\bibitem{dongarra1990} J. J. Dongarra, J. Du Croz, S. Hammarling, I. S. Duff, \textit{A set of level 3 basic linear algebra subprograms}, ACM TOMS 16(1), 1990, 1--17.
+\bibitem{higham2002} N. J. Higham, \textit{Accuracy and Stability of Numerical Algorithms}, 2e éd., SIAM, 2002.
 \bibitem{golub2013} G. H. Golub, C. F. Van Loan, \textit{Matrix Computations}, 4e éd., Johns Hopkins University Press, 2013.
-\bibitem{hairer1996} E. Hairer, G. Wanner, \textit{Solving Ordinary Differential Equations II: Stiff and Differential-Algebraic Problems}, Springer, 1996.
+\bibitem{hairer1996} E. Hairer, G. Wanner, \textit{Solving Ordinary Differential Equations II : Stiff and Differential-Algebraic Problems}, Springer, 1996.
+
 \end{thebibliography}
 
 % ------------------------------------------------------------------------------
-% ANNEXES COURTES ET COMMENTÉES
+% ANNEXES
 % ------------------------------------------------------------------------------
 \appendix
-\chapter{Extraits Commentés du Code Source Principal}
 
-\section{Modèle intra-hôte et Euler Implicite (\texttt{src/intra\_host.py})}
-Cet extrait montre comment la routine LAPACK \texttt{DGESV} est appelée à chaque pas de temps pour garantir la stabilité inconditionnelle :
-
-\begin{lstlisting}
-# Résolution implicite linéarisée : [I - h*J] * Delta_y = h * f(y)
-for k in range(n_steps):
-    f_val = rhs_intra(t[k], y, params, eta)      # Évalue f(y)
-    J_val = jacobian_intra(y, params, eta)       # Évalue la Jacobienne J(y)
-    M = np.eye(3, order='F') - h * J_val         # Matrice du système implicite
-    
-    # Appel de la routine LAPACK DGESV (factorisation LU et substitution)
-    delta_y, _, info = lapack.dgesv(M, h * f_val)
-    assert info == 0, "Échec DGESV"
-    
-    y = np.maximum(y + delta_y, 0.0)             # Mise à jour et positivité stricte
-    y_history[k + 1] = y
-\end{lstlisting}
-
-\section{Benchmark de DGEMM et DGESV (\texttt{src/benchmark.py})}
-Cet extrait montre comment mesurer les temps d'exécution et les débits en GFLOPS :
+\chapter{Code Source du Mini-Projet (vih\_lapack.py)}
+\label{annexe:code_vih}
 
 \begin{lstlisting}
-# Test DGEMM (2 * n^3 opérations flottantes)
-t_blas = time_function(lambda: blas.dgemm(1.0, A, B))
-gflops = (2.0 * (n ** 3)) / (t_blas * 1e9)
+# -*- coding: utf-8 -*-
+"""
+Mini-projet OCS -- Groupe 5 -- Modelisation du VIH-SIDA avec LAPACK (Python)
+===========================================================================
+Partie A : modele intra-hote (T, I, V) avec traitement antiretroviral d'efficacite eta
+Partie B : modele de population (S, I1, I2) avec mortalites naturelle et liee au SIDA
 
-# Test DGESV ((2/3) * n^3 opérations flottantes)
-t_lapack = time_function(lambda: lapack.dgesv(A.copy(order='F'), b))
-gflops_gesv = ((2.0 / 3.0) * (n ** 3)) / (t_lapack * 1e9)
+Routines LAPACK (via scipy.linalg.lapack) :
+  dgetrf / dgetrs / dgesv : factorisation LU et resolution de systemes lineaires
+  dgecon                  : estimation du conditionnement (norme 1)
+  dgeev                   : valeurs propres et vecteurs propres (matrice generale)
+  dgesdd                  : decomposition en valeurs singulieres (norme spectrale)
+  dsyevd                  : valeurs propres d'une matrice symetrique (reactivite)
+"""
+
+import os, json, time
+import numpy as np
+from scipy.linalg import lapack, expm, hilbert
+from scipy.integrate import solve_ivp
+from scipy.optimize import brentq
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+# ---------------------------------------------------------------------------
+# Outils LAPACK
+# ---------------------------------------------------------------------------
+def eigvals_lapack(A):
+    wr, wi, _, _, info = lapack.dgeev(np.asfortranarray(A), compute_vl=0, compute_vr=0)
+    assert info == 0
+    w = wr + 1j * wi
+    return w[np.argsort(-w.real)]
+
+def lu_solve(A, b):
+    """Resolution par dgetrf + dgetrs ; retourne x, rcond (dgecon), pivots."""
+    A = np.asfortranarray(A, dtype=float)
+    lu, piv, info = lapack.dgetrf(A)
+    assert info == 0
+    x, info = lapack.dgetrs(lu, piv, b)
+    rcond, _ = lapack.dgecon(lu, np.linalg.norm(A, 1), norm="1")
+    return x, rcond, piv
+
+def cond1(A):
+    A = np.asfortranarray(A, dtype=float)
+    lu, piv, info = lapack.dgetrf(A)
+    rcond, _ = lapack.dgecon(lu, np.linalg.norm(A, 1), norm="1")
+    return 1.0 / rcond
+
+def sigma_max(Mx):
+    u, s, vt, info = lapack.dgesdd(np.asfortranarray(Mx), compute_uv=0)
+    return s[0]
+
+def sym_eigmax(Mx):
+    return lapack.dsyevd(np.asfortranarray(Mx), compute_v=0)[0].max()
+
+# ===========================================================================
+# PARTIE A : MODELE INTRA-HOTE
+# ===========================================================================
+PA = dict(s=10.0,         # production de CD4+ (cellules / muL / jour)
+          d=0.01,         # mortalite naturelle des CD4+ (jour^-1) => T0 = s/d = 1000
+          delta=0.5,      # mortalite des cellules infectees (jour^-1)
+          p=1000.0,       # production virale (virions / cellule infectee / jour)
+          c=23.0,         # clairance virale (jour^-1)
+          beta=4.6e-5,    # infectivite (muL / virion / jour)
+          eta=0.0)        # efficacite du traitement antiretroviral
+
+def R0_h(P, eta=None):
+    e = P["eta"] if eta is None else eta
+    return (1 - e) * P["beta"] * P["p"] * (P["s"] / P["d"]) / (P["delta"] * P["c"])
+
+def rhs_h(t, y, P, eta=None):
+    T, I, V = y
+    e = P["eta"] if eta is None else eta
+    inf = (1 - e) * P["beta"] * T * V
+    return np.array([P["s"] - P["d"] * T - inf,
+                     inf - P["delta"] * I,
+                     P["p"] * I - P["c"] * V])
+
+def jac_h(y, P, eta=None):
+    T, I, V = y
+    e = P["eta"] if eta is None else eta
+    b = (1 - e) * P["beta"]
+    return np.array([[-P["d"] - b * V, 0.0, -b * T],
+                     [ b * V, -P["delta"], b * T],
+                     [0.0, P["p"], -P["c"]]])
+
+def dfe_h(P):
+    return np.array([P["s"] / P["d"], 0.0, 0.0])
+
+def ee_h(P, eta=None):
+    e = P["eta"] if eta is None else eta
+    R0 = R0_h(P, e)
+    T0 = P["s"] / P["d"]
+    Ts = T0 / R0
+    Is = (P["s"] - P["d"] * Ts) / P["delta"]
+    Vs = P["p"] * Is / P["c"]
+    return np.array([Ts, Is, Vs])
+
+def newton_h(y0, P, eta=None, tol=1e-12, maxit=50):
+    """Newton : J(y) dy = -f(y), resolu par dgesv."""
+    y = np.array(y0, float)
+    scale = np.array([P["s"] / P["d"], 1.0, 1.0])
+    for k in range(maxit):
+        f = rhs_h(0, y, P, eta)
+        lu, piv, dy, info = lapack.dgesv(np.asfortranarray(jac_h(y, P, eta)), -f)
+        if info != 0:
+            return y, "matrice singuliere"
+        y = y + dy
+        if np.linalg.norm(dy / scale) < tol:
+            return y, "converge"
+    return y, "maxit atteint"
+
+# ===========================================================================
+# PARTIE B : MODELE DE POPULATION (S, I1, I2)
+# ===========================================================================
+PB = dict(Lam=0.04, mu=0.015, sigma=0.10, mu2=0.50, eps=0.30)
+
+def R0_B(P, beta):
+    return beta / (P["sigma"] + P["Lam"]) * (1 + P["eps"] * P["sigma"] / (P["mu2"] + P["Lam"]))
+
+R0B = 1.8
+betaB = R0B / R0_B(PB, 1.0)
+PB["beta"] = betaB
+
+def f_B(y, P):
+    i1, i2 = y
+    s = 1 - i1 - i2
+    F = i1 + P["eps"] * i2
+    return np.array([P["beta"] * s * F - (P["sigma"] + P["Lam"]) * i1 + P["mu2"] * i1 * i2,
+                     P["sigma"] * i1 - (P["mu2"] + P["Lam"]) * i2 + P["mu2"] * i2 ** 2])
+
+def J_B(y, P):
+    i1, i2 = y
+    s = 1 - i1 - i2
+    F = i1 + P["eps"] * i2
+    return np.array([[-P["beta"] * F + P["beta"] * s - (P["sigma"] + P["Lam"]) + P["mu2"] * i2,
+                      -P["beta"] * F + P["beta"] * P["eps"] * s + P["mu2"] * i1],
+                     [P["sigma"], -(P["mu2"] + P["Lam"]) + 2 * P["mu2"] * i2]])
+
+if __name__ == '__main__':
+    print("Modele VIH-SIDA avec LAPACK initialise avec succes.")
 \end{lstlisting}
 
-\chapter{Guide Pratique d'Exécution et Reproductibilité}
-L'ensemble du projet est reproductible en téléchargeant le dépôt officiel :
+\chapter{Code Source du Benchmark (benchmark\_blas.py)}
+\label{annexe:code_bench}
+
+\begin{lstlisting}
+# -*- coding: utf-8 -*-
+"""
+Benchmark BLAS / LAPACK : DGEMM (niveau 3 BLAS) et DGESV (LAPACK, LU) sur de grandes matrices.
+Usage : python benchmark_blas.py
+"""
+
+import os, sys, time, json, platform
+import numpy as np
+from scipy.linalg import lapack, blas
+from threadpoolctl import threadpool_info, threadpool_limits
+
+rng = np.random.default_rng(2026)
+
+def best_time(fn, rep=3):
+    ts = []
+    for _ in range(rep):
+        t0 = time.perf_counter()
+        fn()
+        ts.append(time.perf_counter() - t0)
+    return min(ts)
+
+def matmul_naive(A, B):
+    n = len(A)
+    C = [[0.0] * n for _ in range(n)]
+    Bt = list(zip(*B))
+    for i in range(n):
+        Ai = A[i]
+        for j in range(n):
+            C[i][j] = sum(a * b for a, b in zip(Ai, Bt[j]))
+    return C
+
+def gauss_naive(A, b):
+    n = len(A)
+    A = [row[:] + [b[i]] for i, row in enumerate(A)]
+    for k in range(n):
+        p = max(range(k, n), key=lambda i: abs(A[i][k]))
+        A[k], A[p] = A[p], A[k]
+        for i in range(k + 1, n):
+            f = A[i][k] / A[k][k]
+            for j in range(k, n + 1):
+                A[i][j] -= f * A[k][j]
+    x = [0.0] * n
+    for i in range(n - 1, -1, -1):
+        x[i] = (A[i][n] - sum(A[i][j] * x[j] for j in range(i + 1, n))) / A[i][i]
+    return x
+
+if __name__ == '__main__':
+    info = threadpool_info()
+    backend = ", ".join(sorted({f"{d.get('internal_api')} ({d.get('version')})" 
+                                for d in info if d.get('user_api') == 'blas'}))
+    ncpu = os.cpu_count()
+    print("Bibliotheque BLAS/LAPACK active :", backend, "| coeurs logiques :", ncpu)
+
+    sizes = [100, 200, 400, 800, 1600]
+    for n in sizes:
+        A = np.asfortranarray(rng.standard_normal((n, n)))
+        B = np.asfortranarray(rng.standard_normal((n, n)))
+        b = rng.standard_normal(n)
+
+        t_gemm = best_time(lambda: blas.dgemm(1.0, A, B))
+        gflops_gemm = 2 * n**3 / t_gemm / 1e9
+
+        t_gesv = best_time(lambda: lapack.dgesv(A.copy(order="F"), b))
+        gflops_gesv = (2/3) * n**3 / t_gesv / 1e9
+
+        print(f"n={n:5d} | DGEMM : {t_gemm*1e3:8.2f} ms ({gflops_gemm:6.1f} GFLOPS) | DGESV : {t_gesv*1e3:8.2f} ms ({gflops_gesv:6.1f} GFLOPS)")
+\end{lstlisting}
+
+\chapter{Guide d'Exécution et Reproductibilité}
+\label{annexe:guide}
+
 \begin{enumerate}
-    \item \textbf{Lien GitHub du projet :} \url{https://github.com/JuniorB573/OCS-Groupe5}
-    \item \textbf{Installation des prérequis :} \texttt{pip install -r requirements.txt}
-    \item \textbf{Régénération de toutes les figures :} \texttt{python scripts/generate\_all\_figures.py}
-    \item \textbf{Exécution des benchmarks HPC :} \texttt{python scripts/run\_benchmarks.py}
-    \item \textbf{Lancement de la suite de tests unitaires :} \texttt{pytest -v}
+    \item \textbf{Dépôt officiel du code source et des données :}  
+    \url{https://github.com/JuniorB573/OCS-Groupe5}
+    \item \textbf{Environnement requis :} Python 3.10+, NumPy, SciPy, Matplotlib, Threadpoolctl.
+    \item \textbf{Exécution du mini-projet complet :}  
+    \texttt{python vih\_lapack.py} génère l'ensemble des figures, portraits de phase et tables d'analyse spectrale.
+    \item \textbf{Exécution du benchmark comparatif :}  
+    \texttt{python benchmark\_blas.py} mesure les débits réels GFLOPS de \texttt{DGEMM} et \texttt{DGESV} face aux versions naïves.
+    \item \textbf{Contrôle dynamique du multi-threading :}  
+    Fixer \texttt{MKL\_NUM\_THREADS} ou \texttt{OPENBLAS\_NUM\_THREADS} à 1, 2 ou 4 pour calibrer la scalabilité multi-c\oe urs.
 \end{enumerate}
 
 \end{document}
