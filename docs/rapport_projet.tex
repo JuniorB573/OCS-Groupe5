@@ -64,6 +64,7 @@
         {é}{{\'e}}1 {è}{{\`e}}1 {à}{{\`a}}1 {ê}{{\^e}}1 {ë}{{\"e}}1
         {î}{{\^i}}1 {ï}{{\"i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {ù}{{\`u}}1
         {ç}{{\c{c}}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {œ}{{\oe}}1
+        {Ï}{{\"I}}1 {Î}{{\^I}}1 {Ê}{{\^E}}1 {Ë}{{\"E}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {Â}{{\^A}}1
         {µ}{{$\mu$}}1 {°}{{$^\circ$}}1 {—}{{---}}1 {’}{{'}}1 {…}{{\dots}}1
 }
 
@@ -196,10 +197,10 @@
 % TABLE DES MATIÈRES
 % ------------------------------------------------------------------------------
 \newpage
-\pagenumbering{roman}
+\pagenumbering{arabic}
+\setcounter{page}{1}
 \tableofcontents
 \newpage
-\pagenumbering{arabic}
 
 % ------------------------------------------------------------------------------
 % INTRODUCTION
@@ -228,7 +229,7 @@ Dans le domaine biomédical, le suivi clinique des personnes vivant avec le VIH 
     \item \textbf{Étude Théorique des Bibliothèques de Base :} Exposer les fondements mathématiques et informatiques de BLAS (Niveaux 1, 2, 3), LAPACK (factorisations LU, Cholesky, décompositions spectrales) et Intel MKL.
     \item \textbf{Formulation d'un Nouveau Modèle VIH Réaliste :} Modéliser rigoureusement les interactions entre lymphocytes T CD4+, cellules infectées, souche sauvage sensible et souche mutante résistante au sein d'une cohorte clinique hétérogène.
     \item \textbf{Intégration Temporelle Matricielle :} Établir le schéma matriciel scindé $\dot{\mathbf{Y}} = \mathbf{S} + \mathbf{Y}\mathbf{M}^T + \mathbf{\Phi}\mathbf{A}^T$ résolu par un algorithme de Runge-Kutta d'ordre 4 (RK4) vectorisé.
-    \item \textbf{Analyse Pronostique Haute Performance (LAPACK) :} Identifier les biomarqueurs d'échec thérapeutique par régression régularisée de Ridge résolue via Cholesky (\texttt{DPOTRF}/\texttt{DPOTRS}) et cartographier les profils patients par ACP spectrale (\texttt{DSYEVD}).
+    \item \textbf{Analyse Pronostique Haute Performance (LAPACK) :} Identifier les biomarqueurs d'échec thérapeutique par régression régularisée de Ridge résolue via Cholesky (\texttt{DPOTRF} / \texttt{DPOTRS}) et cartographier les profils patients par ACP spectrale (\texttt{DSYEVD}).
     \item \textbf{Campagne de Benchmarks et Validation Rigoureuse :} Mesurer les temps d'exécution, facteurs d'accélération (Speedup), débits en GFLOPS et scalabilité multithread OpenMP en confrontant la bibliothèque Intel aux approches naïves.
 \end{enumerate}
 
@@ -237,8 +238,10 @@ Dans le domaine biomédical, le suivi clinique des personnes vivant avec le VIH 
 \begin{itemize}
     \item \textbf{Chapitres 1 à 3 :} Fondements théoriques de BLAS (Niveaux 1, 2, 3 et intensité arithmétique), LAPACK (factorisations LU, Cholesky, décompositions spectrales) et Intel oneAPI MKL (SIMD AVX2/AVX-512, bibliothèque vectorielle VML).
     \item \textbf{Chapitre 4 : Installation, Configuration et Utilisation des Bibliothèques} (déploiement Conda/pip, détection dynamique des micro-noyaux avec \texttt{threadpoolctl}, contrôle des threads OpenMP et stockage mémoire Fortran zéro-copie).
-    \item \textbf{Chapitre 5 à 7 :} Modélisation biomédicale de cohorte VIH, formulation tensorielle matricielle scindée $\dot{\mathbf{Y}} = \mathbf{S} + \mathbf{Y}\mathbf{M}^T + \mathbf{\Phi}\mathbf{A}^T$, intégration Runge-Kutta 4 (BLAS 3) et analyse pronostique LAPACK (Cholesky et ACP).
+    \item \textbf{Chapitres 5 à 7 :} Modélisation biomédicale de cohorte VIH, formulation tensorielle matricielle scindée $\dot{\mathbf{Y}} = \mathbf{S} + \mathbf{Y}\mathbf{M}^T + \mathbf{\Phi}\mathbf{A}^T$, intégration Runge-Kutta 4 (BLAS 3) et analyse pronostique LAPACK (Cholesky et ACP).
     \item \textbf{Chapitres 8 et 9 :} Résultats médicaux cliniques et campagne de benchmarks comparatifs (confrontation méthodique avec les méthodes lentes naïves).
+    \item \textbf{Chapitre 10 : Guide d'Exécution et Reproductibilité} (protocoles d'exécution pas à pas, reproduction de la simulation, des benchmarks et de la validation formelle pytest).
+    \item \textbf{Annexes A et B :} Codes sources exhaustifs documentés du simulateur, des modèles naïfs, des solveurs LAPACK, du banc d'essai et des tests unitaires.
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -756,6 +759,151 @@ L'évaluation du passage à l'échelle en faisant varier le nombre de threads Op
 Comme le modélise la \textbf{loi d'Amdahl}, l'accélération parallèle présente un amortissement lorsque la taille des matrices par tranche de thread approche la taille des lignes de cache L1/L2, soulignant l'importance d'adapter le nombre de threads à la granulométrie du problème médical.
 
 % ------------------------------------------------------------------------------
+% CHAPITRE 10 : GUIDE D'EXÉCUTION ET REPRODUCTIBILITÉ
+% ------------------------------------------------------------------------------
+\chapter{Guide d'Exécution et Reproductibilité}
+
+\section{Philosophie de la Reproductibilité Computationnelle}
+Dans le cadre de l'ingénierie mathématique et du calcul scientifique haute performance (HPC), la reproductibilité intégrale des simulations et des bancs d'essai constitue un impératif méthodologique fondamental. Conformément aux directives de la recherche reproductible en calcul biomédical, l'intégralité du code source, des données de paramétrage, des scripts de tracé et du document \LaTeX\ est versionnée sous Git et mise à disposition sur le dépôt officiel du projet.
+
+\begin{tcolorbox}[colback=lightbg,colframe=navyblue!70,arc=3pt,boxrule=0.7pt]
+\textbf{Dépôt GitHub Officiel du Projet :} \url{https://github.com/JuniorB573/OCS-Groupe5.git}\\
+\textbf{Branche de Référence :} \texttt{main}\\
+\textbf{Licence :} MIT License (Open Source, Réutilisation Académique Libre)
+\end{tcolorbox}
+
+\section{Arborescence Normative du Projet}
+Le projet respecte une architecture modulaire stricte garantissant la séparation claire entre les modules de calcul, les scripts de lancement, la suite de tests et la documentation :
+
+\begin{lstlisting}[language=bash]
+OCS-Groupe5/
+|-- .gitignore                  # Exclusion des artefacts temporaires et caches
+|-- LICENSE                     # Licence open-source MIT
+|-- pyproject.toml              # Configuration du projet et du moteur pytest
+|-- requirements.txt            # Dependances Python minimales eprouvees
+|-- README.md                   # Guide technique et scientifique exhaustif
+|-- src/                        # Noyaux algorithmiques de calcul
+|   |-- __init__.py             # Exports du package
+|   |-- cohort_model.py         # Modele matriciel vectorise BLAS 3 (DGEMM)
+|   |-- naive_model.py          # Modele scalaire naif (boucles CPython de reference)
+|   |-- lapack_analysis.py      # Regression Ridge Cholesky et ACP spectrale DSYEVD
+|   `-- benchmark.py            # Moteur de mesure GFLOPS, timing et scaling OpenMP
+|-- scripts/                    # Scripts d'execution et de generation
+|   |-- run_simulation.py       # Simulation clinique de cohorte (5 000 patients)
+|   `-- run_benchmarks.py       # Campagne de benchmarks comparative complete
+|-- tests/                      # Validation et tests formels
+|   `-- test_equivalence.py     # Tests d'equivalence numerique stricte (pytest)
+|-- figures/                    # Graphiques vectoriels et rasters haute resolution
+|   |-- logo_ensgmm.png         # Logo institutionnel ENSGMM
+|   |-- logo_unstim.png         # Logo institutionnel UNSTIM
+|   |-- cohort_trajectories.png # Trajectoires d'evolution virale (365 jours)
+|   |-- clinical_pca_clusters.png # Stratification des profils patients
+|   |-- benchmark_naive_vs_mkl.png # Comparatif temps et speedup Naif vs MKL
+|   `-- benchmark_mkl_threads.png # Scalabilite multi-coeurs OpenMP
+`-- docs/                       # Livrables academiques LaTeX
+    |-- rapport_projet.tex      # Code source LaTeX du present rapport
+    |-- rapport_projet.pdf      # Rapport academique officiel compile
+    |-- presentation_beamer.tex # Code source LaTeX de la soutenance
+    `-- presentation_beamer.pdf # Diapositives de soutenance compilees
+\end{lstlisting}
+
+\section{Protocole de Déploiement et d'Installation}
+Pour assurer une exécution sans conflit sur toute machine hôte (Linux, macOS ou Windows), les étapes de déploiement s'articulent ainsi :
+
+\subsection{1. Clonage du Répertoire Git}
+\begin{lstlisting}[language=bash]
+git clone https://github.com/JuniorB573/OCS-Groupe5.git
+cd OCS-Groupe5
+\end{lstlisting}
+
+\subsection{2. Instanciation de l'Environnement Virtuel}
+L'isolation des dépendances évite toute altération de l'interpréteur système :
+\begin{lstlisting}[language=bash]
+# Creation de l'environnement virtuel isole
+python -m venv venv
+
+# Activation sous Linux / macOS (Bash)
+source venv/bin/activate
+
+# Activation sous Windows (PowerShell)
+.\venv\Scripts\Activate.ps1
+\end{lstlisting}
+
+\subsection{3. Installation des Dépendances Numériques}
+\begin{lstlisting}[language=bash]
+pip install --upgrade pip
+pip install -r requirements.txt
+\end{lstlisting}
+
+\section{Protocole de Reproduction des Simulations et Expériences}
+
+\subsection{1. Simulation Clinique de Cohorte (\texttt{scripts/run\_simulation.py})}
+Ce script instancie une cohorte de 5\,000 patients hétérogènes, intègre les trajectoires sur 365 jours par RK4 vectorisé (\texttt{DGEMM}), applique la régression Ridge de Cholesky (\texttt{DPOTRF} / \texttt{DPOTRS}) et réalise la projection spectrale ACP (\texttt{DSYEVD}) :
+\begin{lstlisting}[language=bash]
+python scripts/run_simulation.py
+\end{lstlisting}
+\textbf{Artefacts générés dans \texttt{figures/} :}
+\begin{itemize}
+    \item \texttt{cohort\_trajectories.png} : Trajectoires moyennes et bandes de confiance à 95\,\% des compartiments $T$, $V_s$ et $V_r$.
+    \item \texttt{clinical\_pca\_clusters.png} : Projection dans le plan factoriel des composantes principales 1 et 2 avec mise en évidence des répondeurs virologiques vs échecs thérapeutiques.
+\end{itemize}
+
+\subsection{2. Campagne de Benchmarks et Profilage (\texttt{scripts/run\_benchmarks.py})}
+Ce script déclenche l'intégralité du banc d'essai comparatif documenté au Chapitre 9 :
+\begin{lstlisting}[language=bash]
+python scripts/run_benchmarks.py
+\end{lstlisting}
+\textbf{Mesures réalisées :}
+\begin{enumerate}
+    \item \textbf{Comparaison Naïf vs BLAS 3 / MKL :} Évaluation des temps d'intégration sur cohortes de $N = 50, 100, 200, 400$ patients et calcul automatique du facteur d'accélération (Speedup $S$).
+    \item \textbf{Montée en Charge et Débits (GFLOPS) :} Simulation de cohortes massives ($N = 500, 1\,000, 2\,000, 5\,000, 10\,000$), calcul de l'intensité opérationnelle en MFlops et GFLOPS effectifs.
+    \item \textbf{Factorisation de Cholesky vs Inversion Naïve :} Profilage microseconde du solveur régularisé LAPACK (\texttt{dpotrf} / \texttt{dpotrs}) face à l'inversion générique \texttt{np.linalg.inv}.
+    \item \textbf{Scalabilité Multi-Cœurs OpenMP :} Évaluation du speedup et de l'efficacité parallèle $E(p) = S(p)/p$ pour $p \in \{1, 2, 4, 8\}$ threads OpenMP.
+\end{enumerate}
+\textbf{Artefacts graphiques générés dans \texttt{figures/} :}
+\begin{itemize}
+    \item \texttt{benchmark\_naive\_vs\_mkl.png} : Comparatif des temps d'intégration et accélération.
+    \item \texttt{benchmark\_mkl\_threads.png} : Scalabilité et efficacité multi-cœurs OpenMP.
+\end{itemize}
+
+\subsection{3. Validation Formelle par la Suite de Tests (\texttt{pytest})}
+L'équivalence numérique exacte et le respect des invariants biologiques sont attestés en exécutant la suite de tests automatisée :
+\begin{lstlisting}[language=bash]
+pytest tests/test_equivalence.py -v
+\end{lstlisting}
+Les 5 tests automatisés vérifient :
+\begin{itemize}
+    \item \textbf{\texttt{test\_rhs\_numerical\_equivalence}} : Écart résiduel inférieur à $10^{-14}$ entre le second membre vectorisé BLAS 3 et la formule scalaire naïve.
+    \item \textbf{\texttt{test\_trajectory\_numerical\_equivalence}} : Écart résiduel maximal inférieur à $10^{-10}$ sur 100 pas de temps de l'algorithme RK4.
+    \item \textbf{\texttt{test\_biological\_invariants}} : Positivité stricte des concentrations cellulaires et virales ($T \ge 0, I \ge 0, V \ge 0$).
+    \item \textbf{\texttt{test\_lapack\_cholesky\_equivalence}} : Concordance à $10^{-12}$ entre le solveur de Cholesky LAPACK et le solveur de référence \texttt{scipy.linalg.solve}.
+    \item \textbf{\texttt{test\_lapack\_pca}} : Orthogonalité stricte des vecteurs propres ($\mathbf{V}^T\mathbf{V} = \mathbf{I}$) et décroissance ordonnée des valeurs propres de variance.
+\end{itemize}
+
+\section{Contrôle du Déterminisme et Reproductibilité Matérielle}
+Afin de garantir que toute exécution sur une autre station de calcul produise des résultats identiques :
+\begin{enumerate}
+    \item \textbf{Graines Pseudo-Aléatoires Fixées :} Toutes les distributions initiales de patients sont asservies à une graine reproductible explicite (\texttt{np.random.seed(42)}).
+    \item \textbf{Verrouillage des Threads :} Pour éliminer les variations de timing dues aux décisions dynamiques de l'ordonnanceur de l'OS, les benchmarks fixent la variable d'environnement :
+    \begin{lstlisting}[language=bash]
+    export OMP_NUM_THREADS=4
+    export MKL_NUM_THREADS=4
+    \end{lstlisting}
+    \item \textbf{Passe de Chauffe (Warm-up) :} Chaque mesure temporelle effectue une passe préalable pour charger les bibliothèques dynamiques en mémoire et stabiliser les fréquences CPU (Turbo Boost), puis calcule la moyenne arithmétique sur plusieurs répétitions.
+\end{enumerate}
+
+\section{Compilation des Livrables \LaTeX}
+Pour recompiler le présent rapport officiel ou la soutenance Beamer depuis les fichiers sources :
+\begin{lstlisting}[language=bash]
+# Compilation du rapport officiel (pdflatex)
+pdflatex -interaction=nonstopmode -output-directory=docs docs/rapport_projet.tex
+pdflatex -interaction=nonstopmode -output-directory=docs docs/rapport_projet.tex
+
+# Compilation de la soutenance Beamer
+pdflatex -interaction=nonstopmode -output-directory=docs docs/presentation_beamer.tex
+\end{lstlisting}
+
+% ------------------------------------------------------------------------------
 % CONCLUSION GÉNÉRALE
 % ------------------------------------------------------------------------------
 \chapter*{Conclusion Générale et Perspectives}
@@ -778,17 +926,32 @@ Les perspectives d'extension de ce travail incluent le portage des opérateurs d
 % ANNEXES : CODES SOURCES COMPLETS DU PROJET
 % ------------------------------------------------------------------------------
 \appendix
-\chapter{Codes Sources Documentés du Projet}
 
-\section{Module du Modèle de Cohorte Vectorisé (\texttt{src/cohort\_model.py})}
+\chapter{Noyaux Numériques de Modélisation et Résolution}
+
+\section[Modèle de Cohorte Vectorisé (cohort\_model.py)]{Module du Modèle de Cohorte Vectorisé\\\large(\texttt{src/cohort\_model.py})}
 \lstinputlisting[caption={Modèle matriciel vectorisé de la cohorte VIH (BLAS 3 / RK4).}]{../src/cohort_model.py}
 
 \newpage
-\section{Module d'Analyse Pronostique LAPACK (\texttt{src/lapack\_analysis.py})}
-\lstinputlisting[caption={Régression Cholesky et ACP spectrale Divide \& Conquer.}]{../src/lapack_analysis.py}
+\section[Modèle Scalaire Naïf (naive\_model.py)]{Module du Modèle Scalaire Naïf Séquentiel\\\large(\texttt{src/naive\_model.py})}
+\lstinputlisting[caption={Modèle scalaire de référence en boucles Python pures pour benchmark.}]{../src/naive_model.py}
 
 \newpage
-\section{Module de Benchmark de Performance (\texttt{src/benchmark.py})}
-\lstinputlisting[caption={Campagne de benchmarks comparatifs Naïf vs BLAS 3 / Intel MKL.}]{../src/benchmark.py}
+\section[Analyse Pronostique LAPACK (lapack\_analysis.py)]{Module d'Analyse Pronostique LAPACK\\\large(\texttt{src/lapack\_analysis.py})}
+\lstinputlisting[caption={Régression Cholesky (DPOTRF/DPOTRS) et ACP spectrale Divide \& Conquer (DSYEVD).}]{../src/lapack_analysis.py}
+
+\chapter{Bancs d'Essai, Benchmarks et Tests de Validation}
+
+\section[Moteur de Benchmarks (benchmark.py)]{Module de Benchmark de Performance\\\large(\texttt{src/benchmark.py})}
+\lstinputlisting[caption={Campagne de benchmarks comparatifs Naïf vs BLAS 3 / Intel MKL, Cholesky et OpenMP.}]{../src/benchmark.py}
+
+\newpage
+\section[Script de Lancement des Benchmarks (run\_benchmarks.py)]{Script de Lancement et Visualisation des Benchmarks\\\large(\texttt{scripts/run\_benchmarks.py})}
+\lstinputlisting[caption={Script d'exécution des bancs d'essai et génération des graphiques de performance.}]{../scripts/run_benchmarks.py}
+
+\newpage
+\section[Suite de Tests d'Équivalence (test\_equivalence.py)]{Suite de Tests Unitaires et d'Invariance Biologique\\\large(\texttt{tests/test\_equivalence.py})}
+\lstinputlisting[caption={Validation pytest d'équivalence stricte ($\epsilon < 10^{-10}$) et invariants biologiques.}]{../tests/test_equivalence.py}
 
 \end{document}
+
