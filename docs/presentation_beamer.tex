@@ -10,6 +10,7 @@
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{array}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,shadows}
@@ -28,11 +29,10 @@
 \definecolor{cardbg}{RGB}{248, 250, 252}     % Fond de carte
 \definecolor{forestgreen}{RGB}{39, 110, 68}  % #276E44 - Vert succès/thérapie
 
-% Thème Beamer
+% Configuration Beamer
 \usetheme{Boadilla}
 \usecolortheme{whale}
 
-% Configuration des couleurs
 \setbeamercolor{structure}{fg=navyblue}
 \setbeamercolor{palette primary}{bg=navyblue, fg=white}
 \setbeamercolor{palette secondary}{bg=royalblue, fg=white}
@@ -45,13 +45,11 @@
 
 \setbeamertemplate{navigation symbols}{}
 
-% Polices de présentation (grandes et très lisibles)
 \setbeamerfont{frametitle}{series=\bfseries, size=\large}
 \setbeamerfont{title}{series=\bfseries, size=\Large}
 \setbeamerfont{subtitle}{series=\normalfont\itshape, size=\small}
 \setbeamerfont{footline}{size=\tiny}
 
-% En-tête de diapositive élégant avec fil d'Ariane
 \setbeamertemplate{headline}{%
     \leavevmode
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.3ex,dp=0.8ex,leftskip=0.8cm,rightskip=0.8cm]{palette primary}%
@@ -59,90 +57,56 @@
     \end{beamercolorbox}%
 }
 
-% Titre de diapositive avec soulignement doré
-\setbeamertemplate{frametitle}{%
-    \nointerlineskip
-    \begin{beamercolorbox}[wd=\paperwidth,ht=3.4ex,dp=1.1ex,leftskip=0.8cm,rightskip=0.8cm]{palette secondary}%
-        {\usebeamerfont{frametitle}\color{white}\textbf{\insertframetitle}}%
-    \end{beamercolorbox}%
-    \nointerlineskip
-    \begin{beamercolorbox}[wd=\paperwidth,ht=1.5pt]{palette secondary}%
-        \color{goldaccent}\rule{\paperwidth}{1.5pt}%
-    \end{beamercolorbox}%
-}
-
-% Pied de page aéré
 \setbeamertemplate{footline}{%
     \leavevmode
-    \hbox{%
-    \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.4ex,dp=0.9ex,center]{palette primary}%
-        \scriptsize\textbf{ENSGMM1 -- UNSTIM (Abomey)}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1ex,leftskip=0.8cm,rightskip=0.8cm]{palette tertiary}%
+        {\tiny\textbf{Groupe 5} (GMM1) \quad $\bullet$ \quad Simulation de Cohorte VIH \& HPC (BLAS/LAPACK/MKL) \hfill \textbf{\insertframenumber{} / \inserttotalframenumber}}%
     \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.44\paperwidth,ht=2.4ex,dp=0.9ex,center]{palette secondary}%
-        \scriptsize\textbf{Modélisation VIH-SIDA \& Calcul HPC (Groupe 5)}
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.4ex,dp=0.9ex,right]{palette primary}%
-        \scriptsize\textbf{Diapositive \insertframenumber{} / \inserttotalframenumber} \hspace*{2ex}
-    \end{beamercolorbox}}%
-    \vskip0pt%
 }
 
-% Boîtes d'orateur stylisées
-\newtcolorbox{messagecle}[1][]{
+% Boîtes d'alerte et de synthèse stylisées
+\newtcolorbox{cadreconcept}[1][]{
     colback=softblue,
     colframe=navyblue,
-    fonttitle=\bfseries\color{white},
-    colbacktitle=navyblue,
-    boxrule=0.8pt,
     arc=3pt,
+    boxrule=0.8pt,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
     title=#1,
-    left=6pt, right=6pt, top=4pt, bottom=4pt
+    top=3pt, bottom=3pt, left=6pt, right=6pt
 }
 
-\newtcolorbox{alertebox}[1][]{
-    colback=crimsonred!6,
+\newtcolorbox{cadrehpc}[1][]{
+    colback=cardbg,
+    colframe=royalblue,
+    arc=3pt,
+    boxrule=0.8pt,
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    title=#1,
+    top=3pt, bottom=3pt, left=6pt, right=6pt
+}
+
+\newtcolorbox{cadreclinique}[1][]{
+    colback=red!5!white,
     colframe=crimsonred,
+    arc=3pt,
+    boxrule=0.8pt,
     fonttitle=\bfseries\color{white},
-    colbacktitle=crimsonred,
-    boxrule=0.8pt,
-    arc=3pt,
+    coltitle=white,
     title=#1,
-    left=6pt, right=6pt, top=4pt, bottom=4pt
-}
-
-\newtcolorbox{succesbox}[1][]{
-    colback=forestgreen!6,
-    colframe=forestgreen,
-    fonttitle=\bfseries\color{white},
-    colbacktitle=forestgreen,
-    boxrule=0.8pt,
-    arc=3pt,
-    title=#1,
-    left=6pt, right=6pt, top=4pt, bottom=4pt
-}
-
-\newtcolorbox{kpibox}[2][royalblue]{
-    colback=#1!8,
-    colframe=#1,
-    boxrule=0.8pt,
-    arc=3pt,
-    halign=center,
-    left=2pt, right=2pt, top=4pt, bottom=4pt,
-    title={\scriptsize\bfseries\color{white} #2},
-    colbacktitle=#1
+    top=3pt, bottom=3pt, left=6pt, right=6pt
 }
 
 % Métadonnées
-\title[\textbf{VIH-SIDA \& HPC}]{\textbf{Modélisation Mathématique \& Simulation Numérique du VIH-SIDA}}
-\subtitle{\textbf{Résolution Haute Performance avec BLAS, LAPACK et Intel MKL en Python}}
-\author[\textbf{Groupe 5}]{\textbf{Équipe de projet -- Groupe 5 :}\\[0.1cm]
-\small ADOGOUN Déo Gracias M. \quad $\bullet$ \quad BIAHOU Ahossou J. M.-C. \quad $\bullet$ \quad SYLLA IMOROU Izou Dine}
+\title[\textbf{Modèle Cohorte VIH \& HPC}]{\textbf{Modélisation Multi-Patient de l'Infection VIH-SIDA et Analyse Pronostique Haute Performance}}
+\subtitle{Formulation Matricielle BLAS 3, Décomposition de Cholesky LAPACK et Accélération Intel oneMKL}
+\author[\textbf{Groupe 5 -- ENSGMM1}]{\textbf{Groupe 5 :}\\[0.05cm] \textbf{ADOGOUN Déo Gracias M.} \quad $\bullet$ \quad \textbf{BIAHOU Ahossou J. M.-C.} \quad $\bullet$ \quad \textbf{SYLLA IMOROU Izou Dine}}
 \institute[\textbf{ENSGMM / UNSTIM}]{\textbf{ENSGMM -- UNSTIM Abomey} \quad $\bullet$ \quad \textbf{Sous la direction de : Dr. Carlos AGOSSOU}}
 \date{\textbf{Année académique 2026--2027}}
 
-% ==============================================================================
-% DÉBUT DES DIAPOSITIVES
-% ==============================================================================
+\graphicspath{{figures/}{../figures/}{docs/figures/}}
+
 \begin{document}
 
 % ------------------------------------------------------------------------------
@@ -160,31 +124,31 @@
     \end{tikzpicture}
 
     \centering
-    \vspace*{0.65cm}
+    \vspace*{0.4cm}
 
-    % Logos et En-tête national
+    % Logos institutionnels
     \begin{columns}[c]
         \begin{column}{0.18\textwidth}
             \centering
-            \includegraphics[height=1.35cm, keepaspectratio]{figures/logo_unstim.png}
+            \includegraphics[height=1.30cm, keepaspectratio]{logo_unstim.png}
         \end{column}
         \begin{column}{0.64\textwidth}
             \centering
             {\scriptsize \textsc{\textbf{République du Bénin}}}\\[0.02cm]
-            {\tiny \textbf{Ministère de l'Enseignement Supérieur et de la Recherche Scientifique}}\\[0.05cm]
+            {\tiny \textbf{Ministère de l'Enseignement Supérieur et de la Recherche Scientifique}}\\[0.04cm]
             {\scriptsize \textbf{UNIVERSITÉ NATIONALE DES SCIENCES, TECHNOLOGIES,}}\\[0.02cm]
-            {\scriptsize \textbf{INGÉNIERIE ET MATHÉMATIQUES D'ABOMEY (UNSTIM)}}\\[0.05cm]
-            {\footnotesize \textcolor{navyblue}{\textbf{ÉCOLE NATIONALE DES GÉNIES MATHÉMATIQUES ET MODÉLISATION (ENSGMM)}}}
+            {\scriptsize \textbf{INGÉNIERIE ET MATHÉMATIQUES D'ABOMEY (UNSTIM)}}\\[0.04cm]
+            {\footnotesize \textcolor{navyblue}{\textbf{ÉCOLE NATIONALE SUPÉRIEURE DE GÉNIE MATHÉMATIQUE ET MODÉLISATION (ENSGMM)}}}
         \end{column}
         \begin{column}{0.18\textwidth}
             \centering
-            \includegraphics[height=1.35cm, keepaspectratio]{figures/logo_ensgmm.png}
+            \includegraphics[height=1.30cm, keepaspectratio]{logo_ensgmm.png}
         \end{column}
     \end{columns}
 
-    \vspace{0.15cm}
-    \textcolor{goldaccent}{\rule{0.82\textwidth}{1.0pt}}
-    \vspace{0.15cm}
+    \vspace{0.10cm}
+    \textcolor{goldaccent}{\rule{0.85\textwidth}{1.0pt}}
+    \vspace{0.10cm}
 
     % Titre principal
     \begin{tcolorbox}[
@@ -194,14 +158,14 @@
         boxrule=0pt,
         width=0.96\textwidth,
         halign=center,
-        top=5pt, bottom=5pt
+        top=4pt, bottom=4pt
     ]
-        {\large\bfseries\color{white} Implémentation du Modèle d'Infection par le VIH-SIDA}\\[0.10cm]
-        {\small\color{goldaccent}\textit{Modèles intra-hôte et de population : analyse mathématique,}}\\[0.04cm]
-        {\small\color{goldaccent}\textit{stabilité et résolution numérique avec BLAS, LAPACK et Intel MKL en Python}}
+        {\large\bfseries\color{white} Modélisation Multi-Patient de l'Infection VIH-SIDA}\\[0.08cm]
+        {\small\color{goldaccent}\textit{Formulation Matricielle BLAS 3, Résolution de Cholesky LAPACK}}\\[0.03cm]
+        {\small\color{goldaccent}\textit{et Accélération Haute Performance avec Intel oneMKL en Python}}
     \end{tcolorbox}
 
-    \vspace{0.15cm}
+    \vspace{0.10cm}
 
     % Groupe et encadrement
     \begin{tcolorbox}[
@@ -210,714 +174,492 @@
         arc=3pt,
         boxrule=0.6pt,
         width=0.96\textwidth,
-        top=4pt, bottom=4pt
+        top=3pt, bottom=3pt
     ]
         \centering
-        {\footnotesize \textbf{\textcolor{navyblue}{\underline{Équipe de Projet -- Groupe 5 :}}}}\\[0.08cm]
-        {\footnotesize \textbf{ADOGOUN Déo Gracias M.} \quad $\bullet$ \quad \textbf{BIAHOU Ahossou J. M.-C.} \quad $\bullet$ \quad \textbf{SYLLA IMOROU Izou Dine}}\\[0.10cm]
-        {\scriptsize Filière : ENSGMM1 \quad $\bullet$ \quad UE : Outils de Calcul Scientifique \quad $\bullet$ \quad Année académique : 2026--2027}\\[0.05cm]
+        {\footnotesize \textbf{\textcolor{navyblue}{\underline{Équipe de Projet -- Groupe 5 :}}}}\\[0.05cm]
+        {\footnotesize \textbf{ADOGOUN Déo Gracias M.} \quad $\bullet$ \quad \textbf{BIAHOU Ahossou J. M.-C.} \quad $\bullet$ \quad \textbf{SYLLA IMOROU Izou Dine}}\\[0.08cm]
+        {\scriptsize Filière : ENSGMM 1 \quad $\bullet$ \quad UE : Outils de Calcul Scientifique \quad $\bullet$ \quad Promotion 2025--2026}\\[0.04cm]
         {\scriptsize \textbf{Sous la direction de : \textcolor{navyblue}{Dr. Carlos AGOSSOU}}}
     \end{tcolorbox}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 2. SOMMAIRE ET STRUCTURE DU DISCOURS
+% 2. PLAN DE LA SOUTENANCE
 % ------------------------------------------------------------------------------
+\section{Plan Général}
 \begin{frame}{Plan de la Soutenance}
     \begin{columns}[t]
         \begin{column}{0.48\textwidth}
-            \begin{messagecle}[\textbf{1. Fondements \& Architecture HPC}]
+            \begin{cadreconcept}[\textbf{1. Contexte Biomédical \& Enjeu HPC}]
                 \small
                 \begin{itemize}
-                    \item Pourquoi l'algèbre linéaire haute performance ?
-                    \item Goulot mémoire \& Niveaux BLAS 1, 2, 3
-                    \item Rôle de LAPACK et d'Intel MKL (oneMKL)
+                    \item Suivi de cohortes massives de patients ($N \ge 10\,000$)
+                    \item Inefficacité du calcul scalaire en Python pur
+                    \item Nécessité de BLAS, LAPACK et Intel oneMKL
                 \end{itemize}
-            \end{messagecle}
+            \end{cadreconcept}
             \vspace{0.15cm}
-            \begin{messagecle}[\textbf{2. Modélisation Intra-Hôte ($T, I, V$)}]
+            \begin{cadreconcept}[\textbf{2. Modèle de Cohorte \& Résistance}]
                 \small
                 \begin{itemize}
-                    \item Système de Nowak-May-Perelson
-                    \item Dérivation du seuil critique $\mathcal{R}_0(\eta)$
-                    \item Stabilité globale : Équilibres DFE et EE
+                    \item 5 compartiments : $T$, $I_s$, $I_r$, $V_s$, $V_r$
+                    \item Taux de mutation $\mu$ et multithérapie ART
+                    \item Émergence du rebond viral résistant
                 \end{itemize}
-            \end{messagecle}
+            \end{cadreconcept}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \begin{messagecle}[\textbf{3. Résolution \& Outils LAPACK}]
+            \begin{cadrehpc}[\textbf{3. Formulation Matricielle \& BLAS 3}]
                 \small
                 \begin{itemize}
-                    \item Conditionnement \& Équilibrage (\texttt{DGEEQU})
-                    \item Solveur de Newton avec \texttt{DGESV}
-                    \item Analyse spectrale \& raideur (\texttt{DGEEV})
+                    \item Matrice d'état de cohorte $\mathbf{Y} \in \mathbb{R}^{N \times 5}$
+                    \item Équation vectorielle $\dot{\mathbf{Y}} = \mathbf{S} + \mathbf{Y}\mathbf{M}^T + \mathbf{\Phi}\mathbf{A}^T$
+                    \item Intégrateur Runge-Kutta 4 par \texttt{DGEMM}
                 \end{itemize}
-            \end{messagecle}
+            \end{cadrehpc}
             \vspace{0.15cm}
-            \begin{messagecle}[\textbf{4. Épidémiologie \& Benchmarks}]
+            \begin{cadrehpc}[\textbf{4. Analyse LAPACK \& Benchmarks}]
                 \small
                 \begin{itemize}
-                    \item Modèle macroscopique $S - I_1 - I_2$
-                    \item Politiques publiques : Prévention vs Soins
-                    \item Mesures réelles : Débits GFLOPS \& Multi-cœurs
+                    \item Régression Ridge via Cholesky (\texttt{DPOTRF/DPOTRS})
+                    \item Stratification ACP Divide \& Conquer (\texttt{DSYEVD})
+                    \item Bancs d'essai : Naïf vs MKL, Scalabilité OpenMP
                 \end{itemize}
-            \end{messagecle}
+            \end{cadrehpc}
         \end{column}
     \end{columns}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 3. PROBLEMATIQUE & LE MUR DE LA MEMOIRE
+% 3. PROBLEMATIQUE BIOMEDICALE ET HPC
 % ------------------------------------------------------------------------------
-\section{Architecture HPC}
-
-\begin{frame}{Le « Mur de la Mémoire » et la Réponse de BLAS}
-    \begin{columns}[c]
-        \begin{column}{0.54\textwidth}
-            \begin{messagecle}[\textbf{Le Défi : Le Mur de la Mémoire (\textit{Memory Wall})}]
-                \small
-                Les processeurs calculent beaucoup plus vite que la RAM ne peut fournir les données. Si le processeur attend la mémoire, les performances s'effondrent.
-            \end{messagecle}
-            \vspace{0.1cm}
-            \begin{alertblock}{La Clé : L'Intensité Arithmétique}
-                \small
-                $$q = \frac{\text{Nombre d'opérations (FLOPs)}}{\text{Nombre d'octets transférés}}$$
-                \begin{itemize}
-                    \item \textbf{BLAS 1 \& 2 :} $q = \mathcal{O}(1)$ $\implies$ \textcolor{crimsonred}{\textbf{Bloqué par le bus mémoire}}.
-                    \item \textbf{BLAS 3 (\texttt{DGEMM}) :} $q = \mathcal{O}(n)$ $\implies$ \textcolor{forestgreen}{\textbf{Pleine puissance processeur}} !
-                \end{itemize}
-            \end{alertblock}
-        \end{column}
-
-        \begin{column}{0.44\textwidth}
-            \begin{table}
-                \centering
-                \small
-                \begin{tabular}{l c c}
-                    \toprule
-                    \textbf{Niveau BLAS} & \textbf{Calcul} & \textbf{Routine Clé} \\
-                    \midrule
-                    \textbf{Niveau 1} & $\mathcal{O}(n)$ & \texttt{DAXPY} \\
-                    \textbf{Niveau 2} & $\mathcal{O}(n^2)$ & \texttt{DGEMV} \\
-                    \textbf{Niveau 3} & $\mathbf{\mathcal{O}(n^3)}$ & \textbf{\texttt{DGEMM}} \\
-                    \bottomrule
-                \end{tabular}
-            \end{table}
-
-            \vspace{0.1cm}
-            \begin{succesbox}[\textbf{Le Secret : Cache Blocking}]
-                \scriptsize
-                En découpant la matrice en sous-blocs $B \times B$ calibrés pour le cache L1 ($32\text{ Ko}$), chaque coefficient est réutilisé $B$ fois sur place !
-            \end{succesbox}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 4. LAPACK ET INTEL MKL
-% ------------------------------------------------------------------------------
-\begin{frame}{LAPACK \& Intel MKL (oneMKL) : La Pile Logicielle}
-    \begin{columns}[c]
-        \begin{column}{0.50\textwidth}
-            \begin{messagecle}[\textbf{LAPACK (Algorithmes par Blocs)}]
-                \small
-                \begin{itemize}
-                    \item Factorise un panneau vertical puis met à jour tout le reste du bloc d'un coup avec \texttt{DGEMM} (BLAS 3).
-                    \item Résolution de systèmes : \texttt{DGESV} (LU partiel).
-                    \item Analyse spectrale : \texttt{DGEEV} \& \texttt{DGESDD} (SVD).
-                \end{itemize}
-            \end{messagecle}
-            \vspace{0.1cm}
-            \begin{succesbox}[\textbf{Intel MKL (oneMKL)}]
-                \small
-                \begin{itemize}
-                    \item Micro-noyaux en assembleur optimisés pour processeurs x86-64.
-                    \item Vectorisation SIMD AVX-512 (8 doubles traités simultanément par cycle).
-                    \item Parallélisme multi-cœurs OpenMP.
-                \end{itemize}
-            \end{succesbox}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \begin{tikzpicture}[node distance=0.40cm, every node/.style={rectangle, draw=navyblue, fill=cardbg, rounded corners=2.5pt, font=\scriptsize, align=center, text width=0.92\columnwidth, line width=0.7pt}]
-                \node (py) [fill=navyblue!15] {\textbf{Application Python (Modèle VIH, SciPy)}};
-                \node (wrap) [below=0.18cm of py] {\texttt{scipy.linalg.lapack} / \texttt{scipy.linalg.blas}};
-                \node (lap) [below=0.18cm of wrap, fill=royalblue!20] {\textbf{LAPACK :} \texttt{DGESV}, \texttt{DGEEV}, \texttt{DGEEQU}, \texttt{DGESDD}};
-                \node (blas) [below=0.18cm of lap, fill=goldaccent!25] {\textbf{BLAS 3 / 2 / 1 :} \texttt{DGEMM}, \texttt{DGEMV}, \texttt{DAXPY}};
-                \node (mkl) [below=0.18cm of blas, fill=navyblue, text=white] {\textbf{Intel MKL :} Vectorisation AVX-512 + OpenMP};
-
-                \draw[-{Latex[length=2mm]}, line width=0.8pt, color=navyblue] (py) -- (wrap);
-                \draw[-{Latex[length=2mm]}, line width=0.8pt, color=navyblue] (wrap) -- (lap);
-                \draw[-{Latex[length=2mm]}, line width=0.8pt, color=navyblue] (lap) -- (blas);
-                \draw[-{Latex[length=2mm]}, line width=0.8pt, color=navyblue] (blas) -- (mkl);
-            \end{tikzpicture}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 5. LE MODELE INTRA-HOTE (T, I, V)
-% ------------------------------------------------------------------------------
-\section{Modèle Intra-Hôte}
-
-\begin{frame}{Le Modèle Intra-Hôte de Nowak-May-Perelson}
-    \begin{columns}[c]
-        \begin{column}{0.54\textwidth}
-            \begin{messagecle}[\textbf{Les 3 Compartiments Biologiques}]
-                \small
-                Soit $\eta \in [0, 1]$ l'efficacité du traitement antirétroviral :
-                \begin{equation*}
-                \left\{
-                \begin{aligned}
-                    \frac{\mathrm{d}T}{\mathrm{d}t} &= s - dT - (1 - \eta)\beta T V \\[0.06cm]
-                    \frac{\mathrm{d}I}{\mathrm{d}t} &= (1 - \eta)\beta T V - \delta I \\[0.06cm]
-                    \frac{\mathrm{d}V}{\mathrm{d}t} &= p I - c V
-                \end{aligned}
-                \right.
-                \end{equation*}
-            \end{messagecle}
-            \vspace{0.08cm}
-            \begin{itemize}\footnotesize
-                \item $T(t)$ : Lymphocytes CD4+ sains (cellules cibles).
-                \item $I(t)$ : Cellules CD4+ infectées productrices.
-                \item $V(t)$ : Virions libres circulant dans le sang.
-            \end{itemize}
-        \end{column}
-
-        \begin{column}{0.44\textwidth}
-            \begin{table}
-                \centering
-                \scriptsize
-                \caption{Paramètres biomédicaux de référence}
-                \begin{tabular}{l c l}
-                    \toprule
-                    \textbf{Param.} & \textbf{Valeur} & \textbf{Signification} \\
-                    \midrule
-                    $s$ & $10\text{ j}^{-1}$ & Production CD4+ \\
-                    $d$ & $0{,}01\text{ j}^{-1}$ & Mortalité CD4+ ($T_0=1000$) \\
-                    $\beta$ & $4{,}6 \times 10^{-5}$ & Infectivité virale \\
-                    $\delta$ & $0{,}50\text{ j}^{-1}$ & Mortalité infectées \\
-                    $p$ & $1000\text{ j}^{-1}$ & Virions par cellule \\
-                    $c$ & $23\text{ j}^{-1}$ & Clairance plasmatique \\
-                    \bottomrule
-                \end{tabular}
-            \end{table}
-
-            \begin{alertebox}[\textbf{Source de Raideur Numérique}]
-                \scriptsize
-                $c = 23\text{ j}^{-1}$ contre $d = 0{,}01\text{ j}^{-1}$ : ratio d'échelles de temps supérieur à $2000$ !
-            \end{alertebox}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 6. LE NOMBRE DE REPRODUCTION DE BASE R0
-% ------------------------------------------------------------------------------
-\begin{frame}{Le Nombre de Reproduction de Base $\mathcal{R}_0(\eta)$}
-    \begin{columns}[c]
-        \begin{column}{0.50\textwidth}
-            \begin{messagecle}[\textbf{Matrice de Prochaine Génération (NGM)}]
-                \small
-                Sous-système infecté $(I, V)^T$ avec transmission $F$ et transition $V_m$ :
-                $$\mathbf{\mathcal{R}_0(\eta) = \rho(F V_m^{-1}) = \frac{(1 - \eta)\beta p T_0}{\delta c}}$$
-            \end{messagecle}
-            \vspace{0.1cm}
-            \begin{succesbox}[\textbf{Seuil Thérapeutique Critique $\eta_c$}]
-                \small
-                \begin{itemize}
-                    \item Sans traitement ($\eta = 0$) : $\mathbf{\mathcal{R}_0(0) = 4{,}00}$.
-                    \item Condition d'extinction du virus ($\mathcal{R}_0 < 1$) :
-                    $$\mathbf{\eta > \eta_c = 1 - \frac{1}{\mathcal{R}_0(0)} = 75{,}0\,\%}$$
-                \end{itemize}
-            \end{succesbox}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.2cm, keepaspectratio]{figures/fig10_r0_eta.png}\\[0.05cm]
-            {\scriptsize Décroissance de $\mathcal{R}_0$ en fonction de l'efficacité thérapeutique $\eta$.}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 7. EQUILIBRES ET BIFURCATION TRANSCRITIQUE
-% ------------------------------------------------------------------------------
-\begin{frame}{Stabilité Globale \& Bifurcation Transcritique}
-    \begin{columns}[c]
-        \begin{column}{0.48\textwidth}
-            \begin{succesbox}[\textbf{1. Équilibre Sans Infection (DFE)}]
-                \scriptsize
-                $$E_0 = (T_0, 0, 0) = (1000, 0, 0)$$
-                \textbf{Stabilité Globale (Lyapunov) :}
-                Avec $L = I + \frac{\delta}{p}V$, sa dérivée vérifie :
-                $$\dot{L} \le \frac{\delta c}{p}(\mathcal{R}_0 - 1)V \le 0 \quad (\text{si } \mathcal{R}_0 \le 1)$$
-                $E_0$ est \textbf{globalement asymptotiquement stable}.
-            \end{succesbox}
-            \vspace{0.08cm}
-            \begin{alertebox}[\textbf{2. Équilibre Endémique (EE) : $E^*$}]
-                \scriptsize
-                Existe si et seulement si $\mathbf{\mathcal{R}_0 > 1}$ :
-                $$T^* = \frac{T_0}{\mathcal{R}_0} = 250, \quad V^* = 652{,}2\text{ virions/}\mu\text{L}$$
-            \end{alertebox}
-        \end{column}
-
-        \begin{column}{0.50\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.3cm, keepaspectratio]{figures/fig12_bifurcation_intra.png}\\[0.05cm]
-            {\scriptsize Bifurcation transcritique à $\mathcal{R}_0 = 1$ (échange parfait de stabilité).}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 8. CONDITIONNEMENT ET EQUILIBRAGE DGEEQU
-% ------------------------------------------------------------------------------
-\section{Méthodes Numériques}
-
-\begin{frame}{Conditionnement de la Jacobienne \& Équilibrage LAPACK}
-    \begin{columns}[c]
-        \begin{column}{0.50\textwidth}
-            \begin{alertebox}[\textbf{Le Piège du Conditionnement Élevé}]
-                \small
-                À l'équilibre endémique, la disparité d'échelles ($s=10$ vs $p=1000$) dégrade la Jacobienne :
-                $$\kappa_1(J) = \|J\|_1 \cdot \|J^{-1}\|_1 \approx \mathbf{1{,}52 \times 10^5}$$
-                L'erreur de calcul peut être multipliée par $10^5$ !
-            \end{alertebox}
-            \vspace{0.1cm}
-            \begin{succesbox}[\textbf{La Solution LAPACK : \texttt{DGEEQU}}]
-                \small
-                Calcul des facteurs d'échelle optimaux $R$ et $C$ :
-                $$\widehat{J} = R \cdot J \cdot C \implies \mathbf{\kappa_1(\widehat{J}) \approx 2{,}4 \times 10^2}$$
-                \textbf{Gain de 3 ordres de grandeur sur la précision !}
-            \end{succesbox}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.3cm, keepaspectratio]{figures/fig4_cond_jac.png}\\[0.05cm]
-            {\scriptsize Pic de conditionnement $\kappa_1(J)$ au voisinage du seuil critique.}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 9. NEWTON-RAPHSON AVEC DGESV
-% ------------------------------------------------------------------------------
-\begin{frame}{Résolution Non-Linéaire : Méthode de Newton avec \texttt{DGESV}}
-    \begin{columns}[c]
-        \begin{column}{0.50\textwidth}
-            \begin{messagecle}[\textbf{Algorithme de Newton Vectoriel}]
-                \scriptsize
-                Recherche de l'état d'équilibre $f(y^*) = 0$ :
-                $$J(y_k) \cdot \delta_k = -f(y_k), \quad y_{k+1} = y_k + \delta_k$$
-                \begin{itemize}
-                    \item Résolu par la routine LAPACK \textbf{\texttt{DGESV}} (LU partiel).
-                    \item Aucune inversion matricielle explicite (stabilité numérique).
-                \end{itemize}
-            \end{messagecle}
-            \vspace{0.04cm}
-            \begin{succesbox}[\textbf{Convergence Quadratique ($10^{-16}$)}]
-                \scriptsize
-                Convergence ultra-rapide validée en seulement \textbf{5 à 6 itérations} quel que soit le point initial choisi !
-            \end{succesbox}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.3cm, keepaspectratio]{figures/fig5_newton.png}\\[0.05cm]
-            {\scriptsize Décroissance quadratique de l'erreur résiduelle $\|\delta_k\| / \|y_k\|$.}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 10. ANALYSE SPECTRALE ET REACTIVITE
-% ------------------------------------------------------------------------------
-\begin{frame}{Analyse Spectrale \& Réactivité : \texttt{DGEEV} et \texttt{DGESDD}}
+\section{Contexte \& Enjeu HPC}
+\begin{frame}{Le Défi : Modéliser une Cohorte Clinique Massive}
     \begin{columns}[c]
         \begin{column}{0.52\textwidth}
-            \begin{messagecle}[\textbf{Spectre de la Jacobienne via \texttt{DGEEV}}]
-                \scriptsize
-                À l'équilibre endémique $E^*$ :
+            \begin{cadreclinique}[\textbf{La Réalité Clinique du VIH}]
+                \small
                 \begin{itemize}
-                    \item $\mathbf{\lambda_1 = -23{,}5006\text{ j}^{-1}}$ : Mode rapide associé à la clairance.
-                    \item $\mathbf{\lambda_{2,3} = -0{,}0197 \pm 0{,}1196\,i}$ : Oscillations amorties de période :
-                    $$\mathcal{T} = \frac{2\pi}{\operatorname{Im}(\lambda)} \approx \mathbf{52{,}5\text{ jours}}$$
+                    \item Dans un hôpital ou un essai clinique, on ne traite pas un patient isolé, mais des \textbf{cohortes de milliers d'individus}.
+                    \item \textbf{Hétérogénéité biologique} : chaque patient possède sa propre charge initiale, son taux d'adhésion au traitement $\eta_k$, et sa sensibilité.
+                    \item \textbf{Phénomène d'échappement} : sous traitement incomplet, une souche virale mutante résistante émerge et provoque le rebond viral.
                 \end{itemize}
-            \end{messagecle}
-            \vspace{0.06cm}
-            \begin{alertebox}[\textbf{Réactivité Non-Normale via SVD (\texttt{DGESDD})}]
-                \scriptsize
-                $J(E^*)$ n'est pas normale ($J J^T \ne J^T J$). La réactivité $\omega_{\max}(J) > 0$ provoque une \textbf{amplification transitoire initiale} avant l'amortissement final.
-            \end{alertebox}
+            \end{cadreclinique}
         \end{column}
 
-        \begin{column}{0.46\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.0cm, keepaspectratio]{figures/fig13_amplification.png}\\[0.05cm]
-            {\scriptsize Amplification transitoire $\|e^{Jt}\|_2$ calculée par SVD.}
+        \begin{column}{0.48\textwidth}
+            \begin{cadrehpc}[\textbf{Le Piège du Calcul Naïf}]
+                \small
+                \begin{itemize}
+                    \item Simuler $N = 10\,000$ patients sur 365 jours par une boucle Python :
+                    $$\text{Temps} \approx N \times \text{Nsteps} \times \text{Overhead CPython}$$
+                    \item Les boucles interprétées en Python pur subissent un surcoût colossal de typage dynamique et de cache miss.
+                    \item \textbf{Solution} : Traiter l'ensemble de la cohorte comme un \textbf{tenseur matriciel continu} exploité par des routines compilées ultra-optimisées.
+                \end{itemize}
+            \end{cadrehpc}
         \end{column}
     \end{columns}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 11. RAIDEUR NUMERIQUE : EULER EXPLICITE VS IMPLICITE
+% 4. HIERARCHIE BLAS ET INTEL MKL
 % ------------------------------------------------------------------------------
-\section{Dynamique \& Résultats}
+\begin{frame}{La Hiérarchie BLAS et l'Avantage BLAS 3}
+    \begin{center}
+    \small
+    \begin{tabularx}{\textwidth}{lccccX}
+        \toprule
+        \textbf{Niveau} & \textbf{Opération Type} & \textbf{Mémoire} & \textbf{Flops} & \textbf{Ratio $q$} & \textbf{Comportement Matériel} \\
+        \midrule
+        \textbf{BLAS 1} & $\mathbf{y} \leftarrow \alpha\mathbf{x} + \mathbf{y}$ (\texttt{DAXPY}) & $3n$ & $2n$ & $\mathcal{O}(1)$ & Limité par la bande passante RAM \\
+        \textbf{BLAS 2} & $\mathbf{y} \leftarrow \alpha\mathbf{A}\mathbf{x} + \beta\mathbf{y}$ (\texttt{DGEMV}) & $n^2$ & $2n^2$ & $\mathcal{O}(1)$ & Saturation rapide du bus mémoire \\
+        \textbf{BLAS 3} & $\mathbf{C} \leftarrow \alpha\mathbf{A}\mathbf{B} + \beta\mathbf{C}$ (\texttt{DGEMM}) & $3n^2$ & $2n^3$ & $\mathcal{O}(n)$ & \textbf{Calcul arithmétique pur en cache L1/L2} \\
+        \bottomrule
+    \end{tabularx}
+    \end{center}
 
-\begin{frame}{Le Piège de la Raideur : Euler Explicite vs Euler Implicite}
+    \vspace{0.2cm}
     \begin{columns}[c]
         \begin{column}{0.50\textwidth}
-            \begin{alertebox}[\textbf{Échec d'Euler Explicite (\textit{Stiff Problem})}]
-                \small
-                Ratio de raideur : $\frac{\max |\operatorname{Re}\lambda|}{\min |\operatorname{Re}\lambda|} \approx \mathbf{1{,}19 \times 10^3}$.\\
-                Condition de stabilité stricte :
-                $$h < \frac{2}{|\lambda_{\max}|} \approx \mathbf{0{,}085\text{ jour}}$$
-                Pour $h = 0{,}10\text{ jour}$, le schéma explicite explose vers l'infini !
-            \end{alertebox}
-            \vspace{0.08cm}
-            \begin{succesbox}[\textbf{Succès d'Euler Implicite avec \texttt{DGESV}}]
-                \small
-                Résolution de $[I - h J(y^n)] \Delta y = h f(y^n)$ :
-                \textbf{Inconditionnellement A-stable}, parfaitement robuste quel que soit le pas $h$ choisi.
-            \end{succesbox}
+            \begin{cadrehpc}[\textbf{Le Mur de la Mémoire (\textit{Memory Wall})}]
+                \footnotesize
+                La vitesse des processeurs a crû bien plus vite que la bande passante mémoire.
+                Pour atteindre les performances crêtes (GFLOPS), une routine doit \textbf{réutiliser les données en cache} : c'est l'essence même de BLAS 3.
+            \end{cadrehpc}
         \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.3cm, keepaspectratio]{figures/fig6_raideur.png}\\[0.05cm]
-            {\scriptsize Stabilité comparée : explosion explicite vs stabilité implicite.}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 12. DYNAMIQUE DE PRIMO-INFECTION
-% ------------------------------------------------------------------------------
-\begin{frame}{Dynamique Clinique de Primo-Infection}
-    \begin{columns}[c]
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=2.4cm, keepaspectratio]{figures/fig8_infection_primaire.png}
-            \vspace{0.04cm}
-            \begin{messagecle}[\textbf{Les 3 Phases de l'Infection}]
-                \scriptsize
-                \begin{itemize}
-                    \item \textbf{Pic aigu :} À $15{,}4\text{ j}$ ($17\,373\text{ virions/}\mu\text{L}$).
-                    \item \textbf{Chute des CD4+ :} De $1000$ à $49\text{ cell/}\mu\text{L}$.
-                    \item \textbf{Phase chronique :} Stabilisation à $V^* = 652{,}2$.
-                \end{itemize}
-            \end{messagecle}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=2.4cm, keepaspectratio]{figures/fig9_portrait_phase.png}
-            \vspace{0.04cm}
-            \begin{succesbox}[\textbf{Portrait de Phase $(T, V)$}]
-                \scriptsize
-                Convergence orbitale en spirale logarithmique vers l'Équilibre Endémique (EE).
-            \end{succesbox}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 13. TRAITEMENT ARV ET REBOND VIRAL
-% ------------------------------------------------------------------------------
-\begin{frame}{Efficacité Thérapeutique ARV \& Danger du Rebond Viral}
-    \begin{columns}[c]
         \begin{column}{0.50\textwidth}
-            \begin{succesbox}[\textbf{Succès sous Thérapie ($\eta = 95\% > \eta_c$)}]
-                \scriptsize
+            \begin{cadreconcept}[\textbf{Intel oneMKL (Math Kernel Library)}]
+                \footnotesize
+                Bibliothèque hautement optimisée pour architectures Intel/AMD :
                 \begin{itemize}
-                    \item Charge virale indétectable en moins de 20 jours.
-                    \item Remontée protectrice des CD4+ au-delà de 850 cellules/$\mu$L.
+                    \item Vectorisation matérielle SIMD (AVX-2, AVX-512).
+                    \item Parallélisme multi-cœurs OpenMP transparent.
+                    \item Micro-noyaux de partitionnement de cache par blocs.
                 \end{itemize}
-            \end{succesbox}
-            \vspace{0.06cm}
-            \begin{alertebox}[\textbf{Alerte : Rebond Foudroyant post-arrêt (Jour 100)}]
-                \scriptsize
-                L'arrêt brusque déclenche une explosion virale :
-                $$V_{\max} \approx 18{,}5 \times V^*$$
-                \textbf{Mécanisme clinique :} Les CD4+ reconstituées agissent comme combustible pour les virions résiduels.
-            \end{alertebox}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.0cm, keepaspectratio]{figures/fig11_traitement.png}\\[0.05cm]
-            {\scriptsize Réponse au traitement et rebond aigu après interruption au 100\textsuperscript{e} jour.}
+            \end{cadreconcept}
         \end{column}
     \end{columns}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 14. ANALYSE DE SENSIBILITE
+% 5. LE MODELE DE COHORTE MATHEMATIQUE
 % ------------------------------------------------------------------------------
-\begin{frame}{Analyse de Sensibilité Normalisée des Paramètres}
-    \begin{columns}[c]
-        \begin{column}{0.48\textwidth}
-            \begin{messagecle}[\textbf{Indices d'Élasticité Normalisés}]
-                \scriptsize
-                Sensibilité relative de $\mathcal{R}_0$ et $V^*$ par rapport au paramètre $\theta$ :
-                $$\Upsilon_\theta^Y = \frac{\partial \ln Y}{\partial \ln \theta} = \frac{\theta}{Y} \frac{\partial Y}{\partial \theta}$$
-            \end{messagecle}
-            \vspace{0.06cm}
-            \begin{succesbox}[\textbf{Recommandations Médicales}]
-                \scriptsize
-                \begin{itemize}
-                    \item $\mathbf{\Upsilon_\beta^{\mathcal{R}_0} = +1}$ et $\mathbf{\Upsilon_c^{\mathcal{R}_0} = -1}$ : Les deux cibles prioritaires pour bloquer le virus sont l'infectivité $\beta$ et la clairance $c$.
-                    \item La production $s$ n'a qu'un effet marginal.
-                \end{itemize}
-            \end{succesbox}
-        \end{column}
+\section{Modèle Biomathématique}
+\begin{frame}{Le Modèle de Cohorte avec Émergence de Résistance}
+    Pour chaque patient $k \in \{1, \dots, N\}$, l'état viral et immunitaire est décrit par 5 compartiments :
+    \begin{align*}
+        \frac{dT_k}{dt} &= s - d\,T_k - (1 - \eta_{s,k})\,\beta_s\,T_k\,V_{s,k} - (1 - \eta_{r,k})\,\beta_r\,T_k\,V_{r,k} \\
+        \frac{dI_{s,k}}{dt} &= (1 - \mu)\,(1 - \eta_{s,k})\,\beta_s\,T_k\,V_{s,k} - \delta\,I_{s,k} \\
+        \frac{dI_{r,k}}{dt} &= \mu\,(1 - \eta_{s,k})\,\beta_s\,T_k\,V_{s,k} + (1 - \eta_{r,k})\,\beta_r\,T_k\,V_{r,k} - \delta\,I_{r,k} \\
+        \frac{dV_{s,k}}{dt} &= p\,I_{s,k} - c\,V_{s,k} \\
+        \frac{dV_{r,k}}{dt} &= p\,I_{r,k} - c\,V_{r,k}
+    \end{align*}
 
-        \begin{column}{0.50\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.0cm, keepaspectratio]{figures/fig14_sensibilite.png}\\[0.05cm]
-            {\scriptsize Diagramme tornade des indices normalisés de $\mathcal{R}_0$ et $V^*$.}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 15. MODELE DE POPULATION (S, I1, I2)
-% ------------------------------------------------------------------------------
-\section{Modèle Épidémiologique}
-
-\begin{frame}{Échelle Macroscopique : Modèle de Population $S - I_1 - I_2$}
-    \begin{columns}[c]
-        \begin{column}{0.52\textwidth}
-            \begin{messagecle}[\textbf{Système Compartimental Épidémiologique}]
-                \small
-                \begin{equation*}
-                \left\{
-                \begin{aligned}
-                    \frac{\mathrm{d}S}{\mathrm{d}t} &= \Lambda_a N - \beta S \frac{I_1 + \varepsilon I_2}{N} - \mu_a S \\[0.06cm]
-                    \frac{\mathrm{d}I_1}{\mathrm{d}t} &= \beta S \frac{I_1 + \varepsilon I_2}{N} - \sigma I_1 - \mu_a I_1 \\[0.06cm]
-                    \frac{\mathrm{d}I_2}{\mathrm{d}t} &= \sigma I_1 - \mu_2 I_2 - \mu_a I_2
-                \end{aligned}
-                \right.
-                \end{equation*}
-            \end{messagecle}
-            \vspace{0.06cm}
-            \begin{itemize}\scriptsize
-                \item $S$ : Susceptibles, $I_1$ : Infectés asymptomatiques, $I_2$ : Stade SIDA.
-                \item Incidence standardisée normalisée par $N(t)$.
-            \end{itemize}
-        \end{column}
-
-        \begin{column}{0.46\textwidth}
-            \begin{succesbox}[\textbf{Nombre de Reproduction $\mathcal{R}_0^{\text{pop}}$}]
-                \small
-                Par analyse NGM en proportions :
-                $$\mathbf{\mathcal{R}_0^{\text{pop}} = \frac{\beta}{\sigma + \Lambda_a}\left(1 + \frac{\varepsilon \sigma}{\mu_2 + \Lambda_a}\right) = 1{,}80}$$
-            \end{succesbox}
-            \vspace{0.08cm}
-            \begin{alertebox}[\textbf{Conséquence Démographique}]
-                \scriptsize
-                $\mathcal{R}_0 = 1{,}80 > 1 \implies$ Prévalence endémique à $\mathbf{67{,}8\,\%}$ et déclin démographique annuel à $\mathbf{-3{,}32\,\%/an}$.
-            \end{alertebox}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ------------------------------------------------------------------------------
-% 16. POLITIQUES DE SANTE PUBLIQUE
-% ------------------------------------------------------------------------------
-\begin{frame}{Évaluation des Politiques de Santé Publique sur 200 Ans}
-    \begin{columns}[c]
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=2.4cm, keepaspectratio]{figures/fig16_population_dynamique.png}\\[0.05cm]
-            {\scriptsize Sans intervention : effondrement démographique.}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=2.4cm, keepaspectratio]{figures/fig18_interventions.png}\\[0.05cm]
-            {\scriptsize Scénarios comparés dès l'an 30.}
-        \end{column}
-    \end{columns}
-    \vspace{0.08cm}
-    \begin{succesbox}[\textbf{Enseignement Majeur pour les Décideurs Publics}]
-        \scriptsize
+    \begin{cadreclinique}[\textbf{Mécanisme Clé : Mutation et Pression Thérapeutique}]
+        \footnotesize
         \begin{itemize}
-            \item \textbf{Prévention seule ($\beta/2$) :} $\mathcal{R}_0 \to 0{,}90 < 1 \implies$ \textcolor{forestgreen}{\textbf{Éradication complète de l'épidémie}}.
-            \item \textbf{Traitement seul ($\mu_2 \downarrow$) :} Prolonge la survie individuelle mais gonfle la prévalence globale.
-            \item \textbf{Stratégie Combinée :} Élimination rapide du virus et pérennisation démographique.
+            \item $\mu = 10^{-4}$ : Taux de mutation ponctuelle lors de la transcription inverse.
+            \item Le traitement ART cible la souche sauvage avec l'efficacité $\eta_{s,k} \in [0.50, 0.95]$.
+            \item La souche mutante échappe en partie au traitement : $\eta_{r,k} = \max(0, \eta_{s,k} - 0.35)$.
         \end{itemize}
-    \end{succesbox}
+    \end{cadreclinique}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 17. BENCHMARKS HAUTE PERFORMANCE
+% 6. FORMULATION MATRICIELLE GLOBALE
 % ------------------------------------------------------------------------------
-\section{Benchmarks \& HPC}
+\section{Formulation Matricielle \& BLAS 3}
+\begin{frame}{Formulation Matricielle Globale pour $N$ Patients}
+    On rassemble l'ensemble de la cohorte dans une matrice d'état continue $\mathbf{Y} \in \mathbb{R}^{N \times 5}$ :
+    $$\mathbf{Y} = \begin{pmatrix} T_1 & I_{s,1} & I_{r,1} & V_{s,1} & V_{r,1} \\ \vdots & \vdots & \vdots & \vdots & \vdots \\ T_N & I_{s,N} & I_{r,N} & V_{s,N} & V_{r,N} \end{pmatrix}$$
 
-\begin{frame}{Banc d'Essai Haute Performance : BLAS 3 \& LAPACK}
-    \begin{columns}[c]
+    Le système de $5N$ équations différentielles se condense en une \textbf{unique équation différentielle matricielle} :
+    \begin{equation*}
+        \mathbf{\dot{Y}} = \mathbf{S} + \mathbf{Y}\,\mathbf{M}^T + \mathbf{\Phi}\,\mathbf{A}^T
+    \end{equation*}
+
+    \begin{columns}[t]
         \begin{column}{0.48\textwidth}
-            \centering
-            \includegraphics[width=\linewidth, height=3.0cm, keepaspectratio]{figures/fig19_benchmark_perf.png}\\[0.05cm]
-            {\scriptsize Temps d'exécution et débit GFLOPS mesurés.}
+            \begin{cadrehpc}[\textbf{Partie Linéaire : $\mathbf{M} \in \mathbb{R}^{5 \times 5}$}]
+                \footnotesize
+                $$\mathbf{M} = \begin{pmatrix}
+                -d & 0 & 0 & 0 & 0 \\
+                0 & -\delta & 0 & 0 & 0 \\
+                0 & 0 & -\delta & 0 & 0 \\
+                0 & p & 0 & -c & 0 \\
+                0 & 0 & p & 0 & -c
+                \end{pmatrix}$$
+                Terme source : $\mathbf{S} = \mathbf{1}_N \otimes (s, 0, 0, 0, 0)$.
+            \end{cadrehpc}
         \end{column}
 
-        \begin{column}{0.50\textwidth}
-            \begin{table}
-                \centering
-                \scriptsize
-                \caption{Comparatif des temps d'exécution ($N=150$)}
-                \begin{tabular}{l c c}
-                    \toprule
-                    \textbf{Implémentation} & \textbf{Temps (ms)} & \textbf{Accélération} \\
-                    \midrule
-                    Python Pur Naïf & $104{,}0\text{ ms}$ & $1\times$ (Base) \\
-                    OpenBLAS & $0{,}111\text{ ms}$ & $937\times$ \\
-                    \textbf{Intel MKL} & $\mathbf{0{,}078\text{ ms}}$ & $\mathbf{1333\times}$ \\
-                    \bottomrule
-                \end{tabular}
-            \end{table}
-
-            \begin{succesbox}[\textbf{Débit Crête sous Intel MKL ($N=1600$)}]
-                \scriptsize
-                \begin{itemize}
-                    \item \texttt{DGEMM} (BLAS 3) : $\mathbf{120{,}2\text{ GFLOPS}}$ ($68{,}2\text{ ms}$).
-                    \item \texttt{DGESV} (LAPACK LU) : $\mathbf{52{,}7\text{ GFLOPS}}$ ($51{,}8\text{ ms}$).
-                \end{itemize}
-                Preuve irréfutable du gain matériel apporté par AVX-512.
-            \end{succesbox}
+        \begin{column}{0.48\textwidth}
+            \begin{cadrehpc}[\textbf{Partie Non-Linéaire : $\mathbf{\Phi} \in \mathbb{R}^{N \times 2}$}]
+                \footnotesize
+                Flux d'infections sensibles et mutantes :
+                $$\mathbf{\Phi}_{k,0} = (1 - \eta_{s,k})\beta_s T_k V_{s,k}$$
+                $$\mathbf{\Phi}_{k,1} = (1 - \eta_{r,k})\beta_r T_k V_{r,k}$$
+                Matrice stœchiométrique $\mathbf{A} \in \mathbb{R}^{5 \times 2}$ :
+                $$\mathbf{A}^T = \begin{pmatrix} -1 & -1 \\ 1-\mu & 0 \\ \mu & 1 \\ 0 & 0 \\ 0 & 0 \end{pmatrix}^T$$
+            \end{cadrehpc}
         \end{column}
     \end{columns}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 18. SCALABILITE MULTI-COEURS
+% 7. INTEGRATION TEMPORELLE RK4 PAR BLAS 3
 % ------------------------------------------------------------------------------
-\begin{frame}{Scalabilité Multi-Cœurs OpenMP avec Intel MKL}
+\begin{frame}{Intégration Temporelle Runge-Kutta 4 par Micro-Noyaux BLAS 3}
+    L'évaluation du second membre $\mathbf{F}(\mathbf{Y}) = \mathbf{S} + \mathbf{Y}\,\mathbf{M}^T + \mathbf{\Phi}\,\mathbf{A}^T$ fait intervenir deux produits matriciels :
+    \begin{itemize}
+        \item $\mathbf{Y}\,\mathbf{M}^T$ avec $\mathbf{Y} \in \mathbb{R}^{N \times 5}$ et $\mathbf{M}^T \in \mathbb{R}^{5 \times 5}$ : appel BLAS 3 \texttt{DGEMM}.
+        \item $\mathbf{\Phi}\,\mathbf{A}^T$ avec $\mathbf{\Phi} \in \mathbb{R}^{N \times 2}$ et $\mathbf{A}^T \in \mathbb{R}^{2 \times 5}$ : appel BLAS 3 \texttt{DGEMM}.
+    \end{itemize}
+
+    \begin{cadrehpc}[\textbf{Algorithme Vectorisé RK4 pour la Cohorte}]
+        \small
+        À chaque pas de temps $h$ pour toute la cohorte simultanément :
+        \begin{align*}
+            \mathbf{K}_1 &= \mathbf{F}(\mathbf{Y}_n) \\
+            \mathbf{K}_2 &= \mathbf{F}\left(\mathbf{Y}_n + \frac{h}{2}\mathbf{K}_1\right) \\
+            \mathbf{K}_3 &= \mathbf{F}\left(\mathbf{Y}_n + \frac{h}{2}\mathbf{K}_2\right) \\
+            \mathbf{K}_4 &= \mathbf{F}(\mathbf{Y}_n + h\,\mathbf{K}_3) \\
+            \mathbf{Y}_{n+1} &= \mathbf{Y}_n + \frac{h}{6}\left(\mathbf{K}_1 + 2\mathbf{K}_2 + 2\mathbf{K}_3 + \mathbf{K}_4\right)
+        \end{align*}
+        \textbf{Avantage majeur} : Zéro boucle Python sur les patients. La totalité du calcul est traitée en mémoire C/Fortran contiguë dans les registres vectoriels SIMD !
+    \end{cadrehpc}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 8. ANALYSE CLINIQUE PAR CHOLESKY LAPACK
+% ------------------------------------------------------------------------------
+\section{Analyse Clinique LAPACK}
+\begin{frame}{Analyse Clinique Pronostique : Régression Ridge via LAPACK}
     \begin{columns}[c]
         \begin{column}{0.50\textwidth}
-            \begin{messagecle}[\textbf{Contrôle du Parallélisme Système}]
-                \scriptsize
-                Allocation pilotée par les variables système :\\
-                \texttt{export MKL\_NUM\_THREADS=4}\\
-                \texttt{export OMP\_NUM\_THREADS=4}
-            \end{messagecle}
-            \vspace{0.06cm}
-            \begin{succesbox}[\textbf{Passage à l'Échelle ($N=1600$, \texttt{DGEMM})}]
-                \scriptsize
-                \begin{itemize}
-                    \item \textbf{1 thread :} $68{,}2\text{ ms}$
-                    \item \textbf{2 threads :} $36{,}4\text{ ms}$ ($\text{Gain } 1{,}87\times$)
-                    \item \textbf{4 threads :} $\mathbf{19{,}1\text{ ms}}$ ($\text{Gain } 3{,}57\times$)
-                \end{itemize}
-                \textbf{Efficacité parallèle remarquable de $\mathbf{89{,}2\,\%}$ !}
-            \end{succesbox}
+            \begin{cadreclinique}[\textbf{Objectif Médical}]
+                \small
+                Prédire la charge virale finale d'un patient à partir de ses biomarqueurs à $t = 30$ jours ($T_{30}, V_{s,30}, V_{r,30}, \eta_s$).
+                \textbf{Problème} : Les variables sont fortement colinéaires $\implies$ risque d'instabilité numérique.
+            \end{cadreclinique}
+            \vspace{0.1cm}
+            \begin{cadreconcept}[\textbf{Régularisation de Tikhonov (Ridge)}]
+                \small
+                On résout le système régularisé :
+                $$(\mathbf{X}^T\mathbf{X} + \lambda\mathbf{I})\,\mathbf{w} = \mathbf{X}^T\mathbf{y}$$
+                La matrice $\mathbf{A}_{\text{ridge}} = \mathbf{X}^T\mathbf{X} + \lambda\mathbf{I}$ est \textbf{symétrique définie positive}.
+            \end{cadreconcept}
         \end{column}
 
-        \begin{column}{0.48\textwidth}
-            \begin{messagecle}[\textbf{Pourquoi Intel MKL domine ?}]
-                \scriptsize
+        \begin{column}{0.50\textwidth}
+            \begin{cadrehpc}[\textbf{Résolution Haute Performance par LAPACK}]
+                \small
                 \begin{enumerate}
-                    \item \textbf{Micro-noyaux AVX-512 FMA :} Deux opérations par cycle horloge.
-                    \item \textbf{Gestion thermique Turbo Boost :} Ajustement dynamique de la taille des tuiles.
-                    \item \textbf{Zéro-copie en mémoire :} Alignement direct Fortran (\texttt{order='F'}) depuis NumPy.
+                    \item \textbf{BLAS 3 \texttt{DSYRK}} :
+                    Calcul du produit symétrique rang-$k$ :
+                    $$\mathbf{C} \leftarrow \mathbf{X}^T\mathbf{X} + \lambda\mathbf{I}$$
+                    (2 fois moins d'opérations qu'un produit général).
+                    \item \textbf{LAPACK \texttt{DPOTRF}} :
+                    Factorisation de Cholesky $\mathbf{A} = \mathbf{L}\mathbf{L}^T$.
+                    \item \textbf{LAPACK \texttt{DPOTRS}} :
+                    Double descente-remontée triangulaire pour obtenir le vecteur de poids $\mathbf{w}$.
                 \end{enumerate}
-            \end{messagecle}
+                \textbf{Gain} : 2 fois plus rapide que la factorisation LU (\texttt{DGESV}) et infiniment plus stable que l'inversion naïve $\mathbf{A}^{-1}$.
+            \end{cadrehpc}
         \end{column}
     \end{columns}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 19. SYNTHESE ET CONCLUSION
+% 9. STRATIFICATION DES PATIENTS PAR ACP LAPACK
 % ------------------------------------------------------------------------------
-\section{Conclusion}
-
-\begin{frame}{Synthèse Générale des Contributions}
+\begin{frame}{Stratification des Patients par ACP (\texttt{DSYEVD})}
     \begin{columns}[c]
-        \begin{column}{0.48\textwidth}
-            \begin{succesbox}[\textbf{1. Apport Mathématique \& HPC}]
-                \scriptsize
+        \begin{column}{0.52\textwidth}
+            \begin{cadreconcept}[\textbf{Analyse en Composantes Principales (ACP)}]
+                \small
                 \begin{itemize}
-                    \item Résolution de systèmes raides non-linéaires grâce à la complémentarité \textbf{BLAS 3} et \textbf{LAPACK (\texttt{DGESV}, \texttt{DGEEQU}, \texttt{DGEEV})}.
-                    \item Accélération matérielle avec \textbf{Intel MKL} supérieure à $\mathbf{1300\times}$.
+                    \item Réduction dimensionnelle des profils cliniques de $5$ variables vers les $2$ axes de variance maximale.
+                    \item Matrice de covariance empirique $\mathbf{\Sigma} = \frac{1}{N-1}\mathbf{\tilde{X}}^T\mathbf{\tilde{X}} \in \mathbb{R}^{5 \times 5}$ symétrique semi-définie positive.
+                    \item Résolution du problème aux valeurs propres :
+                    $$\mathbf{\Sigma}\,\mathbf{v}_i = \lambda_i\,\mathbf{v}_i$$
                 \end{itemize}
-            \end{succesbox}
-            \vspace{0.06cm}
-            \begin{messagecle}[\textbf{2. Enseignements Médicaux}]
-                \scriptsize
-                \begin{itemize}
-                    \item Seuil d'éradication intra-hôte : $\mathbf{\eta_c = 75{,}0\,\%}$.
-                    \item Alerte clinique sur le \textbf{rebond viral foudroyant} en cas d'interruption.
-                    \item Primauté absolue de la \textbf{prévention} à l'échelle de la population.
-                \end{itemize}
-            \end{messagecle}
+            \end{cadreconcept}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \begin{messagecle}[\textbf{3. Perspectives de Recherche}]
-                \scriptsize
+            \begin{cadrehpc}[\textbf{Routine LAPACK \texttt{DSYEVD}}]
+                \small
                 \begin{itemize}
-                    \item \textbf{Métapopulations 2D spatialisées :} Diffusion géographique couplée par matrices de transport denses BLAS 3.
-                    \item \textbf{Assimilation de données réelles :} Calibrage robuste par moindres carrés via \texttt{DGELS}.
-                    \item \textbf{Contrôle optimal stochastique :} Posologie personnalisée en temps réel.
+                    \item Algorithme de type \textbf{Divide \& Conquer} pour matrices symétriques réelles.
+                    \item Complexité réduite et orthogonalité parfaite des vecteurs propres garanties par construction.
+                    \item Projection directe des $N$ patients :
+                    $$\mathbf{Z} = \mathbf{\tilde{X}}\,\mathbf{V}_{[:, :2]} \in \mathbb{R}^{N \times 2}$$
+                    réalisée par BLAS 3 \texttt{DGEMM}.
                 \end{itemize}
-            \end{messagecle}
+            \end{cadrehpc}
         \end{column}
     \end{columns}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% 20. DIAPOSITIVE FINALE : REMERCIEMENTS
+% 10. RESULTATS DE SIMULATION : TRAJECTOIRES DE COHORTE
+% ------------------------------------------------------------------------------
+\section{Résultats Scientifiques \& HPC}
+\begin{frame}{Trajectoires de Cohorte : Répression vs Rebond Mutant}
+    \begin{center}
+        \includegraphics[width=0.88\textwidth, height=5.2cm, keepaspectratio]{cohort_trajectories.png}
+    \end{center}
+    \footnotesize
+    \textbf{Lecture biomédicale} : Sur 5 000 patients simulés pendant 365 jours, le traitement bloque la souche sauvage (bleu). Cependant, les patients avec faible adhésion ($\eta_s < 0.70$) développent la souche résistante (rouge) qui provoque l'effondrement des lymphocytes T CD4+ (vert).
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 11. RESULTATS DE STRATIFICATION PAR CLUSTERS PCA
+% ------------------------------------------------------------------------------
+\begin{frame}{Stratification Clinique des Patients par ACP}
+    \begin{center}
+        \includegraphics[width=0.62\textwidth, height=5.0cm, keepaspectratio]{clinical_pca_clusters.png}
+    \end{center}
+    \footnotesize
+    \textbf{Visualisation dans le premier plan factoriel} : La première composante (axe horizontal, inertie maximale) sépare nettement les patients répondeurs (contrôle virologique, vert) des patients en échec thérapeutique avec sélection de mutants (rouge).
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 12. BENCHMARKS : PYTHON NAIF VS BLAS 3 / MKL
+% ------------------------------------------------------------------------------
+\begin{frame}{Banc d'Essai : Python Naïf vs BLAS 3 (Intel oneMKL)}
+    \begin{center}
+        \includegraphics[width=0.65\textwidth, height=4.8cm, keepaspectratio]{benchmark_naive_vs_mkl.png}
+    \end{center}
+    \footnotesize
+    \textbf{Accélération mesurée} : Pour une cohorte de 400 patients, le modèle BLAS 3 / MKL est \textbf{8,2 fois plus rapide} que le code Python naïf en boucles imbriquées (0,30 s vs 2,46 s pour 730 pas d'intégration RK4).
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 13. SYNTHESE CHIFFREE DES PERFORMANCES
+% ------------------------------------------------------------------------------
+\begin{frame}{Montée en Charge et Débits de Simulation de Cohorte}
+    \begin{center}
+    \small
+    \begin{tabular}{rcccc}
+        \toprule
+        \textbf{Patients ($N$)} & \textbf{Temps MKL (s)} & \textbf{Débit (patients/s)} & \textbf{Flops Estimés (MFlops)} & \textbf{GFLOPS Effectifs} \\
+        \midrule
+        500   & 0,336 & 1\,488 & 401,5  & 1,19 \\
+        1\,000 & 0,596 & 1\,678 & 803,0  & 1,35 \\
+        2\,000 & 1,162 & 1\,721 & 1\,606,0 & 1,38 \\
+        5\,000 & 2,930 & 1\,706 & 4\,015,0 & 1,37 \\
+        10\,000 & 4,923 & \textbf{2\,031} & 8\,030,0 & \textbf{1,63} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{0.2cm}
+    \begin{columns}[c]
+        \begin{column}{0.50\textwidth}
+            \begin{cadrehpc}[\textbf{Complexité Linéaire Parfaite $\mathcal{O}(N)$}]
+                \footnotesize
+                Le temps de calcul croît strictement de façon linéaire avec la taille de la cohorte.
+                À $N = 10\,000$, la simulation complète de 365 jours d'évolution virale s'exécute en moins de \textbf{5 secondes} !
+            \end{cadrehpc}
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{cadreconcept}[\textbf{Performance Cholesky vs Inversion}]
+                \footnotesize
+                Pour la régression Ridge :
+                \begin{itemize}
+                    \item Cholesky LAPACK (\texttt{DPOTRF/S}) : \textbf{0,11 ms}
+                    \item Inversion Naïve (\texttt{inv(A) @ y}) : \textbf{0,25 ms}
+                    \item \textbf{Gain de vitesse} : facteur $\mathbf{2,3\times}$ avec stabilité numérique absolue.
+                \end{itemize}
+            \end{cadreconcept}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 14. SCALABILITE MULTI-COEURS OPENMP
+% ------------------------------------------------------------------------------
+\begin{frame}{Scalabilité Multi-Cœurs OpenMP avec Intel oneMKL}
+    \begin{center}
+        \includegraphics[width=0.82\textwidth, height=4.8cm, keepaspectratio]{benchmark_mkl_threads.png}
+    \end{center}
+    \footnotesize
+    \textbf{Comportement en parallélisme partagé} : Le temps d'exécution décroît lors du passage de 1 à 4 threads OpenMP (\texttt{OMP\_NUM\_THREADS}), confirmant l'efficacité des micro-noyaux BLAS 3 multithreadés d'Intel MKL sur matrices continues.
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 15. VALIDATION ET TESTS NUMERIQUES
+% ------------------------------------------------------------------------------
+\section{Validation \& Architecture}
+\begin{frame}{Validation Formelle \& Invariants Biologiques}
+    \begin{columns}[c]
+        \begin{column}{0.50\textwidth}
+            \begin{cadrehpc}[\textbf{Suite de Tests Pytest Automatisée}]
+                \footnotesize
+                \begin{itemize}
+                    \item \texttt{test\_rhs\_numerical\_equivalence} : Équivalence exacte du second membre matriciel vs naïf ($\epsilon < 10^{-14}$).
+                    \item \texttt{test\_trajectory\_numerical\_equivalence} : Équivalence stricte sur 100 pas RK4 ($\epsilon < 10^{-10}$).
+                    \item \texttt{test\_biological\_invariants} : Positivité stricte des concentrations ($T \ge 0, I \ge 0, V \ge 0$).
+                    \item \texttt{test\_lapack\_cholesky\_equivalence} : Cohérence de la régression Ridge Cholesky vs solveur standard.
+                    \item \texttt{test\_lapack\_pca} : Orthogonalité $\mathbf{V}^T\mathbf{V} = \mathbf{I}$ et variance décroissante.
+                \end{itemize}
+            \end{cadrehpc}
+        \end{column}
+
+        \begin{column}{0.50\textwidth}
+            \begin{cadreconcept}[\textbf{Architecture Logicielle Modulaire}]
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{\texttt{src/cohort\_model.py}} : Formulation matricielle et RK4 vectorisé.
+                    \item \textbf{\texttt{src/naive\_model.py}} : Modèle de référence en boucles pures.
+                    \item \textbf{\texttt{src/lapack\_analysis.py}} : Régression Ridge Cholesky et ACP \texttt{DSYEVD}.
+                    \item \textbf{\texttt{src/benchmark.py}} : Protocoles de profilage et mesure GFLOPS.
+                    \item \textbf{\texttt{scripts/}} : Scripts d'exécution reproductibles.
+                \end{itemize}
+            \end{cadreconcept}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 16. SYNTHESE GENERALE DES CONTRIBUTIONS
+% ------------------------------------------------------------------------------
+\section{Bilan \& Conclusion}
+\begin{frame}{Synthèse Générale des Contributions}
+    \begin{columns}[t]
+        \begin{column}{0.33\textwidth}
+            \begin{cadreconcept}[\textbf{Modélisation}]
+                \footnotesize
+                \begin{itemize}
+                    \item Modèle biomédical réaliste intégrant souche sauvage, mutant résistant et traitement ART.
+                    \item Hétérogénéité inter-patients prise en compte à grande échelle.
+                \end{itemize}
+            \end{cadreconcept}
+        \end{column}
+
+        \begin{column}{0.33\textwidth}
+            \begin{cadrehpc}[\textbf{HPC \& BLAS/LAPACK}]
+                \footnotesize
+                \begin{itemize}
+                    \item Vectorisation matricielle complète réduisant l'intégration à des \texttt{DGEMM} BLAS 3.
+                    \item Cholesky (\texttt{DPOTRF}) pour la régression Ridge : rapidité et stabilité.
+                    \item ACP Divide \& Conquer (\texttt{DSYEVD}) pour la stratification.
+                \end{itemize}
+            \end{cadrehpc}
+        \end{column}
+
+        \begin{column}{0.33\textwidth}
+            \begin{cadreclinique}[\textbf{Performances \& Impact}]
+                \footnotesize
+                \begin{itemize}
+                    \item Accélération $> 8\times$ par rapport à l'implémentation naïve.
+                    \item Plus de \textbf{2 000 patients simulés par seconde} à $N = 10\,000$.
+                    \item Outil d'aide à la décision clinique à haut débit.
+                \end{itemize}
+            \end{cadreclinique}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.25cm}
+    \begin{tcolorbox}[colback=softblue, colframe=navyblue, arc=3pt, boxrule=0.8pt, halign=center, top=3pt, bottom=3pt]
+        {\small\bfseries\color{navyblue} Le calcul scientifique haute performance transforme la modélisation virologique théorique en un simulateur épidémiologique et clinique massif en temps réel.}
+    \end{tcolorbox}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% 17. DIAPOSITIVE DE REMERCIEMENTS
 % ------------------------------------------------------------------------------
 \begin{frame}[plain]
     \begin{tikzpicture}[remember picture, overlay]
-        \fill[top color=navyblue, bottom color=navyblue!90!black] (current page.north west) rectangle (current page.south east);
-        \draw[line width=1pt, color=goldaccent] 
-            ($(current page.north west) + (0.45cm,-0.45cm)$) rectangle 
-            ($(current page.south east) + (-0.45cm,0.45cm)$);
+        \fill[navyblue] (current page.north west) rectangle (current page.south east);
+        \draw[line width=1.5pt, color=goldaccent] 
+            ($(current page.north west) + (0.5cm,-0.5cm)$) rectangle 
+            ($(current page.south east) + (-0.5cm,0.5cm)$);
     \end{tikzpicture}
 
     \centering
-    \vspace{0.4cm}
+    \vspace*{1.2cm}
 
-    {\Huge\bfseries\color{white} Merci pour votre attention !}
+    {\Huge\bfseries\color{white} Merci pour votre attention !}\\[0.4cm]
+    {\large\color{goldaccent}\textit{Avez-vous des questions ?}}\\[0.8cm]
 
-    \vspace{0.3cm}
-    {\large\color{goldaccent}\textit{Place aux questions et aux échanges.}}
-
-    \vspace{0.4cm}
     \begin{tcolorbox}[
-        colback=white,
+        colback=navyblue!80!black,
         colframe=goldaccent,
         arc=4pt,
         boxrule=1pt,
-        width=0.88\textwidth,
+        width=0.75\textwidth,
         halign=center,
-        top=4pt, bottom=4pt
+        top=6pt, bottom=6pt
     ]
-        {\small\bfseries\textcolor{navyblue}{Équipe de Projet -- Groupe 5 (ENSGMM1)}}\\[0.1cm]
-        {\footnotesize \textbf{ADOGOUN Déo Gracias M.} \quad $\bullet$ \quad \textbf{BIAHOU Ahossou J. M.-C.} \quad $\bullet$ \quad \textbf{SYLLA IMOROU Izou Dine}}\\[0.15cm]
-        {\scriptsize \textbf{Sous la direction de : Dr. Carlos AGOSSOU}}\\[0.04cm]
-        {\scriptsize École Nationale des Génies Mathématiques et Modélisation (ENSGMM) -- UNSTIM Abomey}
+        {\footnotesize\bfseries\color{white} Équipe Groupe 5 -- ENSGMM 1 / UNSTIM Abomey}\\[0.15cm]
+        {\scriptsize\color{gray!30} ADOGOUN Déo Gracias M. \quad $\bullet$ \quad BIAHOU Ahossou J. M.-C. \quad $\bullet$ \quad SYLLA IMOROU Izou Dine}\\[0.10cm]
+        {\scriptsize\color{goldaccent} Dépôt GitHub : \url{https://github.com/JuniorB573/OCS-Groupe5.git}}
     \end{tcolorbox}
-
-    \vspace{0.25cm}
-    \begin{columns}[c]
-        \begin{column}{0.4\textwidth}
-            \centering
-            \includegraphics[height=1.2cm, keepaspectratio]{figures/logo_unstim.png}
-        \end{column}
-        \begin{column}{0.4\textwidth}
-            \centering
-            \includegraphics[height=1.2cm, keepaspectratio]{figures/logo_ensgmm.png}
-        \end{column}
-    \end{columns}
 \end{frame}
 
 \end{document}
