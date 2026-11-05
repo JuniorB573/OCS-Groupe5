@@ -1,0 +1,14 @@
+generate_figures.py -- regenere les figures du rapport (hors annexes)
+---------------------------------------------------------------------
+Utilisation (dans ce dossier, environnement Python avec numpy, scipy, matplotlib) :
+
+    python generate_figures.py                # ecrit dans figures_regenerees/
+    python generate_figures.py mon_dossier    # ou dans un dossier au choix
+
+- Le dossier "figures/" d'origine n'est jamais modifie.
+- 16 figures sont produites (fig3 a fig14 et fig16 a fig19), environ 20 secondes.
+- Pour utiliser les nouvelles figures dans le rapport : copier les .png voulus
+  dans "figures/" (memes noms), puis recompiler : pdflatex main.tex (deux fois).
+- fig19 (benchmark) depend de la machine et du backend BLAS : les temps seront
+  ceux de l'ordinateur qui lance le script.
+- Ce script n'est volontairement pas inclus en annexe du rapport.
